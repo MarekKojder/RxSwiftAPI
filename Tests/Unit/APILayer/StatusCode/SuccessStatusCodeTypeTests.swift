@@ -1,12 +1,12 @@
 //
 //  InfoStatusCodeTypeTests.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 18.01.2017.
 //
 
 import XCTest
-@testable import SwiftAPI2
+@testable import RxSwiftAPI
 
 class SuccessStatusCodeTypeTests: XCTestCase {
 

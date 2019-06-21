@@ -1,6 +1,6 @@
 //
 //  ApiError.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 17.01.2017.
 //
@@ -9,8 +9,8 @@ import Foundation
 
 struct ApiError {
 
-    ///Domain of SwiftAPI errors.
-    private static let apiDomain = "SwiftApiServiceErrorDomain"
+    ///Domain of RxSwiftAPI errors.
+    private static let apiDomain = "RxSwiftAPIServiceErrorDomain"
 
     ///Creates NSError with given code and description.
     private static func errorWith(code: Int, description: String) -> Error {

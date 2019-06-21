@@ -1,6 +1,6 @@
 //
 //  ApiResponseCompletionHandler.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 23.01.2017.
 //

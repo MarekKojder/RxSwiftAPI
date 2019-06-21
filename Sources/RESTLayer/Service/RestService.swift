@@ -1,6 +1,6 @@
 //
 //  RestService.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 03.02.2017.
 //

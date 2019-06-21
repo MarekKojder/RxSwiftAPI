@@ -1,19 +1,19 @@
-# SwiftAPI
+# RxSwiftAPI
 
 <div align = "center">
-  <a href="http://cocoapods.org/pods/SwiftAPI">
-    <img src="https://img.shields.io/cocoapods/v/SwiftAPI.svg?style=flat" />
+  <a href="http://cocoapods.org/pods/RxSwiftAPI">
+    <img src="https://img.shields.io/cocoapods/v/RxSwiftAPI.svg?style=flat" />
   </a>
 </div>
 <div align = "center">
-  <a href="http://cocoapods.org/pods/SwiftAPI" target="blank">
-    <img src="https://img.shields.io/cocoapods/p/SwiftAPI.svg?style=flat" />
+  <a href="http://cocoapods.org/pods/RxSwiftAPI" target="blank">
+    <img src="https://img.shields.io/cocoapods/p/RxSwiftAPI.svg?style=flat" />
   </a>
-  <a href="http://cocoapods.org/pods/SwiftAPI">
+  <a href="http://cocoapods.org/pods/RxSwiftAPI">
     <img src="https://img.shields.io/badge/swift-4.1-brightgreen.svg" />
   </a>
-  <a href="http://cocoapods.org/pods/SwiftAPI" target="blank">
-    <img src="https://img.shields.io/cocoapods/l/SwiftAPI.svg?style=flat" />
+  <a href="http://cocoapods.org/pods/RxSwiftAPI" target="blank">
+    <img src="https://img.shields.io/cocoapods/l/RxSwiftAPI.svg?style=flat" />
   </a>
   <br>
   <br>
@@ -32,9 +32,9 @@
 
 ## Installation
 
-Swift-API is available through [CocoaPods](http://cocoapods.org/pods/SwiftAPI). To install it, simply add the following line to your Podfile
+Swift-API is available through [CocoaPods](http://cocoapods.org/pods/RxSwiftAPI). To install it, simply add the following line to your Podfile
 ```ruby
-pod 'SwiftAPI'
+pod 'RxSwiftAPI'
 ```
 and run
 ```ruby
@@ -46,7 +46,7 @@ pod install
 
 At the beginning, import library by adding
 ```swift
-import SwiftAPI
+import RxSwiftAPI
 ```
 then you can create instance of ApiService
 ```swift
@@ -70,4 +70,4 @@ To get familiar with more advanced usage please take a look at usage example ava
 
 ## License
 
-SwiftAPI is available under the MIT license. See the LICENSE file for more info.
+RxSwiftAPI is available under the MIT license. See the LICENSE file for more info.

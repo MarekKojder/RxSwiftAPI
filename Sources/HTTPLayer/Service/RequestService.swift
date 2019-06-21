@@ -1,6 +1,6 @@
 //
 //  APIRequest.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 16.12.2016.
 //

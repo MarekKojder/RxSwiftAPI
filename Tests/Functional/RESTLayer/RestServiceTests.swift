@@ -1,11 +1,12 @@
 //
 //  RestServiceTests.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 07.02.2017.
 //
+
 import XCTest
-@testable import SwiftAPI2
+@testable import RxSwiftAPI
 
 struct ExampleData: Codable {
     let url: URL
@@ -24,37 +25,34 @@ enum ExamplePath: String, ResourcePath {
     case notFound
 
     case none = ""
-    case fileToDownload = "commons/d/d1/Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg"
+    case fileToDownload = "commons/thumb/5/53/Wikipedia-logo-en-big.png/489px-Wikipedia-logo-en-big.png"
 }
 
 class RestServiceTests: XCTestCase {
 
-    private var rootURL: String {
-        return "https://httpbin.org/"
-    }
+    private var restService: RestService!
 
-    private var downloadRootURL: String {
-        return "https://upload.wikimedia.org/"
-    }
-
-    private var uploadingFileURL: URL {
-        return Bundle(for: type(of: self)).url(forResource: "testImage", withExtension: "png")!
-    }
-
-    private var downloadedFileURL: URL {
-        return URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0], isDirectory: true)
-    }
+    private var downloadRestService: RestService!
 
     private var exampleData: ExampleData {
-        return ExampleData(url: URL(string: rootURL)!)
+        return ExampleData(url: TestData.Url.root)
     }
 
-    private var exampleHeaders: [ApiHeader] {
-        return [ApiHeader(name: "User-Agent", value: "SwiftApi")]
+    override func setUp() {
+        super.setUp()
+
+        restService = RestService(baseUrl: TestData.Path.root,
+                                  headerFields: TestData.Headers.example)
+
+        downloadRestService = RestService(baseUrl: TestData.Path.downloadRoot,
+                                          apiPath: "wikipedia/",
+                                          headerFields: nil)
     }
 
-    private var exampleAuthHeader: [ApiHeader] {
-        return [ApiHeader.Authorization.basic(login: "admin", password: "admin1")!]
+    override func tearDown() {
+        restService = nil
+        downloadRestService = nil
+        super.tearDown()
     }
 
     private func log(_ details: RestResponseDetails, for path: ResourcePath, and resource: Codable? = nil) {
@@ -68,24 +66,7 @@ class RestServiceTests: XCTestCase {
         print(message)
         print("--------------------")
     }
-
-    var restService: RestService!
-    var downloadRestService: RestService!
-
-    override func setUp() {
-        super.setUp()
-
-        restService = RestService(baseUrl: rootURL, apiPath: "", headerFields: exampleHeaders, coderProvider: DefaultCoderProvider(), fileManager: DefaultFileManager())
-        downloadRestService = RestService(baseUrl: downloadRootURL, apiPath: "wikipedia/", headerFields: nil, coderProvider: DefaultCoderProvider(), fileManager: DefaultFileManager())
-    }
-
-    override func tearDown() {
-        restService = nil
-        downloadRestService = nil
-        super.tearDown()
-    }
 }
-
 
 extension RestServiceTests {
 
@@ -176,7 +157,7 @@ extension RestServiceTests {
             responseExpectation.fulfill()
         }
         do {
-            try restService.post(value, at: path, aditionalHeaders: exampleAuthHeader, useProgress: false, completion: completion)
+            try restService.post(value, at: path, aditionalHeaders: TestData.Headers.auth, useProgress: false, completion: completion)
         } catch {
             XCTFail(error.localizedDescription)
         }
@@ -197,7 +178,7 @@ extension RestServiceTests {
             responseExpectation.fulfill()
         }
         do {
-            try restService.post(value, at: path, aditionalHeaders: exampleAuthHeader, completion: completion)
+            try restService.post(value, at: path, aditionalHeaders: TestData.Headers.auth, completion: completion)
         } catch {
             XCTFail(error.localizedDescription)
         }
@@ -218,7 +199,7 @@ extension RestServiceTests {
             responseExpectation.fulfill()
         }
         do {
-            try restService.put(value, at: path, aditionalHeaders: exampleAuthHeader, completion: completion)
+            try restService.put(value, at: path, aditionalHeaders: TestData.Headers.auth, completion: completion)
         } catch {
             XCTFail(error.localizedDescription)
         }
@@ -239,7 +220,7 @@ extension RestServiceTests {
             responseExpectation.fulfill()
         }
         do {
-            try restService.put(value, at: path, aditionalHeaders: exampleAuthHeader, completion: completion)
+            try restService.put(value, at: path, aditionalHeaders: TestData.Headers.auth, completion: completion)
         } catch {
             XCTFail(error.localizedDescription)
         }
@@ -260,7 +241,7 @@ extension RestServiceTests {
             responseExpectation.fulfill()
         }
         do {
-            try restService.patch(value, at: path, aditionalHeaders: exampleAuthHeader, completion: completion)
+            try restService.patch(value, at: path, aditionalHeaders: TestData.Headers.auth, completion: completion)
         } catch {
             XCTFail(error.localizedDescription)
         }
@@ -281,7 +262,7 @@ extension RestServiceTests {
             responseExpectation.fulfill()
         }
         do {
-            try restService.patch(value, at: path, aditionalHeaders: exampleAuthHeader, completion: completion)
+            try restService.patch(value, at: path, aditionalHeaders: TestData.Headers.auth, completion: completion)
         } catch {
             XCTFail(error.localizedDescription)
         }
@@ -302,7 +283,7 @@ extension RestServiceTests {
             responseExpectation.fulfill()
         }
         do {
-            try restService.delete(value, at: path, aditionalHeaders: exampleAuthHeader, completion: completion)
+            try restService.delete(value, at: path, aditionalHeaders: TestData.Headers.auth, completion: completion)
         } catch {
             XCTFail(error.localizedDescription)
         }
@@ -323,7 +304,7 @@ extension RestServiceTests {
             responseExpectation.fulfill()
         }
         do {
-            try restService.delete(value, at: path, aditionalHeaders: exampleAuthHeader, completion: completion)
+            try restService.delete(value, at: path, aditionalHeaders: TestData.Headers.auth, completion: completion)
         } catch {
             XCTFail(error.localizedDescription)
         }
@@ -336,7 +317,7 @@ extension RestServiceTests {
     //MARK: File requests tests
     func testGetFile() {
         let path = ExamplePath.fileToDownload
-        let location = downloadedFileURL
+        let location = TestData.Url.fileDestination
         let responseExpectation = expectation(description: "Expect GET response")
         var responseFailed = true
         let completion = { [weak self] (success: Bool, details: RestResponseDetails) in
@@ -357,7 +338,7 @@ extension RestServiceTests {
 
     func testWrongPathGetFile() {
         let path = ExamplePath.fileToDownload
-        let location = downloadedFileURL
+        let location = TestData.Url.fileDestination
         let responseExpectation = expectation(description: "Expect GET response")
         var responseFailed = true
         let completion = { [weak self] (success: Bool, details: RestResponseDetails) in
@@ -378,7 +359,7 @@ extension RestServiceTests {
 
     func testPostFile() {
         let path = ExamplePath.post
-        let location = uploadingFileURL
+        let location = TestData.Url.localFile
         let responseExpectation = expectation(description: "Expect POST response")
         var responseFailed = true
         let completion = { [weak self] (success: Bool, details: RestResponseDetails) in
@@ -399,7 +380,7 @@ extension RestServiceTests {
 
     func testPutFile() {
         let path = ExamplePath.put
-        let location = uploadingFileURL
+        let location = TestData.Url.localFile
         let responseExpectation = expectation(description: "Expect PUT response")
         var responseFailed = true
         let completion = { [weak self] (success: Bool, details: RestResponseDetails) in
@@ -420,7 +401,7 @@ extension RestServiceTests {
 
     func testPatchFile() {
         let path = ExamplePath.patch
-        let location = uploadingFileURL
+        let location = TestData.Url.localFile
         let responseExpectation = expectation(description: "Expect PATCH response")
         var responseFailed = true
         let completion = { [weak self] (success: Bool, details: RestResponseDetails) in
@@ -443,7 +424,7 @@ extension RestServiceTests {
         let path1 = ExamplePath.put
         let path2 = ExamplePath.patch
         let path3 = ExamplePath.get
-        let location = uploadingFileURL
+        let location = TestData.Url.localFile
         let responseExpectation = expectation(description: "Expect PATCH response")
         var responseFailed = true
         let completion = { [weak self] (success: Bool, details: RestResponseDetails) in

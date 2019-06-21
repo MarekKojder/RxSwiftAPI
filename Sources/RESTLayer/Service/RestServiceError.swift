@@ -1,6 +1,6 @@
 //
 //  RestServiceError.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 04.06.2018.
 //

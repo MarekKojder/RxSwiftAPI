@@ -1,6 +1,6 @@
 //
 //  WebserviceSession.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 02.01.2017.
 //
@@ -41,7 +41,7 @@ extension RequestService.Configuration {
             let version = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String {
             identifier = "\(name)-\(version)"
         } else {
-            identifier = "SwiftAPIBackgroundSession"
+            identifier = "RxSwiftAPIBackgroundSession"
         }
         return RequestService.Configuration(urlSessionConfiguration: .background(withIdentifier: identifier))
     }

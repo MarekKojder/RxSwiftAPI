@@ -1,6 +1,6 @@
 //
 //  ApiHeader.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 27.01.2017.
 //

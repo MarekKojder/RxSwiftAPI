@@ -1,6 +1,6 @@
 //
 //  ApiService+BackgroundEvents.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 22.02.2017.
 //

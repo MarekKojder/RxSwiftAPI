@@ -1,6 +1,6 @@
 //
 //  RestResponseDetails.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 02.10.2018.
 //

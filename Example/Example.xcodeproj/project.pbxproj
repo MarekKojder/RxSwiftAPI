@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EA083AC822BCD8460041213C /* SwiftAPI2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA083AC722BCD8460041213C /* SwiftAPI2.framework */; };
-		EA083AC922BCD8460041213C /* SwiftAPI2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EA083AC722BCD8460041213C /* SwiftAPI2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EA083ACB22BD039F0041213C /* RxSwiftAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA083ACA22BD039F0041213C /* RxSwiftAPI.framework */; };
+		EA083ACC22BD039F0041213C /* RxSwiftAPI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EA083ACA22BD039F0041213C /* RxSwiftAPI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EA56C21E1E40977800068B9E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA56C21D1E40977800068B9E /* AppDelegate.swift */; };
 		EA56C2231E40977800068B9E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA56C2211E40977800068B9E /* Main.storyboard */; };
 		EA56C2251E40977800068B9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA56C2241E40977800068B9E /* Assets.xcassets */; };
@@ -23,13 +23,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		EA745C621E432AFB00A65CB6 /* Embed Frameworks */ = {
+		EA083ACD22BD039F0041213C /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				EA083AC922BCD8460041213C /* SwiftAPI2.framework in Embed Frameworks */,
+				EA083ACC22BD039F0041213C /* RxSwiftAPI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -37,7 +37,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		EA083AC722BCD8460041213C /* SwiftAPI2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftAPI2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA083ACA22BD039F0041213C /* RxSwiftAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwiftAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA56C21A1E40977800068B9E /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA56C21D1E40977800068B9E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA56C2221E40977800068B9E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -58,7 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA083AC822BCD8460041213C /* SwiftAPI2.framework in Frameworks */,
+				EA083ACB22BD039F0041213C /* RxSwiftAPI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,7 +143,7 @@
 		EA745C631E432B8000A65CB6 /* EmbededFrameworks */ = {
 			isa = PBXGroup;
 			children = (
-				EA083AC722BCD8460041213C /* SwiftAPI2.framework */,
+				EA083ACA22BD039F0041213C /* RxSwiftAPI.framework */,
 			);
 			name = EmbededFrameworks;
 			sourceTree = "<group>";
@@ -167,7 +167,7 @@
 				EA56C2161E40977800068B9E /* Sources */,
 				EA56C2171E40977800068B9E /* Frameworks */,
 				EA56C2181E40977800068B9E /* Resources */,
-				EA745C621E432AFB00A65CB6 /* Embed Frameworks */,
+				EA083ACD22BD039F0041213C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

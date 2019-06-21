@@ -1,6 +1,6 @@
 //
 //  RequestCallback.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 20.12.2016.
 //

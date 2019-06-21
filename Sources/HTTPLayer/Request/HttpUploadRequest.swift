@@ -1,6 +1,6 @@
 //
 //  HttpUploadRequest.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 02.01.2017.
 //

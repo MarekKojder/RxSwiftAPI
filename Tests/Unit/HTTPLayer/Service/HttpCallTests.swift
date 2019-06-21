@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import SwiftAPI2
+@testable import RxSwiftAPI
 
 class HttpCallTests: XCTestCase {
 
@@ -99,7 +99,7 @@ class HttpCallTests: XCTestCase {
     func testUpdateWithUrl() {
         let call = HttpCall(progressBlock: progressBlock, successBlock: successBlock, failureBlock: failureBlock)
         let url1 = URL(string: "http://cocoapods.org/")!
-        let url2 = URL(string: "http://cocoapods.org/pods/SwiftAPI")!
+        let url2 = URL(string: "http://cocoapods.org/pods/RxSwiftAPI")!
         call.update(with: URLResponse(url: url1, mimeType: nil, expectedContentLength: 0, textEncodingName: nil))
         call.update(with: url2)
 

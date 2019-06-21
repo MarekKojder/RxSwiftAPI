@@ -1,12 +1,12 @@
 //
 //  RestServiceTests.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 07.02.2017.
 //
 
 import XCTest
-@testable import SwiftAPI2
+@testable import RxSwiftAPI
 
 class RestServiceTests: XCTestCase {
 

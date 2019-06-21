@@ -1,32 +1,19 @@
 //
 //  DefaultFileManagerTests.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 19.01.2017.
 //
 
 import XCTest
-@testable import SwiftAPI2
+@testable import RxSwiftAPI
 
 class DefaultFileManagerTests: XCTestCase {
 
-    fileprivate var documentsUrl: URL {
-        return URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0], isDirectory: true)
-    }
-
-    fileprivate var imageURL: URL {
-        return Bundle(for: type(of: self)).url(forResource: "testImage", withExtension: "png")!
-    }
-
-    var exampleDestination: URL {
-        return documentsUrl
-    }
-
-
     func testCoppyFileWithSuccess() {
         let manager = DefaultFileManager()
-        let source = imageURL
-        let destination = exampleDestination
+        let source = TestData.Url.localFile
+        let destination = TestData.Url.fileDestination
 
         let error = manager.copyFile(from: source, to: destination)
 
@@ -35,7 +22,7 @@ class DefaultFileManagerTests: XCTestCase {
     
     func testCoppyFileWithError() {
         let manager = DefaultFileManager()
-        let destination = exampleDestination
+        let destination = TestData.Url.fileDestination
 
         let error = manager.copyFile(from: destination, to: destination)
 

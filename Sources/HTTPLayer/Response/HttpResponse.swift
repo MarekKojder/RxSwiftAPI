@@ -1,6 +1,6 @@
 //
 //  HttpResponse.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 21.12.2016.
 //

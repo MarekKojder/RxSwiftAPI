@@ -1,42 +1,30 @@
 //
 //  HttpRequestTests.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 04.01.2017.
 //
 
 import XCTest
-@testable import SwiftAPI2
+@testable import RxSwiftAPI
 
 class HttpDownloadRequestTests: XCTestCase {
 
-    var rootURL: URL {
+    private var rootURL: URL {
         return URL(string: "https://jsonplaceholder.typicode.com")!
     }
 
-    fileprivate var documentsUrl: URL {
-        return URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0], isDirectory: true)
-    }
-
-    var exampleDestination: URL {
-        return documentsUrl.appendingPathComponent("file.jpg")
-    }
-
-    var anotherExampleDestination: URL {
-        return documentsUrl.appendingPathComponent("file2.jpg")
-    }
-
-    var exampleSuccessAction: ResponseAction {
+    private var exampleSuccessAction: ResponseAction {
         return ResponseAction.success {_ in}
     }
 
-    var exampleFailureAction: ResponseAction {
+    private var exampleFailureAction: ResponseAction {
         return ResponseAction.failure {_ in}
     }
 
     func testFullConstructor() {
         let url = rootURL.appendingPathComponent("posts/1")
-        let destination = exampleDestination
+        let destination = TestData.Url.fileDestination
         let success = exampleSuccessAction
         let failure = exampleFailureAction
         let request = HttpDownloadRequest(url: url, destinationUrl: destination, onSuccess: success, onFailure: failure, useProgress: true)
@@ -51,8 +39,8 @@ class HttpDownloadRequestTests: XCTestCase {
 
     func testHashValue() {
         let url = rootURL.appendingPathComponent("posts/1")
-        let destination1 = exampleDestination
-        let destination2 = anotherExampleDestination
+        let destination1 = TestData.Url.fileDestination
+        let destination2 = TestData.Url.anotherFileDestination
         let success = exampleSuccessAction
         let failure = exampleFailureAction
         let request1 = HttpDownloadRequest(url: url, destinationUrl: destination1, onSuccess: success, onFailure: failure, useProgress: true)

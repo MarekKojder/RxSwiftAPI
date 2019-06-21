@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import SwiftAPI2
+import RxSwiftAPI
 
 struct ResponseData: Codable {
 
@@ -84,7 +84,7 @@ struct RestManager {
             headers = nil
         } else {
             rootURL = "https://httpbin.org"
-            headers = [ApiHeader(name: "User-Agent", value: "SwiftApiExample")]
+            headers = [ApiHeader(name: "User-Agent", value: "RxSwiftAPIExample")]
         }
         self.restService = RestService(baseUrl: rootURL, apiPath: apiPath, headerFields: headers)
     }

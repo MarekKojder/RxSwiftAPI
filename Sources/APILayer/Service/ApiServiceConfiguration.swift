@@ -1,6 +1,6 @@
 //
 //  ApiServiceConfiguration.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 05.06.2018.
 //

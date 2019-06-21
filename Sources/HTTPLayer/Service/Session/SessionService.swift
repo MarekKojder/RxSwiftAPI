@@ -1,6 +1,6 @@
 //
 //  SessionService.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 07.03.2018.
 //
@@ -10,7 +10,7 @@ import Foundation
 final class SessionService: NSObject {
 
     private(set) var isValid = true
-    private let sessionQueue = DispatchQueue(label: "SwiftAPI.SessionService.sessionQueue", qos: .background)
+    private let sessionQueue = DispatchQueue(label: "RxSwiftAPI.SessionService.sessionQueue", qos: .background)
     private var session: URLSession!
     private var activeCalls = [URLSessionTask: HttpCall]()
 

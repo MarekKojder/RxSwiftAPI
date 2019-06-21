@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import SwiftAPI2
+import RxSwiftAPI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

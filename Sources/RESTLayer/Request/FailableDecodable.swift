@@ -1,6 +1,6 @@
 //
 //  FailableDecodable.swift
-//  SwiftAPI iOS
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 26.01.2018.
 //

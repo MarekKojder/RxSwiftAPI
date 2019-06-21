@@ -1,12 +1,12 @@
 //
 //  HttpResponseTests.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 18.01.2017.
 //
 
 import XCTest
-@testable import SwiftAPI2
+@testable import RxSwiftAPI
 
 class HttpResponseTests: XCTestCase {
 
@@ -14,11 +14,11 @@ class HttpResponseTests: XCTestCase {
         return URL(string: "https://jsonplaceholder.typicode.com")!
     }
 
-    var exampleBody: Data {
+    private var exampleBody: Data {
         return "Example string.".data(using: .utf8)!
     }
 
-    var anotherExampleBody: Data {
+    private var anotherExampleBody: Data {
         return "Another example string.".data(using: .utf8)!
     }
 

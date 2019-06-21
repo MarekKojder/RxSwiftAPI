@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EAA0E1A71E5D9B6B00A7AA3A"
-               BuildableName = "SwiftAPI2.framework"
-               BlueprintName = "SwiftAPI2 watchOS"
-               ReferencedContainer = "container:SwiftAPI2.xcodeproj">
+               BlueprintIdentifier = "EAA0E19A1E5D9B0700A7AA3A"
+               BuildableName = "RxSwiftAPI.framework"
+               BlueprintName = "RxSwiftAPI tvOS"
+               ReferencedContainer = "container:RxSwiftAPI.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "EA93FE2E1E5EC42A00A82381"
                BuildableName = "UnitTests iOS.xctest"
                BlueprintName = "UnitTests iOS"
-               ReferencedContainer = "container:SwiftAPI2.xcodeproj">
+               ReferencedContainer = "container:RxSwiftAPI.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -45,17 +45,17 @@
                BlueprintIdentifier = "EA93FEA21E5EC87500A82381"
                BuildableName = "FunctionalTests iOS.xctest"
                BlueprintName = "FunctionalTests iOS"
-               ReferencedContainer = "container:SwiftAPI2.xcodeproj">
+               ReferencedContainer = "container:RxSwiftAPI.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EAA0E1A71E5D9B6B00A7AA3A"
-            BuildableName = "SwiftAPI2.framework"
-            BlueprintName = "SwiftAPI2 watchOS"
-            ReferencedContainer = "container:SwiftAPI2.xcodeproj">
+            BlueprintIdentifier = "EAA0E19A1E5D9B0700A7AA3A"
+            BuildableName = "RxSwiftAPI.framework"
+            BlueprintName = "RxSwiftAPI tvOS"
+            ReferencedContainer = "container:RxSwiftAPI.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -70,14 +70,14 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
-      allowLocationSimulation = "YES">
+      allowLocationSimulation = "NO">
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EAA0E1A71E5D9B6B00A7AA3A"
-            BuildableName = "SwiftAPI2.framework"
-            BlueprintName = "SwiftAPI2 watchOS"
-            ReferencedContainer = "container:SwiftAPI2.xcodeproj">
+            BlueprintIdentifier = "EAA0E19A1E5D9B0700A7AA3A"
+            BuildableName = "RxSwiftAPI.framework"
+            BlueprintName = "RxSwiftAPI tvOS"
+            ReferencedContainer = "container:RxSwiftAPI.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -92,10 +92,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EAA0E1A71E5D9B6B00A7AA3A"
-            BuildableName = "SwiftAPI2.framework"
-            BlueprintName = "SwiftAPI2 watchOS"
-            ReferencedContainer = "container:SwiftAPI2.xcodeproj">
+            BlueprintIdentifier = "EAA0E19A1E5D9B0700A7AA3A"
+            BuildableName = "RxSwiftAPI.framework"
+            BlueprintName = "RxSwiftAPI tvOS"
+            ReferencedContainer = "container:RxSwiftAPI.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

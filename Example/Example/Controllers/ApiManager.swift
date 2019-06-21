@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import SwiftAPI2
+import RxSwiftAPI
 
 ///Completion type for all requests.
 typealias ApiManagerCompletionHandler = (_ readableResponse: String?, _ resourceUrl: URL?, _ error: Error?) -> ()
@@ -129,7 +129,7 @@ fileprivate extension ApiManager {
 
     ///Example HTTP header.
     var exampleHeaders: [ApiHeader] {
-        return [ApiHeader(name: "User-Agent", value: "SwiftApiExample")]
+        return [ApiHeader(name: "User-Agent", value: "RxSwiftAPIExample")]
     }
 
     ///Example custom configuration

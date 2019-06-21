@@ -1,36 +1,16 @@
 //
 //  RequestServiceTests.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 04.01.2017.
 //
 
 import XCTest
-@testable import SwiftAPI2
+@testable import RxSwiftAPI
 
 class RequestServiceTests: XCTestCase {
 
-    fileprivate var rootURL: URL {
-        return URL(string: "https://httpbin.org")!
-    }
-
-    fileprivate var smallFileUrl: URL {
-        return URL(string: "https://upload.wikimedia.org/wikipedia/commons/d/d1/Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg")!
-    }
-
-    fileprivate var bigFileUrl: URL {
-        return URL(string: "https://upload.wikimedia.org/wikipedia/commons/3/3f/Fronalpstock_big.jpg")!
-    }
-
-    fileprivate var localImageURL: URL {
-        return Bundle(for: type(of: self)).url(forResource: "testImage", withExtension: "png")!
-    }
-
-    fileprivate var documentsUrl: URL {
-        return URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0], isDirectory: true)
-    }
-
-    var requestService: RequestService!
+    private var requestService: RequestService!
 
     override func setUp() {
         super.setUp()
@@ -42,68 +22,70 @@ class RequestServiceTests: XCTestCase {
         requestService = nil
         super.tearDown()
     }
+}
 
+extension RequestServiceTests {
 
     //MARK: - DataRequest tests
     func testHttpGetDataRequest() {
-        let url = rootURL.appendingPathComponent("get")
+        let url = TestData.Url.root.appendingPathComponent("get")
 
         performTestDataRequest(url: url, method: .get)
     }
 
     func testHttpPostDataRequest() {
-        let url = rootURL.appendingPathComponent("post")
+        let url = TestData.Url.root.appendingPathComponent("post")
         let body = jsonData(with: ["title": "test", "body": "post", "userId": 1] as [String : Any])
 
         performTestDataRequest(url: url, method: .post, body: body)
     }
 
     func testHttpPutDataRequest() {
-        let url = rootURL.appendingPathComponent("put")
+        let url = TestData.Url.root.appendingPathComponent("put")
         let body = jsonData(with: ["id": 1, "title": "test", "body": "put", "userId": 1] as [String : Any])
 
         performTestDataRequest(url: url, method: .put, body: body)
     }
 
     func testHttpPatchDataRequest() {
-        let url = rootURL.appendingPathComponent("patch")
+        let url = TestData.Url.root.appendingPathComponent("patch")
         let body = jsonData(with: ["body": "patch"] as [String : Any])
 
         performTestDataRequest(url: url, method: .patch, body: body)
     }
 
     func testHttpDeleteDataRequest() {
-        let url = rootURL.appendingPathComponent("delete")
+        let url = TestData.Url.root.appendingPathComponent("delete")
 
         performTestDataRequest(url: url, method: .delete)
     }
 
     //MARK: UploadRequest tests
     func testHttpPostUploadRequest() {
-        let url = rootURL.appendingPathComponent("post")
-        let resourceUrl = localImageURL
+        let url = TestData.Url.root.appendingPathComponent("post")
+        let resourceUrl = TestData.Url.localFile
 
         performTestUploadRequest(url: url, method: .post, resourceUrl: resourceUrl)
     }
 
     func testHttpPutUploadRequest() {
-        let url = rootURL.appendingPathComponent("put")
-        let resourceUrl = localImageURL
+        let url = TestData.Url.root.appendingPathComponent("put")
+        let resourceUrl = TestData.Url.localFile
 
         performTestUploadRequest(url: url, method: .put, resourceUrl: resourceUrl)
     }
 
     func testHttpPatchUploadRequest() {
-        let url = rootURL.appendingPathComponent("patch")
-        let resourceUrl = localImageURL
+        let url = TestData.Url.root.appendingPathComponent("patch")
+        let resourceUrl = TestData.Url.localFile
 
         performTestUploadRequest(url: url, method: .patch, resourceUrl: resourceUrl)
     }
 
     //MARK: DownloadRequest tests
     func testHttpDownloadRequest() {
-        let fileUrl = smallFileUrl
-        let destinationUrl = documentsUrl
+        let fileUrl = TestData.Url.smallFile
+        let destinationUrl = TestData.Url.fileDestination
         let responseExpectation = expectation(description: "Expect response from \(fileUrl)")
 
         var successPerformed = false
@@ -137,8 +119,8 @@ class RequestServiceTests: XCTestCase {
 
     //MARK: Request managing tests
     func testHttpRequestCancel() {
-        let fileUrl = smallFileUrl
-        let destinationUrl = documentsUrl.appendingPathComponent("file.jpg")
+        let fileUrl = TestData.Url.smallFile
+        let destinationUrl = TestData.Url.fileDestination
         let responseExpectation = expectation(description: "Expect response from \(fileUrl)")
 
         var successPerformed = false
@@ -148,10 +130,10 @@ class RequestServiceTests: XCTestCase {
         }
 
         var failurePerformed = false
-        var responseError: Error?
+        var responseError: NSError?
         let failure = ResponseAction.failure {error in
             failurePerformed = true
-            responseError = error
+            responseError = error as NSError?
             responseExpectation.fulfill()
         }
 
@@ -162,15 +144,15 @@ class RequestServiceTests: XCTestCase {
         waitForExpectations(timeout: 10) { error in
             XCTAssertNil(error, "Download request test failed with error: \(error!.localizedDescription)")
             XCTAssertTrue(failurePerformed)
-            XCTAssertEqual(responseError?.localizedDescription, "cancelled", "Resposne should finnish with cancel error!")
+            XCTAssertTrue(responseError?.domain == NSURLErrorDomain && responseError?.code == -999, "Resposne should finnish with cancel error!")
             XCTAssertFalse(successPerformed)
         }
     }
 
     func testHttpRequestCancelAll() {
-        let fileUrl1 = bigFileUrl
-        let fileUrl2 = bigFileUrl
-        let destinationUrl = documentsUrl
+        let fileUrl1 = TestData.Url.bigFile
+        let fileUrl2 = TestData.Url.bigFile
+        let destinationUrl = TestData.Url.fileDestination
         let responseExpectation = expectation(description: "Expect file")
 
         var successPerformed = false
@@ -180,10 +162,10 @@ class RequestServiceTests: XCTestCase {
         }
 
         var failurePerformed = false
-        var responseError: Error?
+        var responseError: NSError?
         let failure = ResponseAction.failure {error in
             failurePerformed = true
-            responseError = error
+            responseError = error as NSError?
             responseExpectation.fulfill()
         }
         let request1 = HttpDownloadRequest(url: fileUrl1, destinationUrl: destinationUrl, useProgress: false)
@@ -196,13 +178,13 @@ class RequestServiceTests: XCTestCase {
         waitForExpectations(timeout: 10) { error in
             XCTAssertNil(error, "Download request test failed with error: \(error!.localizedDescription)")
             XCTAssertTrue(failurePerformed)
-            XCTAssertEqual(responseError?.localizedDescription, "cancelled", "Resposne should finnish with cancel error!")
+            XCTAssertTrue(responseError?.domain == NSURLErrorDomain && responseError?.code == -999, "Resposne should finnish with cancel error!")
             XCTAssertFalse(successPerformed)
         }
     }
 
     func testSuspendAndResume() {
-        let url = rootURL.appendingPathComponent("get")
+        let url = TestData.Url.root.appendingPathComponent("get")
         let method = HttpMethod.get
         let responseExpectation = expectation(description: "Expect response from \(url)")
 

@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import SwiftAPI2
+@testable import RxSwiftAPI
 
 private struct TestArray: Codable {
 
@@ -31,12 +31,12 @@ private struct TestArray: Codable {
 
 class FailableDecodableTests: XCTestCase {
 
-    var correctData: Data {
+    private var correctData: Data {
         let json = "{ \"array\": [{\"value\": \"test1\"}, {\"notValue\": \"test2\"}, {\"value\": \"test3\"}] }"
         return json.data(using: .utf8)!
     }
 
-    var incorrectData: Data {
+    private var incorrectData: Data {
         let json = "{ \"array\": [{\"notValue\": \"test1\"}, {\"notValue\": \"test2\"}, {\"notValue\": \"test3\"}] }"
         return json.data(using: .utf8)!
     }

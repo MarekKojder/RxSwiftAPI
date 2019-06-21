@@ -1,6 +1,6 @@
 //
 //  InfoStatusCodeType.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 16.01.2017.
 //

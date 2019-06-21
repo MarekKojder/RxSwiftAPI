@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA083ADD22BD70060041213C /* testImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EA083ADA22BD70060041213C /* testImage.jpg */; };
+		EA083ADE22BD70060041213C /* testImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EA083ADA22BD70060041213C /* testImage.jpg */; };
+		EA083ADF22BD7D540041213C /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA083ACF22BD68170041213C /* TestData.swift */; };
+		EA083AE022BD7D540041213C /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA083ACF22BD68170041213C /* TestData.swift */; };
+		EA083AE222BD7D640041213C /* OSXTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA083AD822BD6BA80041213C /* OSXTestData.swift */; };
+		EA083AE322BD7D680041213C /* IOSTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA083AD422BD6B960041213C /* IOSTestData.swift */; };
+		EA083AE422BD7DBD0041213C /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA083ACF22BD68170041213C /* TestData.swift */; };
+		EA083AE522BD7DBE0041213C /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA083ACF22BD68170041213C /* TestData.swift */; };
+		EA083AE622BD7DC30041213C /* IOSTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA083AD422BD6B960041213C /* IOSTestData.swift */; };
+		EA083AE722BD7DC80041213C /* OSXTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA083AD822BD6BA80041213C /* OSXTestData.swift */; };
 		EA2A8F8F201B9FD8003721F0 /* FailableDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2A8F8E201B9FD8003721F0 /* FailableDecodable.swift */; };
 		EA3B4DFB21634FC700BC730D /* RestResponseDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3B4DFA21634FC700BC730D /* RestResponseDetails.swift */; };
 		EA3B4DFC21634FC700BC730D /* RestResponseDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3B4DFA21634FC700BC730D /* RestResponseDetails.swift */; };
@@ -21,9 +31,8 @@
 		EA3B4E222163A16E00BC730D /* FailableDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA695B9120211B04004662B1 /* FailableDecodableTests.swift */; };
 		EA3B4E232163A16E00BC730D /* RequestServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FEB21E5ECAB400A82381 /* RequestServiceTests.swift */; };
 		EA3B4E242163A16E00BC730D /* RestServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FEB51E5ECAB400A82381 /* RestServiceTests.swift */; };
-		EA3B4E262163A16E00BC730D /* SwiftAPI2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAA0E1B51E5D9B8900A7AA3A /* SwiftAPI2.framework */; };
+		EA3B4E262163A16E00BC730D /* RxSwiftAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAA0E1B51E5D9B8900A7AA3A /* RxSwiftAPI.framework */; };
 		EA3B4E282163A16E00BC730D /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA93FEBC1E5ECAE200A82381 /* Resources.xcassets */; };
-		EA3B4E292163A16E00BC730D /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = EA93FEBD1E5ECAE200A82381 /* testImage.png */; };
 		EA3B4E332163A2D300BC730D /* ServerErrorStatusCodeTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE471E5EC4C700A82381 /* ServerErrorStatusCodeTypeTests.swift */; };
 		EA3B4E342163A2D300BC730D /* HttpDownloadRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE511E5EC4C700A82381 /* HttpDownloadRequestTests.swift */; };
 		EA3B4E352163A2D300BC730D /* SuccessStatusCodeTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE491E5EC4C700A82381 /* SuccessStatusCodeTypeTests.swift */; };
@@ -48,7 +57,7 @@
 		EA3B4E482163A2D300BC730D /* UnknownStatusCodeTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE4A1E5EC4C700A82381 /* UnknownStatusCodeTypeTests.swift */; };
 		EA3B4E492163A2D300BC730D /* RestServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE621E5EC4C700A82381 /* RestServiceTests.swift */; };
 		EA3B4E4A2163A2D300BC730D /* ApiServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE421E5EC4C700A82381 /* ApiServiceTests.swift */; };
-		EA3B4E4C2163A2D300BC730D /* SwiftAPI2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAA0E1B51E5D9B8900A7AA3A /* SwiftAPI2.framework */; };
+		EA3B4E4C2163A2D300BC730D /* RxSwiftAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAA0E1B51E5D9B8900A7AA3A /* RxSwiftAPI.framework */; };
 		EA54E3C620C535CF0096D989 /* RestServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA54E3C520C535CF0096D989 /* RestServiceError.swift */; };
 		EA54E3C720C535CF0096D989 /* RestServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA54E3C520C535CF0096D989 /* RestServiceError.swift */; };
 		EA54E3C820C535CF0096D989 /* RestServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA54E3C520C535CF0096D989 /* RestServiceError.swift */; };
@@ -188,7 +197,7 @@
 		EA8A7FDF1FB18ACB00088163 /* SwiftAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = EA8A7F341FB18ACB00088163 /* SwiftAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA8A7FE01FB18ACB00088163 /* SwiftAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = EA8A7F341FB18ACB00088163 /* SwiftAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA9125781E5ED3B1006A2801 /* DefaultFileManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9125761E5ED391006A2801 /* DefaultFileManagerTests.swift */; };
-		EA93FE341E5EC42A00A82381 /* SwiftAPI2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAA0E1B51E5D9B8900A7AA3A /* SwiftAPI2.framework */; };
+		EA93FE341E5EC42A00A82381 /* RxSwiftAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAA0E1B51E5D9B8900A7AA3A /* RxSwiftAPI.framework */; };
 		EA93FE851E5EC64800A82381 /* RestServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE621E5EC4C700A82381 /* RestServiceTests.swift */; };
 		EA93FE861E5EC64C00A82381 /* InfoStatusCodeTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE451E5EC4C700A82381 /* InfoStatusCodeTypeTests.swift */; };
 		EA93FE871E5EC65000A82381 /* SuccessStatusCodeTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE491E5EC4C700A82381 /* SuccessStatusCodeTypeTests.swift */; };
@@ -210,12 +219,11 @@
 		EA93FE981E5EC69300A82381 /* ResponseActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE581E5EC4C700A82381 /* ResponseActionTests.swift */; };
 		EA93FE991E5EC69700A82381 /* RequestServiceConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE5A1E5EC4C700A82381 /* RequestServiceConfigurationTests.swift */; };
 		EA93FE9A1E5EC69B00A82381 /* RequestServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE5B1E5EC4C700A82381 /* RequestServiceTests.swift */; };
-		EA93FEA81E5EC87500A82381 /* SwiftAPI2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAA0E1B51E5D9B8900A7AA3A /* SwiftAPI2.framework */; };
+		EA93FEA81E5EC87500A82381 /* RxSwiftAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAA0E1B51E5D9B8900A7AA3A /* RxSwiftAPI.framework */; };
 		EA93FEC01E5ECAEB00A82381 /* ApiServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FEAF1E5ECAB400A82381 /* ApiServiceTests.swift */; };
 		EA93FEC21E5ECAF400A82381 /* RequestServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FEB21E5ECAB400A82381 /* RequestServiceTests.swift */; };
 		EA93FEC31E5ECAF800A82381 /* RestServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FEB51E5ECAB400A82381 /* RestServiceTests.swift */; };
 		EA93FEC41E5ECAFC00A82381 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA93FEBC1E5ECAE200A82381 /* Resources.xcassets */; };
-		EA93FEC51E5ECB0000A82381 /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = EA93FEBD1E5ECAE200A82381 /* testImage.png */; };
 		EA9AD41820507F2200C2D401 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AD41720507F2200C2D401 /* SessionService.swift */; };
 		EA9AD41920507F2200C2D401 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AD41720507F2200C2D401 /* SessionService.swift */; };
 		EA9AD41A20507F2200C2D401 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AD41720507F2200C2D401 /* SessionService.swift */; };
@@ -282,6 +290,10 @@
 		91F758214662673A40D981E2 /* Pods-SwiftAPITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftAPITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftAPITests/Pods-SwiftAPITests.release.xcconfig"; sourceTree = "<group>"; };
 		9E7D820679C817FD6EF3F97F /* Pods-SwiftAPI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftAPI.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftAPI/Pods-SwiftAPI.release.xcconfig"; sourceTree = "<group>"; };
 		EA01F3FE1F0E511E001EC5B6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Unit/Info.plist; sourceTree = SOURCE_ROOT; };
+		EA083ACF22BD68170041213C /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
+		EA083AD422BD6B960041213C /* IOSTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSTestData.swift; sourceTree = "<group>"; };
+		EA083AD822BD6BA80041213C /* OSXTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSXTestData.swift; sourceTree = "<group>"; };
+		EA083ADA22BD70060041213C /* testImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testImage.jpg; sourceTree = "<group>"; };
 		EA2A8F8E201B9FD8003721F0 /* FailableDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailableDecodable.swift; sourceTree = "<group>"; };
 		EA3B4DFA21634FC700BC730D /* RestResponseDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestResponseDetails.swift; sourceTree = "<group>"; };
 		EA3B4DFF2163520500BC730D /* RestResponseHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestResponseHeader.swift; sourceTree = "<group>"; };
@@ -357,16 +369,15 @@
 		EA93FEB31E5ECAB400A82381 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA93FEB51E5ECAB400A82381 /* RestServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestServiceTests.swift; sourceTree = "<group>"; };
 		EA93FEBC1E5ECAE200A82381 /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Resources.xcassets; path = SupportingFiles/Resources.xcassets; sourceTree = "<group>"; };
-		EA93FEBD1E5ECAE200A82381 /* testImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = testImage.png; path = SupportingFiles/testImage.png; sourceTree = "<group>"; };
 		EA992AA31E56FA2F007E7222 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
 		EA992AA71E56FB4D007E7222 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		EA992AA81E56FB4D007E7222 /* script.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = script.sh; sourceTree = SOURCE_ROOT; };
 		EA9AD41720507F2200C2D401 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		EA9C72B11F31A720005DC978 /* ApiMethodTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiMethodTests.swift; sourceTree = "<group>"; };
-		EAA0E18E1E5D9A7400A7AA3A /* SwiftAPI2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftAPI2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EAA0E19B1E5D9B0700A7AA3A /* SwiftAPI2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftAPI2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EAA0E1A81E5D9B6B00A7AA3A /* SwiftAPI2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftAPI2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EAA0E1B51E5D9B8900A7AA3A /* SwiftAPI2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftAPI2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAA0E18E1E5D9A7400A7AA3A /* RxSwiftAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwiftAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAA0E19B1E5D9B0700A7AA3A /* RxSwiftAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwiftAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAA0E1A81E5D9B6B00A7AA3A /* RxSwiftAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwiftAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAA0E1B51E5D9B8900A7AA3A /* RxSwiftAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwiftAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAA0E2A91E5DC4AA00A7AA3A /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		EAA0E2AB1E5DC4AA00A7AA3A /* SwiftAPI.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftAPI.podspec; sourceTree = "<group>"; };
 		EAB1479620C70DF5009E1358 /* ApiServiceConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiServiceConfiguration.swift; sourceTree = "<group>"; };
@@ -382,7 +393,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA3B4E262163A16E00BC730D /* SwiftAPI2.framework in Frameworks */,
+				EA3B4E262163A16E00BC730D /* RxSwiftAPI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,7 +401,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA3B4E4C2163A2D300BC730D /* SwiftAPI2.framework in Frameworks */,
+				EA3B4E4C2163A2D300BC730D /* RxSwiftAPI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,7 +409,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA93FE341E5EC42A00A82381 /* SwiftAPI2.framework in Frameworks */,
+				EA93FE341E5EC42A00A82381 /* RxSwiftAPI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,7 +417,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA93FEA81E5EC87500A82381 /* SwiftAPI2.framework in Frameworks */,
+				EA93FEA81E5EC87500A82381 /* RxSwiftAPI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,10 +487,10 @@
 		EA0658121E03EBF000B46CEA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EAA0E18E1E5D9A7400A7AA3A /* SwiftAPI2.framework */,
-				EAA0E19B1E5D9B0700A7AA3A /* SwiftAPI2.framework */,
-				EAA0E1A81E5D9B6B00A7AA3A /* SwiftAPI2.framework */,
-				EAA0E1B51E5D9B8900A7AA3A /* SwiftAPI2.framework */,
+				EAA0E18E1E5D9A7400A7AA3A /* RxSwiftAPI.framework */,
+				EAA0E19B1E5D9B0700A7AA3A /* RxSwiftAPI.framework */,
+				EAA0E1A81E5D9B6B00A7AA3A /* RxSwiftAPI.framework */,
+				EAA0E1B51E5D9B8900A7AA3A /* RxSwiftAPI.framework */,
 				EA93FE2F1E5EC42A00A82381 /* UnitTests iOS.xctest */,
 				EA93FEA31E5EC87500A82381 /* FunctionalTests iOS.xctest */,
 				EA3B4E2D2163A16E00BC730D /* FunctionalTests OSX.xctest */,
@@ -873,8 +884,11 @@
 			isa = PBXGroup;
 			children = (
 				EA93FEBC1E5ECAE200A82381 /* Resources.xcassets */,
-				EA93FEBD1E5ECAE200A82381 /* testImage.png */,
+				EA083ADA22BD70060041213C /* testImage.jpg */,
 				EA93FEB31E5ECAB400A82381 /* Info.plist */,
+				EA083ACF22BD68170041213C /* TestData.swift */,
+				EA083AD422BD6B960041213C /* IOSTestData.swift */,
+				EA083AD822BD6BA80041213C /* OSXTestData.swift */,
 			);
 			name = SupportingFIles;
 			sourceTree = "<group>";
@@ -1010,9 +1024,9 @@
 			productReference = EA93FEA31E5EC87500A82381 /* FunctionalTests iOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		EAA0E18D1E5D9A7400A7AA3A /* SwiftAPI2 macOS */ = {
+		EAA0E18D1E5D9A7400A7AA3A /* RxSwiftAPI macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EAA0E1931E5D9A7400A7AA3A /* Build configuration list for PBXNativeTarget "SwiftAPI2 macOS" */;
+			buildConfigurationList = EAA0E1931E5D9A7400A7AA3A /* Build configuration list for PBXNativeTarget "RxSwiftAPI macOS" */;
 			buildPhases = (
 				EAA0E1891E5D9A7400A7AA3A /* Sources */,
 				EAA0E18A1E5D9A7400A7AA3A /* Frameworks */,
@@ -1023,14 +1037,14 @@
 			);
 			dependencies = (
 			);
-			name = "SwiftAPI2 macOS";
+			name = "RxSwiftAPI macOS";
 			productName = "SwiftAPI macOS";
-			productReference = EAA0E18E1E5D9A7400A7AA3A /* SwiftAPI2.framework */;
+			productReference = EAA0E18E1E5D9A7400A7AA3A /* RxSwiftAPI.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		EAA0E19A1E5D9B0700A7AA3A /* SwiftAPI2 tvOS */ = {
+		EAA0E19A1E5D9B0700A7AA3A /* RxSwiftAPI tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EAA0E1A01E5D9B0700A7AA3A /* Build configuration list for PBXNativeTarget "SwiftAPI2 tvOS" */;
+			buildConfigurationList = EAA0E1A01E5D9B0700A7AA3A /* Build configuration list for PBXNativeTarget "RxSwiftAPI tvOS" */;
 			buildPhases = (
 				EAA0E1961E5D9B0700A7AA3A /* Sources */,
 				EAA0E1971E5D9B0700A7AA3A /* Frameworks */,
@@ -1041,14 +1055,14 @@
 			);
 			dependencies = (
 			);
-			name = "SwiftAPI2 tvOS";
+			name = "RxSwiftAPI tvOS";
 			productName = "SwiftAPI tvOS";
-			productReference = EAA0E19B1E5D9B0700A7AA3A /* SwiftAPI2.framework */;
+			productReference = EAA0E19B1E5D9B0700A7AA3A /* RxSwiftAPI.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		EAA0E1A71E5D9B6B00A7AA3A /* SwiftAPI2 watchOS */ = {
+		EAA0E1A71E5D9B6B00A7AA3A /* RxSwiftAPI watchOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EAA0E1AD1E5D9B6B00A7AA3A /* Build configuration list for PBXNativeTarget "SwiftAPI2 watchOS" */;
+			buildConfigurationList = EAA0E1AD1E5D9B6B00A7AA3A /* Build configuration list for PBXNativeTarget "RxSwiftAPI watchOS" */;
 			buildPhases = (
 				EAA0E1A31E5D9B6B00A7AA3A /* Sources */,
 				EAA0E1A41E5D9B6B00A7AA3A /* Frameworks */,
@@ -1059,14 +1073,14 @@
 			);
 			dependencies = (
 			);
-			name = "SwiftAPI2 watchOS";
+			name = "RxSwiftAPI watchOS";
 			productName = "SwiftAPI watchOS";
-			productReference = EAA0E1A81E5D9B6B00A7AA3A /* SwiftAPI2.framework */;
+			productReference = EAA0E1A81E5D9B6B00A7AA3A /* RxSwiftAPI.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		EAA0E1B41E5D9B8900A7AA3A /* SwiftAPI2 iOS */ = {
+		EAA0E1B41E5D9B8900A7AA3A /* RxSwiftAPI iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EAA0E1BA1E5D9B8900A7AA3A /* Build configuration list for PBXNativeTarget "SwiftAPI2 iOS" */;
+			buildConfigurationList = EAA0E1BA1E5D9B8900A7AA3A /* Build configuration list for PBXNativeTarget "RxSwiftAPI iOS" */;
 			buildPhases = (
 				EAA0E1B01E5D9B8900A7AA3A /* Sources */,
 				EAA0E1B11E5D9B8900A7AA3A /* Frameworks */,
@@ -1077,9 +1091,9 @@
 			);
 			dependencies = (
 			);
-			name = "SwiftAPI2 iOS";
+			name = "RxSwiftAPI iOS";
 			productName = "SwiftAPI iOS";
-			productReference = EAA0E1B51E5D9B8900A7AA3A /* SwiftAPI2.framework */;
+			productReference = EAA0E1B51E5D9B8900A7AA3A /* RxSwiftAPI.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -1118,11 +1132,13 @@
 					EAA0E19A1E5D9B0700A7AA3A = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = B4QB84STNF;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					EAA0E1A71E5D9B6B00A7AA3A = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = B4QB84STNF;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					EAA0E1B41E5D9B8900A7AA3A = {
@@ -1133,7 +1149,7 @@
 					};
 				};
 			};
-			buildConfigurationList = EA06580B1E03EBF000B46CEA /* Build configuration list for PBXProject "SwiftAPI2" */;
+			buildConfigurationList = EA06580B1E03EBF000B46CEA /* Build configuration list for PBXProject "RxSwiftAPI" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1146,10 +1162,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				EAA0E1B41E5D9B8900A7AA3A /* SwiftAPI2 iOS */,
-				EAA0E19A1E5D9B0700A7AA3A /* SwiftAPI2 tvOS */,
-				EAA0E18D1E5D9A7400A7AA3A /* SwiftAPI2 macOS */,
-				EAA0E1A71E5D9B6B00A7AA3A /* SwiftAPI2 watchOS */,
+				EAA0E1B41E5D9B8900A7AA3A /* RxSwiftAPI iOS */,
+				EAA0E19A1E5D9B0700A7AA3A /* RxSwiftAPI tvOS */,
+				EAA0E18D1E5D9A7400A7AA3A /* RxSwiftAPI macOS */,
+				EAA0E1A71E5D9B6B00A7AA3A /* RxSwiftAPI watchOS */,
 				EA93FE2E1E5EC42A00A82381 /* UnitTests iOS */,
 				EA3B4E2F2163A2D300BC730D /* UnitTests OSX */,
 				EA93FEA21E5EC87500A82381 /* FunctionalTests iOS */,
@@ -1163,8 +1179,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA083ADE22BD70060041213C /* testImage.jpg in Resources */,
 				EA3B4E282163A16E00BC730D /* Resources.xcassets in Resources */,
-				EA3B4E292163A16E00BC730D /* testImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1186,8 +1202,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA083ADD22BD70060041213C /* testImage.jpg in Resources */,
 				EA93FEC41E5ECAFC00A82381 /* Resources.xcassets in Resources */,
-				EA93FEC51E5ECB0000A82381 /* testImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1226,9 +1242,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA083AE222BD7D640041213C /* OSXTestData.swift in Sources */,
 				EA3B4E202163A16E00BC730D /* DefaultFileManagerTests.swift in Sources */,
 				EA3B4E212163A16E00BC730D /* ApiServiceTests.swift in Sources */,
 				EA3B4E222163A16E00BC730D /* FailableDecodableTests.swift in Sources */,
+				EA083AE022BD7D540041213C /* TestData.swift in Sources */,
 				EA3B4E232163A16E00BC730D /* RequestServiceTests.swift in Sources */,
 				EA3B4E242163A16E00BC730D /* RestServiceTests.swift in Sources */,
 			);
@@ -1254,8 +1272,10 @@
 				EA3B4E402163A2D300BC730D /* HttpCallTests.swift in Sources */,
 				EA3B4E412163A2D300BC730D /* HttpUploadRequestTests.swift in Sources */,
 				EA3B4E422163A2D300BC730D /* RequestServiceConfigurationTests.swift in Sources */,
+				EA083AE722BD7DC80041213C /* OSXTestData.swift in Sources */,
 				EA3B4E432163A2D300BC730D /* HttpDataRequestTests.swift in Sources */,
 				EA3B4E442163A2D300BC730D /* ApiMethodTests.swift in Sources */,
+				EA083AE422BD7DBD0041213C /* TestData.swift in Sources */,
 				EA3B4E452163A2D300BC730D /* HttpRequestTests.swift in Sources */,
 				EA3B4E462163A2D300BC730D /* ApiResponseTests.swift in Sources */,
 				EA3B4E472163A2D300BC730D /* HttpHeaderTests.swift in Sources */,
@@ -1287,6 +1307,8 @@
 				EA93FE991E5EC69700A82381 /* RequestServiceConfigurationTests.swift in Sources */,
 				EA93FE931E5EC68200A82381 /* HttpDataRequestTests.swift in Sources */,
 				EA9C72B21F31A720005DC978 /* ApiMethodTests.swift in Sources */,
+				EA083AE522BD7DBE0041213C /* TestData.swift in Sources */,
+				EA083AE622BD7DC30041213C /* IOSTestData.swift in Sources */,
 				EA93FE921E5EC67F00A82381 /* HttpRequestTests.swift in Sources */,
 				EA93FE8F1E5EC67200A82381 /* ApiResponseTests.swift in Sources */,
 				EA93FE911E5EC67B00A82381 /* HttpHeaderTests.swift in Sources */,
@@ -1301,8 +1323,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA9125781E5ED3B1006A2801 /* DefaultFileManagerTests.swift in Sources */,
+				EA083AE322BD7D680041213C /* IOSTestData.swift in Sources */,
 				EA93FEC01E5ECAEB00A82381 /* ApiServiceTests.swift in Sources */,
 				EA9F374B20218FED008DEFF3 /* FailableDecodableTests.swift in Sources */,
+				EA083ADF22BD7D540041213C /* TestData.swift in Sources */,
 				EA93FEC21E5ECAF400A82381 /* RequestServiceTests.swift in Sources */,
 				EA93FEC31E5ECAF800A82381 /* RestServiceTests.swift in Sources */,
 			);
@@ -1506,22 +1530,22 @@
 /* Begin PBXTargetDependency section */
 		EA3B4E1D2163A16E00BC730D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = EAA0E1B41E5D9B8900A7AA3A /* SwiftAPI2 iOS */;
+			target = EAA0E1B41E5D9B8900A7AA3A /* RxSwiftAPI iOS */;
 			targetProxy = EA3B4E1E2163A16E00BC730D /* PBXContainerItemProxy */;
 		};
 		EA3B4E302163A2D300BC730D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = EAA0E1B41E5D9B8900A7AA3A /* SwiftAPI2 iOS */;
+			target = EAA0E1B41E5D9B8900A7AA3A /* RxSwiftAPI iOS */;
 			targetProxy = EA3B4E312163A2D300BC730D /* PBXContainerItemProxy */;
 		};
 		EA93FE361E5EC42A00A82381 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = EAA0E1B41E5D9B8900A7AA3A /* SwiftAPI2 iOS */;
+			target = EAA0E1B41E5D9B8900A7AA3A /* RxSwiftAPI iOS */;
 			targetProxy = EA93FE351E5EC42A00A82381 /* PBXContainerItemProxy */;
 		};
 		EA93FEAA1E5EC87500A82381 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = EAA0E1B41E5D9B8900A7AA3A /* SwiftAPI2 iOS */;
+			target = EAA0E1B41E5D9B8900A7AA3A /* RxSwiftAPI iOS */;
 			targetProxy = EA93FEA91E5EC87500A82381 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1653,7 +1677,7 @@
 				INFOPLIST_FILE = Tests/Functional/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "marq.FunctionalTests-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "marq.FunctionalTests-OSX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = macosx;
@@ -1668,7 +1692,7 @@
 				INFOPLIST_FILE = Tests/Functional/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "marq.FunctionalTests-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "marq.FunctionalTests-OSX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = macosx;
@@ -1683,7 +1707,7 @@
 				INFOPLIST_FILE = Tests/Unit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "marq.UnitTests-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "marq.UnitTests-OSX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 4.0;
@@ -1697,7 +1721,7 @@
 				INFOPLIST_FILE = Tests/Unit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "marq.UnitTests-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "marq.UnitTests-OSX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 4.0;
@@ -1772,8 +1796,8 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_BUNDLE_IDENTIFIER = "marq.SwiftAPI2-macOS";
-				PRODUCT_NAME = SwiftAPI2;
+				PRODUCT_BUNDLE_IDENTIFIER = "marq.RxSwiftAPI-macOS";
+				PRODUCT_NAME = RxSwiftAPI;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
@@ -1796,8 +1820,8 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_BUNDLE_IDENTIFIER = "marq.SwiftAPI2-macOS";
-				PRODUCT_NAME = SwiftAPI2;
+				PRODUCT_BUNDLE_IDENTIFIER = "marq.RxSwiftAPI-macOS";
+				PRODUCT_NAME = RxSwiftAPI;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
@@ -1817,11 +1841,11 @@
 				INFOPLIST_FILE = "Sources/SupportingFiles/Info-tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "marq.SwiftAPI2-tvOS";
-				PRODUCT_NAME = SwiftAPI2;
+				PRODUCT_BUNDLE_IDENTIFIER = "marq.RxSwiftAPI-tvOS";
+				PRODUCT_NAME = RxSwiftAPI;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -1840,11 +1864,11 @@
 				INFOPLIST_FILE = "Sources/SupportingFiles/Info-tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "marq.SwiftAPI2-tvOS";
-				PRODUCT_NAME = SwiftAPI2;
+				PRODUCT_BUNDLE_IDENTIFIER = "marq.RxSwiftAPI-tvOS";
+				PRODUCT_NAME = RxSwiftAPI;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -1863,11 +1887,11 @@
 				INFOPLIST_FILE = "Sources/SupportingFiles/Info-watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "marq.SwiftAPI2-watchOS";
-				PRODUCT_NAME = SwiftAPI2;
+				PRODUCT_BUNDLE_IDENTIFIER = "marq.RxSwiftAPI-watchOS";
+				PRODUCT_NAME = RxSwiftAPI;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -1886,11 +1910,11 @@
 				INFOPLIST_FILE = "Sources/SupportingFiles/Info-watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "marq.SwiftAPI2-watchOS";
-				PRODUCT_NAME = SwiftAPI2;
+				PRODUCT_BUNDLE_IDENTIFIER = "marq.RxSwiftAPI-watchOS";
+				PRODUCT_NAME = RxSwiftAPI;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -1910,8 +1934,8 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "marq.SwiftAPI2-iOS";
-				PRODUCT_NAME = SwiftAPI2;
+				PRODUCT_BUNDLE_IDENTIFIER = "marq.RxSwiftAPI-iOS";
+				PRODUCT_NAME = RxSwiftAPI;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -1931,8 +1955,8 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "marq.SwiftAPI2-iOS";
-				PRODUCT_NAME = SwiftAPI2;
+				PRODUCT_BUNDLE_IDENTIFIER = "marq.RxSwiftAPI-iOS";
+				PRODUCT_NAME = RxSwiftAPI;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -1941,7 +1965,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		EA06580B1E03EBF000B46CEA /* Build configuration list for PBXProject "SwiftAPI2" */ = {
+		EA06580B1E03EBF000B46CEA /* Build configuration list for PBXProject "RxSwiftAPI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EA0658231E03EBF000B46CEA /* Debug */,
@@ -1986,7 +2010,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EAA0E1931E5D9A7400A7AA3A /* Build configuration list for PBXNativeTarget "SwiftAPI2 macOS" */ = {
+		EAA0E1931E5D9A7400A7AA3A /* Build configuration list for PBXNativeTarget "RxSwiftAPI macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EAA0E1941E5D9A7400A7AA3A /* Debug */,
@@ -1995,7 +2019,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EAA0E1A01E5D9B0700A7AA3A /* Build configuration list for PBXNativeTarget "SwiftAPI2 tvOS" */ = {
+		EAA0E1A01E5D9B0700A7AA3A /* Build configuration list for PBXNativeTarget "RxSwiftAPI tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EAA0E1A11E5D9B0700A7AA3A /* Debug */,
@@ -2004,7 +2028,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EAA0E1AD1E5D9B6B00A7AA3A /* Build configuration list for PBXNativeTarget "SwiftAPI2 watchOS" */ = {
+		EAA0E1AD1E5D9B6B00A7AA3A /* Build configuration list for PBXNativeTarget "RxSwiftAPI watchOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EAA0E1AE1E5D9B6B00A7AA3A /* Debug */,
@@ -2013,7 +2037,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EAA0E1BA1E5D9B8900A7AA3A /* Build configuration list for PBXNativeTarget "SwiftAPI2 iOS" */ = {
+		EAA0E1BA1E5D9B8900A7AA3A /* Build configuration list for PBXNativeTarget "RxSwiftAPI iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EAA0E1BB1E5D9B8900A7AA3A /* Debug */,

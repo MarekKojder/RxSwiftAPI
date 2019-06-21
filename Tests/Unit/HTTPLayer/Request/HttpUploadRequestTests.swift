@@ -1,43 +1,31 @@
 //
 //  HttpRequestTests.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 04.01.2017.
 //
 
 import XCTest
-@testable import SwiftAPI2
+@testable import RxSwiftAPI
 
 class HttpUploadRequestTests: XCTestCase {
 
-    var rootURL: URL {
+    private var rootURL: URL {
         return URL(string: "https://jsonplaceholder.typicode.com")!
     }
 
-    fileprivate var documentsUrl: URL {
-        return URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0], isDirectory: true)
-    }
-
-    var exampleResource: URL {
-        return documentsUrl.appendingPathComponent("file.jpg")
-    }
-
-    var anotherExampleResource: URL {
-        return documentsUrl.appendingPathComponent("file2.jpg")
-    }
-
-    var exampleSuccessAction: ResponseAction {
+    private var exampleSuccessAction: ResponseAction {
         return ResponseAction.success {_ in}
     }
 
-    var exampleFailureAction: ResponseAction {
+    private var exampleFailureAction: ResponseAction {
         return ResponseAction.failure {_ in}
     }
 
     func testFullConstructor() {
         let url = rootURL.appendingPathComponent("posts/1")
         let method = HttpMethod.get
-        let resource = exampleResource
+        let resource = TestData.Url.fileDestination
         let success = exampleSuccessAction
         let failure = exampleFailureAction
         let request = HttpUploadRequest(url: url, method: method, resourceUrl: resource, onSuccess: success, onFailure: failure, useProgress: true)
@@ -53,8 +41,8 @@ class HttpUploadRequestTests: XCTestCase {
     func testHashValue() {
         let url = rootURL.appendingPathComponent("posts/1")
         let method = HttpMethod.post
-        let resource1 = exampleResource
-        let resource2 = anotherExampleResource
+        let resource1 = TestData.Url.fileDestination
+        let resource2 = TestData.Url.anotherFileDestination
         let success = exampleSuccessAction
         let failure = exampleFailureAction
         let request1 = HttpUploadRequest(url: url, method: method, resourceUrl: resource1, onSuccess: success, onFailure: failure, useProgress: true)

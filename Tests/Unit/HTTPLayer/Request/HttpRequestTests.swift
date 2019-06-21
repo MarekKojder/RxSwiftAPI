@@ -1,24 +1,24 @@
 //
 //  HttpRequestTests.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 04.01.2017.
 //
 
 import XCTest
-@testable import SwiftAPI2
+@testable import RxSwiftAPI
 
 class HttpRequestTests: XCTestCase {
 
-    var rootURL: URL {
+    private var rootURL: URL {
         return URL(string: "https://jsonplaceholder.typicode.com")!
     }
 
-    var exampleSuccessAction: ResponseAction {
+    private var exampleSuccessAction: ResponseAction {
         return ResponseAction.success {_ in}
     }
 
-    var exampleFailureAction: ResponseAction {
+    private var exampleFailureAction: ResponseAction {
         return ResponseAction.failure {_ in}
     }
     

@@ -1,6 +1,6 @@
 //
 //  CoderProvider.swift
-//  SwiftAPI
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 26.01.2018.
 //

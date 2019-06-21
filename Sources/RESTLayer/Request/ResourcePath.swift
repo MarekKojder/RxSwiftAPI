@@ -1,6 +1,6 @@
 //
 //  ResourcePath.swift
-//  SwiftAPI iOS
+//  RxSwiftAPI
 //
 //  Created by Marek Kojder on 30.01.2018.
 //
