@@ -26,7 +26,7 @@ public extension KeyedDecodingContainer {
 
      This method is strongly advised for decoding arrays in which may appear incorrect values. In that case that method will not fail all array but only this particular values.
      */
-    public func decodeArray<T: Decodable>(of type: T.Type, forKey key: KeyedDecodingContainer.Key) throws -> (array: [T], failedCount: Int) {
+    func decodeArray<T: Decodable>(of type: T.Type, forKey key: KeyedDecodingContainer.Key) throws -> (array: [T], failedCount: Int) {
         let decoded = try decode(ApiArray<T>.self, forKey: key)
         if decoded.array.isEmpty, decoded.failedItemsCount > 0 {
             throw DecodingError.typeMismatch(type, DecodingError.Context(codingPath: [key], debugDescription: "Parsing failed for all elements of array."))

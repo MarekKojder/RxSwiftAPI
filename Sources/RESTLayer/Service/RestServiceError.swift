@@ -15,7 +15,7 @@ public extension RestService {
 
      - url: informs about issues with creating *URL*.
      */
-    public enum Error: Swift.Error {
+    enum Error: Swift.Error {
         case url
     }
 }

@@ -106,8 +106,8 @@ extension RequestService.Configuration {
 
 extension RequestService.Configuration: Hashable {
 
-    public var hashValue: Int {
-        return urlSessionConfiguration.hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(urlSessionConfiguration)
     }
 
     public static func ==(lhs: RequestService.Configuration, rhs: RequestService.Configuration) -> Bool {

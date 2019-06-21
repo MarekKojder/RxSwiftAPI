@@ -153,11 +153,11 @@ struct RestManager {
     func getFile(large: Bool, inBackground: Bool, completion: @escaping RestManagerFileCompletionHandler) -> Progress? {
         let path = fileToDownload(large: large)
         let location = downloadedFileURL(large: large)
-        let completion = completionHandler(for: location, with: completion)
         do {
+            let completion = completionHandler(for: location, with: completion)
             return try restService.getFile(at: path, saveAt: location, inBackground: inBackground, completion: completion).progress
         } catch {
-            completion(false, error)
+            completion(nil, error.localizedDescription)
             return nil
         }
     }
@@ -166,11 +166,11 @@ struct RestManager {
     ///Sends file using POST request.
     func postFile(large: Bool, inBackground: Bool, completion: @escaping RestManagerFileCompletionHandler) -> Progress? {
         let location = fileToUpload(large: large)
-        let completion = completionHandler(for: location, with: completion)
         do {
+            let completion = completionHandler(for: location, with: completion)
             return try restService.postFile(from: location, at: Path.post, inBackground: inBackground, completion: completion).progress
         } catch {
-            completion(false, error)
+            completion(nil, error.localizedDescription)
             return nil
         }
     }
@@ -178,11 +178,11 @@ struct RestManager {
     ///Sends file using PUT request.
     func putFile(large: Bool, inBackground: Bool, completion: @escaping RestManagerFileCompletionHandler) -> Progress? {
         let location = fileToUpload(large: large)
-        let completion = completionHandler(for: location, with: completion)
         do {
+            let completion = completionHandler(for: location, with: completion)
             return try restService.putFile(from: location, at: Path.put, inBackground: inBackground, completion: completion).progress
         } catch {
-            completion(false, error)
+            completion(nil, error.localizedDescription)
             return nil
         }
     }
@@ -190,11 +190,11 @@ struct RestManager {
     ///Sends file using PATCH request.
     func patchFile(large: Bool, inBackground: Bool, completion: @escaping RestManagerFileCompletionHandler) -> Progress? {
         let location = fileToUpload(large: large)
-        let completion = completionHandler(for: location, with: completion)
         do {
+            let completion = completionHandler(for: location, with: completion)
             return try restService.patchFile(from: location, at: Path.patch, inBackground: inBackground, completion: completion).progress
         } catch {
-            completion(false, error)
+            completion(nil, error.localizedDescription)
             return nil
         }
     }
@@ -245,13 +245,13 @@ fileprivate extension RestManager {
 
     ///Completion handler for data requests.
     func completionHandler(for completion: @escaping RestManagerCompletionHandler) -> RestResponseCompletionHandler<ResponseData> {
-        return { (data: ResponseData?, error: Error?) in
-            guard let data = data, error == nil else {
+        return { (data: ResponseData?, details: RestResponseDetails) in
+            guard let data = data else {
                 let readableError: String
-                if let error = error {
+                if let error = details.error {
                     readableError = "Error occured during request:\n \(error.localizedDescription)"
                 } else {
-                    readableError = "Unknown error occured during request."
+                    readableError = details.statusCode.description
                 }
                 completion(nil, readableError)
                 return
@@ -262,13 +262,13 @@ fileprivate extension RestManager {
 
     ///Completion handler for file requests.
     func completionHandler(for fileUrl: URL, with completion: @escaping RestManagerFileCompletionHandler) -> RestSimpleResponseCompletionHandler {
-        return { (success: Bool, error: Error?) in
-            guard success == true, error == nil else {
+        return { (success: Bool, details: RestResponseDetails) in
+            guard success == true else {
                 let readableError: String
-                if let error = error {
+                if let error = details.error {
                     readableError = "Error occured during request:\n \(error.localizedDescription)"
                 } else {
-                    readableError = "Unknown error occured during request."
+                    readableError = details.statusCode.description
                 }
                 completion(nil, readableError)
                 return

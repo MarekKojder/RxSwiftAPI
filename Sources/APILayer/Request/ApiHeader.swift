@@ -113,8 +113,9 @@ extension ApiHeader {
 
 extension ApiHeader: Hashable {
 
-    public var hashValue: Int {
-        return "\(name):\(value)".hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+        hasher.combine(value)
     }
 
     public static func ==(lhs: ApiHeader, rhs: ApiHeader) -> Bool {
