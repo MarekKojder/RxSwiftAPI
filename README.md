@@ -65,9 +65,7 @@ To get familiar with more advanced usage please take a look at usage example ava
 
 ## Authors
 
-- Marek Kojder, marek.kojder@xsolve.pl
-- Sławomir Zagórski, slawomir.zagorski@xsolve.pl
-- Radosław Budzik, radoslaw.budzik@xsolve.pl
+- Marek Kojder, marq.kojder@gmail.com
 
 
 ## License

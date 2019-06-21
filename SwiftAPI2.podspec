@@ -12,11 +12,11 @@ Pod::Spec.new do |s|
   #  summary should be tweet-length, and the description more in depth.
   #
 
-  s.name         = "SwiftAPI-beta"
-  s.version      = "1.1.0"
+  s.name         = "SwiftAPI2"
+  s.version      = "2.0.0"
   s.summary      = "Simple networking library based on URLSession with REST API support."
-  s.description  = "SwiftAPI is simple networking library created by XSolve which allows easy connection with server out of the box. It's written in Swift 4, using URLSession for managing requests."
-  s.homepage     = "https://github.com/xsolve-pl/swift-api"
+  s.description  = "SwiftAPI is simple networking library which allows easy connection with server out of the box. It's written in Swift 5, using URLSession for managing requests."
+  s.homepage     = "https://github.com/MarekKojder/swift-api"
 
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -39,9 +39,7 @@ Pod::Spec.new do |s|
   #  profile URL.
   #
 
-  s.authors = { "Marek Kojder" => "marek.kojder@xsolve.pl",
-                "Sławomir Zagórski" => "slawomir.zagorski@xsolve.pl",
-                "Radosław Budzik" => "radoslaw.budzik@xsolve.pl"}
+  s.authors = { "Marek Kojder" => "marq.kojder@gmail.com"}
  
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -62,7 +60,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source = { :git => "https://github.com/xsolve-pl/swift-api.git", :branch => "develop", :tag => s.version.to_s + "-beta" }
+  s.source = { :git => "https://github.com/MarekKojder/swift-api.git", :branch => "master", :tag => s.version.to_s }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #

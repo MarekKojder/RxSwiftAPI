@@ -3,7 +3,6 @@
 //  SwiftAPI
 //
 //  Created by Marek Kojder on 08.02.2017.
-//  Copyright © 2017 XSolve. All rights reserved.
 //
 
 import Foundation

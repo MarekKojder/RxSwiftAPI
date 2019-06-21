@@ -19,7 +19,7 @@
                BlueprintIdentifier = "EA3B4E2F2163A2D300BC730D"
                BuildableName = "UnitTests OSX.xctest"
                BlueprintName = "UnitTests OSX"
-               ReferencedContainer = "container:SwiftAPI.xcodeproj">
+               ReferencedContainer = "container:SwiftAPI2.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

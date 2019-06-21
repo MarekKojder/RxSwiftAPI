@@ -3,11 +3,10 @@
 //  Example
 //
 //  Created by Marek Kojder on 31.01.2017.
-//  Copyright © 2017 XSolve. All rights reserved.
 //
 
 import UIKit
-import SwiftAPI
+import SwiftAPI2
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

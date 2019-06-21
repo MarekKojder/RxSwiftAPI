@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA083AC822BCD8460041213C /* SwiftAPI2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA083AC722BCD8460041213C /* SwiftAPI2.framework */; };
+		EA083AC922BCD8460041213C /* SwiftAPI2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EA083AC722BCD8460041213C /* SwiftAPI2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EA56C21E1E40977800068B9E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA56C21D1E40977800068B9E /* AppDelegate.swift */; };
 		EA56C2231E40977800068B9E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA56C2211E40977800068B9E /* Main.storyboard */; };
 		EA56C2251E40977800068B9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA56C2241E40977800068B9E /* Assets.xcassets */; };
@@ -16,8 +18,6 @@
 		EA56C23B1E40991D00068B9E /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA56C2361E40991D00068B9E /* DownloadViewController.swift */; };
 		EA56C23C1E40991D00068B9E /* RequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA56C2371E40991D00068B9E /* RequestViewController.swift */; };
 		EA56C23D1E40991D00068B9E /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA56C2381E40991D00068B9E /* UploadViewController.swift */; };
-		EA745C601E432AFA00A65CB6 /* SwiftAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA745C5F1E432AFA00A65CB6 /* SwiftAPI.framework */; };
-		EA745C611E432AFA00A65CB6 /* SwiftAPI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EA745C5F1E432AFA00A65CB6 /* SwiftAPI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EA8966571FB190CE00F4F425 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8966551FB190CD00F4F425 /* ApiManager.swift */; };
 		EA8966581FB190CE00F4F425 /* RestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8966561FB190CE00F4F425 /* RestManager.swift */; };
 /* End PBXBuildFile section */
@@ -29,7 +29,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				EA745C611E432AFA00A65CB6 /* SwiftAPI.framework in Embed Frameworks */,
+				EA083AC922BCD8460041213C /* SwiftAPI2.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -37,6 +37,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		EA083AC722BCD8460041213C /* SwiftAPI2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftAPI2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA56C21A1E40977800068B9E /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA56C21D1E40977800068B9E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA56C2221E40977800068B9E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -48,7 +49,6 @@
 		EA56C2361E40991D00068B9E /* DownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		EA56C2371E40991D00068B9E /* RequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestViewController.swift; sourceTree = "<group>"; };
 		EA56C2381E40991D00068B9E /* UploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
-		EA745C5F1E432AFA00A65CB6 /* SwiftAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA8966551FB190CD00F4F425 /* ApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		EA8966561FB190CE00F4F425 /* RestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,7 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA745C601E432AFA00A65CB6 /* SwiftAPI.framework in Frameworks */,
+				EA083AC822BCD8460041213C /* SwiftAPI2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,7 +143,7 @@
 		EA745C631E432B8000A65CB6 /* EmbededFrameworks */ = {
 			isa = PBXGroup;
 			children = (
-				EA745C5F1E432AFA00A65CB6 /* SwiftAPI.framework */,
+				EA083AC722BCD8460041213C /* SwiftAPI2.framework */,
 			);
 			name = EmbededFrameworks;
 			sourceTree = "<group>";
@@ -190,7 +190,7 @@
 				TargetAttributes = {
 					EA56C2191E40977800068B9E = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = MHNNR8L946;
+						DevelopmentTeam = B4QB84STNF;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
@@ -382,10 +382,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = MHNNR8L946;
+				DEVELOPMENT_TEAM = B4QB84STNF;
 				INFOPLIST_FILE = Example/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = pl.xsolve.Example;
+				PRODUCT_BUNDLE_IDENTIFIER = marq.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -395,10 +395,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = MHNNR8L946;
+				DEVELOPMENT_TEAM = B4QB84STNF;
 				INFOPLIST_FILE = Example/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = pl.xsolve.Example;
+				PRODUCT_BUNDLE_IDENTIFIER = marq.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};

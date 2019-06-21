@@ -3,8 +3,9 @@
 //  SwiftAPI
 //
 //  Created by Marek Kojder on 30.01.2018.
-//  Copyright © 2018 XSolve. All rights reserved.
 //
+
+import Foundation
 
 ///Default implementation of protocol
 public struct DefaultCoderProvider: CoderProvider {

@@ -3,7 +3,6 @@
 //  SwiftAPI iOS
 //
 //  Created by Marek Kojder on 30.01.2018.
-//  Copyright © 2018 XSolve. All rights reserved.
 //
 
 /// A type that can be used as a path of the resource.

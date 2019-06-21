@@ -55,17 +55,11 @@ current_branch=$(git rev-parse --abbrev-ref HEAD)
 last_commit=$(git log --pretty=format:"%H" -1)
 last_tag=""
 spec_file=""
-is_beta=true
 
 #Checking if used branch is correct
 if [ "$current_branch" = "master" ]; then
     last_tag=$(git tag --sort=version:refname | sed -e '/beta/d' | tail -1)
     spec_file=$(ls | grep '\.podspec$' | sed -e '/beta/d' | sed -n 1p)
-    is_beta=false
-elif [ "$current_branch" = "develop" ]; then
-    last_tag=$(git tag --sort=version:refname | sed -e '/beta/!d' | tail -1)
-    spec_file=$(ls | grep '\.podspec$' | sed -e '/beta/!d' | sed -n 1p)
-    is_beta=true
 else
     echo "${red}${current_branch} does not match to any of release branches! Checkout to master or develop.${endColor}"
     exit 1
@@ -86,28 +80,8 @@ if [ "$spec_version" != "$tag_version" ]; then
     fi
 fi
 
-echo "${yellow}Deleting tag ${last_tag}...${endColor}"
-#Remove last tag locally
-if [ -n "$verbosed" ]; then
-    git tag -d $last_tag
-else
-    git tag -d $last_tag &> /dev/null
-fi
-#Remove last tag remotely
-if [ -n "$verbosed" ]; then
-    git push origin :refs/tags/$last_tag
-else
-    git push origin :refs/tags/$last_tag &> /dev/null
-fi
-
-echo "${yellow}Adding tag $last_tag to last commit...${endColor}"
-#Add last tag to last commit
-if [ -n "$verbosed" ]; then
-    git tag -a $last_tag $last_commit -m "Moved tag to newest commit"
-else
-    git tag -a $last_tag $last_commit -m "Moved tag to newest commit" &> /dev/null
-fi
-#Push this tag
+echo "${yellow}Pushing local changes to remote...${endColor}"
+#Push local changes
 if [ -n "$verbosed" ]; then
     git push origin $current_branch --follow-tags
 else
@@ -124,13 +98,8 @@ fi
 words=($(echo "$validation" | tail -1))
 if [ "${words[1]}" = "passed" ]; then
     pushing=""
-    if [ "$is_beta" = true ] ; then
-        echo "${yellow}Pushing beta pod as private repo...${endColor}"
-        pushing=$(pod repo push $spec_branch_name $spec_file $use_libraries)
-    else
-        echo "${yellow}Pushing pod as public repo...${endColor}"
-        pushing=$(pod trunk push $spec_file $use_libraries)
-    fi
+    echo "${yellow}Pushing pod as public repo...${endColor}"
+    pushing=$(pod trunk push $spec_file $use_libraries)
 
     if [ -n "$verbosed" ]; then
         echo "$pushing"

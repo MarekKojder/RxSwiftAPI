@@ -3,11 +3,10 @@
 //  UnitTests iOS
 //
 //  Created by Marek Kojder on 30.01.2018.
-//  Copyright © 2018 XSolve. All rights reserved.
 //
 
 import XCTest
-@testable import SwiftAPI
+@testable import SwiftAPI2
 
 private struct TestArray: Codable {
 

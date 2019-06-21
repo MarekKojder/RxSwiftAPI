@@ -3,11 +3,10 @@
 //  SwiftAPI
 //
 //  Created by Marek Kojder on 04.01.2017.
-//  Copyright © 2017 XSolve. All rights reserved.
 //
 
 import XCTest
-@testable import SwiftAPI
+@testable import SwiftAPI2
 
 class RequestServiceTests: XCTestCase {
 
