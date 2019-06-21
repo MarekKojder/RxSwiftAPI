@@ -10,14 +10,14 @@ import Foundation
 
 public extension ApiService {
 
-    public typealias CachePolicy = NSURLRequest.CachePolicy
+    typealias CachePolicy = NSURLRequest.CachePolicy
 
-    public typealias CookieAcceptPolicy = HTTPCookie.AcceptPolicy
+    typealias CookieAcceptPolicy = HTTPCookie.AcceptPolicy
 
-    public typealias CookieStorage = HTTPCookieStorage
+    typealias CookieStorage = HTTPCookieStorage
 
     ///Struct containing most common behaviors and policies for requests.
-    public struct Configuration {
+    struct Configuration {
 
         let requestServiceConfiguration: RequestService.Configuration
 

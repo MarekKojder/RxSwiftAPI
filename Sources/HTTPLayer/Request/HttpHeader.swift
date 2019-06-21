@@ -28,8 +28,9 @@ struct HttpHeader {
 }
 
 extension HttpHeader: Hashable {
-    var hashValue: Int {
-        return "\(name):\(value)".hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+        hasher.combine(value)
     }
 
     public static func ==(lhs: HttpHeader, rhs: HttpHeader) -> Bool {

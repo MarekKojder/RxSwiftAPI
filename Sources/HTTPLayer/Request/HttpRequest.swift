@@ -70,8 +70,8 @@ class HttpRequest {
 
 extension  HttpRequest: Hashable {
 
-    final var hashValue: Int {
-        return uuid.hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(uuid)
     }
 
     /**
