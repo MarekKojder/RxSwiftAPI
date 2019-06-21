@@ -2,6 +2,10 @@
 
 ## Upcoming
 
+## [v1.7.0](https://github.com/xsolve-pl/swift-api/tree/1.7.0) (2019-06-21)
+- Migrated library and example to Swift 5
+- Resolved all warnings 
+
 ## [v1.6.2](https://github.com/xsolve-pl/swift-api/tree/1.6.2) (2018-12-06)
 - Increased priority of response actions queues.
 
