@@ -34,7 +34,7 @@ enum TestData {
         }
 
         static var localFile: URL {
-            return Bundle(for: type(of: TestClass())).url(forResource: "testImage", withExtension: "jpg")!
+            return Bundle(for: TestClass.self).url(forResource: "testImage", withExtension: "jpg")!
         }
 
         static var smallFile: URL {

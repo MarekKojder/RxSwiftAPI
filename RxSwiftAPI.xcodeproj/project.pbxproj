@@ -294,6 +294,7 @@
 		EA083AD422BD6B960041213C /* IOSTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSTestData.swift; sourceTree = "<group>"; };
 		EA083AD822BD6BA80041213C /* OSXTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSXTestData.swift; sourceTree = "<group>"; };
 		EA083ADA22BD70060041213C /* testImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testImage.jpg; sourceTree = "<group>"; };
+		EA083AE822BD81F70041213C /* RxSwiftAPI.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = RxSwiftAPI.podspec; sourceTree = "<group>"; };
 		EA2A8F8E201B9FD8003721F0 /* FailableDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailableDecodable.swift; sourceTree = "<group>"; };
 		EA3B4DFA21634FC700BC730D /* RestResponseDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestResponseDetails.swift; sourceTree = "<group>"; };
 		EA3B4DFF2163520500BC730D /* RestResponseHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestResponseHeader.swift; sourceTree = "<group>"; };
@@ -379,7 +380,6 @@
 		EAA0E1A81E5D9B6B00A7AA3A /* RxSwiftAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwiftAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAA0E1B51E5D9B8900A7AA3A /* RxSwiftAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwiftAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAA0E2A91E5DC4AA00A7AA3A /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		EAA0E2AB1E5DC4AA00A7AA3A /* SwiftAPI.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftAPI.podspec; sourceTree = "<group>"; };
 		EAB1479620C70DF5009E1358 /* ApiServiceConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiServiceConfiguration.swift; sourceTree = "<group>"; };
 		EAB1479B20C7146C009E1358 /* ApiServiceConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiServiceConfigurationTests.swift; sourceTree = "<group>"; };
 		EABDA7B420513E950019DE47 /* HttpCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpCall.swift; sourceTree = "<group>"; };
@@ -899,7 +899,7 @@
 				EA992AA71E56FB4D007E7222 /* README.md */,
 				EA992AA31E56FA2F007E7222 /* CHANGELOG.md */,
 				EAA0E2A91E5DC4AA00A7AA3A /* LICENSE */,
-				EAA0E2AB1E5DC4AA00A7AA3A /* SwiftAPI.podspec */,
+				EA083AE822BD81F70041213C /* RxSwiftAPI.podspec */,
 				EA992AA81E56FB4D007E7222 /* script.sh */,
 			);
 			name = Metadata;

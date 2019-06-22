@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   #  summary should be tweet-length, and the description more in depth.
   #
 
-  s.name         = "SwiftAPI2"
+  s.name         = "RxSwiftAPI"
   s.version      = "2.0.0"
   s.summary      = "Simple networking library based on URLSession with REST API support."
   s.description  = "SwiftAPI is simple networking library which allows easy connection with server out of the box. It's written in Swift 5, using URLSession for managing requests."
@@ -81,6 +81,8 @@ Pod::Spec.new do |s|
   #
 
   s.frameworks = "Foundation"
+  s.dependency 'RxSwift', '~> 5.0'
+  s.dependency 'RxCocoa', '~> 5.0'
 
 
   # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
