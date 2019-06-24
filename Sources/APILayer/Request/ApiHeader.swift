@@ -34,7 +34,7 @@ public struct ApiHeader {
 
      - Returns: Ready to use Basic Auth header, or nil when credentials encoding went wrong.
      */
-    @available(*, deprecated, message: "Use Authorization.basic(login:password:) enum instad.")
+    @available(*, unavailable, message: "Use Authorization.basic(login:password:) enum instad.")
     public init?(login: String, password: String) {
         guard let credentials = "\(login):\(password)".data(using: .utf8)?.base64EncodedString(options: .init(rawValue: 0)) else {
             return nil

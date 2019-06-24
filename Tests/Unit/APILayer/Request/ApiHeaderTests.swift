@@ -40,16 +40,6 @@ class ApiHeaderTests: XCTestCase {
         XCTAssertTrue(header.value == httpHeader.value)
     }
 
-    func testBasicAuthConstructorHeader() {
-        let login = "admin"
-        let password = "admin1"
-        let header = ApiHeader(login: login, password: password)
-        let credentials = "\(login):\(password)".data(using: .utf8)?.base64EncodedString(options: .init(rawValue: 0))
-
-        XCTAssertEqual(header?.name, "Authorization")
-        XCTAssertEqual(header?.value, "Basic \(credentials!)")
-    }
-
     func testBasicAuthHeader() {
         let login = "admin"
         let password = "admin1"
