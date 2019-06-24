@@ -372,7 +372,7 @@
 		EA93FEBC1E5ECAE200A82381 /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Resources.xcassets; path = SupportingFiles/Resources.xcassets; sourceTree = "<group>"; };
 		EA992AA31E56FA2F007E7222 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
 		EA992AA71E56FB4D007E7222 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
-		EA992AA81E56FB4D007E7222 /* script.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = script.sh; sourceTree = SOURCE_ROOT; };
+		EA992AA81E56FB4D007E7222 /* deploy.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = deploy.sh; path = Scripts/deploy.sh; sourceTree = SOURCE_ROOT; };
 		EA9AD41720507F2200C2D401 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		EA9C72B11F31A720005DC978 /* ApiMethodTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiMethodTests.swift; sourceTree = "<group>"; };
 		EAA0E18E1E5D9A7400A7AA3A /* RxSwiftAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwiftAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -900,7 +900,7 @@
 				EA992AA31E56FA2F007E7222 /* CHANGELOG.md */,
 				EAA0E2A91E5DC4AA00A7AA3A /* LICENSE */,
 				EA083AE822BD81F70041213C /* RxSwiftAPI.podspec */,
-				EA992AA81E56FB4D007E7222 /* script.sh */,
+				EA992AA81E56FB4D007E7222 /* deploy.sh */,
 			);
 			name = Metadata;
 			sourceTree = "<group>";
