@@ -231,6 +231,10 @@
 		EA93FEC21E5ECAF400A82381 /* RequestServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FEB21E5ECAB400A82381 /* RequestServiceTests.swift */; };
 		EA93FEC31E5ECAF800A82381 /* RestServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FEB51E5ECAB400A82381 /* RestServiceTests.swift */; };
 		EA93FEC41E5ECAFC00A82381 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA93FEBC1E5ECAE200A82381 /* Resources.xcassets */; };
+		EA980AE522C5FA030060A8A9 /* RxURLSessionDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA980AE422C5FA030060A8A9 /* RxURLSessionDelegateProxy.swift */; };
+		EA980AE622C5FA030060A8A9 /* RxURLSessionDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA980AE422C5FA030060A8A9 /* RxURLSessionDelegateProxy.swift */; };
+		EA980AE722C5FA030060A8A9 /* RxURLSessionDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA980AE422C5FA030060A8A9 /* RxURLSessionDelegateProxy.swift */; };
+		EA980AE822C5FA030060A8A9 /* RxURLSessionDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA980AE422C5FA030060A8A9 /* RxURLSessionDelegateProxy.swift */; };
 		EA9AD41820507F2200C2D401 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AD41720507F2200C2D401 /* SessionService.swift */; };
 		EA9AD41920507F2200C2D401 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AD41720507F2200C2D401 /* SessionService.swift */; };
 		EA9AD41A20507F2200C2D401 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AD41720507F2200C2D401 /* SessionService.swift */; };
@@ -402,6 +406,7 @@
 		EA93FEB31E5ECAB400A82381 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA93FEB51E5ECAB400A82381 /* RestServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestServiceTests.swift; sourceTree = "<group>"; };
 		EA93FEBC1E5ECAE200A82381 /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Resources.xcassets; path = SupportingFiles/Resources.xcassets; sourceTree = "<group>"; };
+		EA980AE422C5FA030060A8A9 /* RxURLSessionDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxURLSessionDelegateProxy.swift; sourceTree = "<group>"; };
 		EA992AA31E56FA2F007E7222 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
 		EA992AA71E56FB4D007E7222 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		EA992AA81E56FB4D007E7222 /* deploy.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = deploy.sh; path = Scripts/deploy.sh; sourceTree = SOURCE_ROOT; };
@@ -974,6 +979,7 @@
 			children = (
 				EABDA7B420513E950019DE47 /* HttpCall.swift */,
 				EA9AD41720507F2200C2D401 /* SessionService.swift */,
+				EA980AE422C5FA030060A8A9 /* RxURLSessionDelegateProxy.swift */,
 			);
 			path = Session;
 			sourceTree = "<group>";
@@ -1431,10 +1437,14 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-FunctionalTests OSX/Pods-FunctionalTests OSX-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa-macOS/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRelay-macOS/RxRelay.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift-macOS/RxSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1493,10 +1503,14 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-UnitTests OSX/Pods-UnitTests OSX-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa-macOS/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRelay-macOS/RxRelay.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift-macOS/RxSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1533,10 +1547,14 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-FunctionalTests iOS/Pods-FunctionalTests iOS-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa-iOS/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRelay-iOS/RxRelay.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift-iOS/RxSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1551,10 +1569,14 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-UnitTests iOS/Pods-UnitTests iOS-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa-iOS/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRelay-iOS/RxRelay.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift-iOS/RxSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1687,6 +1709,7 @@
 				EA8A7F531FB18ACB00088163 /* ApiService.swift in Sources */,
 				EA8A7F7B1FB18ACB00088163 /* FileManager.swift in Sources */,
 				EA695B8D2020B48A004662B1 /* DefaultCoderProvider.swift in Sources */,
+				EA980AE722C5FA030060A8A9 /* RxURLSessionDelegateProxy.swift in Sources */,
 				EA8A7F831FB18ACB00088163 /* HttpDownloadRequest.swift in Sources */,
 				EA8A7FB31FB18ACB00088163 /* RestResponseCompletion.swift in Sources */,
 				EA8A7F8F1FB18ACB00088163 /* HttpUploadRequest.swift in Sources */,
@@ -1749,6 +1772,7 @@
 				EA8A7F561FB18ACB00088163 /* ClientErrorStatusCodeType.swift in Sources */,
 				EA8A7FB21FB18ACB00088163 /* RestResponseCompletion.swift in Sources */,
 				EA8A7F4A1FB18ACB00088163 /* ApiMethod.swift in Sources */,
+				EA980AE622C5FA030060A8A9 /* RxURLSessionDelegateProxy.swift in Sources */,
 				EA8A7F461FB18ACB00088163 /* ApiResponseCompletionHandler.swift in Sources */,
 				EA8A7F821FB18ACB00088163 /* HttpDownloadRequest.swift in Sources */,
 			);
@@ -1798,6 +1822,7 @@
 				EA8A7F581FB18ACB00088163 /* ClientErrorStatusCodeType.swift in Sources */,
 				EA8A7FB41FB18ACB00088163 /* RestResponseCompletion.swift in Sources */,
 				EA8A7F4C1FB18ACB00088163 /* ApiMethod.swift in Sources */,
+				EA980AE822C5FA030060A8A9 /* RxURLSessionDelegateProxy.swift in Sources */,
 				EA8A7F481FB18ACB00088163 /* ApiResponseCompletionHandler.swift in Sources */,
 				EA8A7F841FB18ACB00088163 /* HttpDownloadRequest.swift in Sources */,
 			);
@@ -1847,6 +1872,7 @@
 				EA8A7FA91FB18ACB00088163 /* RequestServiceConfiguration.swift in Sources */,
 				EA8A7F891FB18ACB00088163 /* HttpRequest.swift in Sources */,
 				EA8A7F6D1FB18ACB00088163 /* SuccessStatusCodeType.swift in Sources */,
+				EA980AE522C5FA030060A8A9 /* RxURLSessionDelegateProxy.swift in Sources */,
 				EA8A7F711FB18ACB00088163 /* UnknownStatusCodeType.swift in Sources */,
 				EA8A7F611FB18ACB00088163 /* ServerErrorStatusCodeType.swift in Sources */,
 			);
