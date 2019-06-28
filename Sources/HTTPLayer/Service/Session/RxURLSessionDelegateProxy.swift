@@ -11,14 +11,42 @@ import RxCocoa
 typealias RxURLSessionDelegate = URLSessionDataDelegate & URLSessionDownloadDelegate
 
 class RxURLSession: NSObject {
-    weak var delegate: RxURLSessionDelegate?
+    private let configuration: URLSessionConfiguration
+    private(set) var urlSession: URLSession?
+
+    init(configuration: URLSessionConfiguration) {
+        self.configuration = configuration
+    }
+}
+
+private extension RxURLSession {
+
+    func initUrlSession(with delegate: RxURLSessionDelegate) {
+        guard urlSession == nil else { //URLSession already initiated
+            print("URLSession delegate is read only property! Operation has no effect!")
+            return
+        }
+        urlSession = URLSession(configuration: configuration, delegate: delegate, delegateQueue: nil)
+    }
 }
 
 extension RxURLSession: HasDelegate {
     public typealias Delegate = RxURLSessionDelegate
+
+    var delegate: RxURLSessionDelegate? {
+        get {
+            return urlSession?.delegate as? RxURLSessionDelegate
+        }
+        set(newValue) {
+            guard let delegate = newValue else {
+                return
+            }
+            initUrlSession(with: delegate)
+        }
+    }
 }
 
-class RxURLSessionDelegateProxy: DelegateProxy<RxURLSession, RxURLSessionDelegate>, DelegateProxyType, RxURLSessionDelegate {
+class RxURLSessionDelegateProxy: DelegateProxy<RxURLSession, RxURLSessionDelegate> {
 
     private(set) weak var urlSession: RxURLSession?
 
@@ -30,6 +58,11 @@ class RxURLSessionDelegateProxy: DelegateProxy<RxURLSession, RxURLSessionDelegat
     public static func registerKnownImplementations() {
         register { RxURLSessionDelegateProxy(urlSession: $0) }
     }
+}
+
+extension RxURLSessionDelegateProxy: DelegateProxyType {}
+
+extension RxURLSessionDelegateProxy: RxURLSessionDelegate {
 
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         urlSession?.delegate?.urlSession(session, downloadTask: downloadTask, didFinishDownloadingTo: location)
