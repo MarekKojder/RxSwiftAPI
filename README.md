@@ -10,7 +10,7 @@
     <img src="https://img.shields.io/cocoapods/p/RxSwiftAPI.svg?style=flat" />
   </a>
   <a href="http://cocoapods.org/pods/RxSwiftAPI">
-    <img src="https://img.shields.io/badge/swift-4.1-brightgreen.svg" />
+    <img src="https://img.shields.io/badge/swift-5.0-brightgreen.svg" />
   </a>
   <a href="http://cocoapods.org/pods/RxSwiftAPI" target="blank">
     <img src="https://img.shields.io/cocoapods/l/RxSwiftAPI.svg?style=flat" />
@@ -19,20 +19,21 @@
   <br>
 </div>
 
-**Swift API** was born as idea of having very light, very fast, written in swift, easy to update and ready to use out of the box library for communication through network. Now that idea is real as cocoapod library. Main features of library:
-- Written using Swift 4
+**RxSwiftAPI** was born as idea of having very light, very fast, easy to use written in Swift and reactive library for communication through network.
+Main features of library:
+- Written in Swift 5
 - Ready to use out of the box
-- Using URLSession for managing requests
+- Uses `URLSession` for managing requests
 - Allows sending requests in foreground or background
 - Supports connection with REST and non-REST APIs
-- Introduces easy to use wrapper for status codes
 - Is available for iOS, macOS, watchOS and tvOS
-- Supports Codable protocol
+- Supports `Codable` protocol
+- Based on [SwiftAPI](https://cocoapods.org/pods/SwiftAPI) and uses `RxSwift` 5
 
 
 ## Installation
 
-Swift-API is available through [CocoaPods](http://cocoapods.org/pods/RxSwiftAPI). To install it, simply add the following line to your Podfile
+RxSwiftAPI is available through [CocoaPods](https://cocoapods.org/pods/RxSwiftAPI). To install it, simply add the following line to your Podfile
 ```ruby
 pod 'RxSwiftAPI'
 ```
@@ -65,9 +66,13 @@ To get familiar with more advanced usage please take a look at usage example ava
 
 ## Authors
 
-- Marek Kojder, marq.kojder@gmail.com
+- [Marek Kojder](https://github.com/MarekKojder)
 
 
 ## License
 
 RxSwiftAPI is available under the MIT license. See the LICENSE file for more info.
+
+## Note
+
+RxSwiftAPI is not fully converted to reactive version yet. Please, be patient, work is in progress :-).

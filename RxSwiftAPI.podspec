@@ -14,9 +14,9 @@ Pod::Spec.new do |s|
 
   s.name         = "RxSwiftAPI"
   s.version      = "2.0.0"
-  s.summary      = "Simple networking library based on URLSession with REST API support."
-  s.description  = "SwiftAPI is simple networking library which allows easy connection with server out of the box. It's written in Swift 5, using URLSession for managing requests."
-  s.homepage     = "https://github.com/MarekKojder/swift-api"
+  s.summary      = "Simple reactive networking library based on URLSession with REST API support."
+  s.description  = "RxSwiftAPI is simple networking library based on SwiftAPI, but improved ad uses RxSwift to allow using it in reactive applications."
+  s.homepage     = "https://github.com/MarekKojder/RxSwiftAPI"
 
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -39,7 +39,7 @@ Pod::Spec.new do |s|
   #  profile URL.
   #
 
-  s.authors = { "Marek Kojder" => "marq.kojder@gmail.com"}
+  s.author = "Marek Kojder"
  
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -48,10 +48,10 @@ Pod::Spec.new do |s|
   #  the deployment target. You can optionally include the target after the platform.
   #
 
-  s.ios.deployment_target = "8.0"
+  s.ios.deployment_target = "9.0"
   s.osx.deployment_target = "10.10"
   s.tvos.deployment_target = "9.0"
-  s.watchos.deployment_target = "2.0"
+  s.watchos.deployment_target = "3.0"
 
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -60,7 +60,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source = { :git => "https://github.com/MarekKojder/swift-api.git", :branch => "master", :tag => s.version.to_s }
+  s.source = { :git => "https://github.com/MarekKojder/RxSwiftAPI.git", :branch => "master", :tag => s.version.to_s }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
