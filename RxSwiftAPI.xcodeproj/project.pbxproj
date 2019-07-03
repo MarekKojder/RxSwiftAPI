@@ -721,6 +721,7 @@
 		EA8A7F1E1FB18ACB00088163 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				EA8FF24F22CCC2B20047BA07 /* RxURLSession */,
 				EABDA7B320513E740019DE47 /* Session */,
 				EA8A7F221FB18ACB00088163 /* RequestServiceConfiguration.swift */,
 				EA8A7F211FB18ACB00088163 /* RequestService.swift */,
@@ -769,6 +770,15 @@
 				EA8A7F331FB18ACB00088163 /* Info-watchOS.plist */,
 			);
 			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		EA8FF24F22CCC2B20047BA07 /* RxURLSession */ = {
+			isa = PBXGroup;
+			children = (
+				EA8FF24A22CC88FE0047BA07 /* RxURLSession.swift */,
+				EA980AE422C5FA030060A8A9 /* RxURLSessionDelegateProxy.swift */,
+			);
+			path = RxURLSession;
 			sourceTree = "<group>";
 		};
 		EA9125741E5ED391006A2801 /* Dependencies */ = {
@@ -984,8 +994,6 @@
 			children = (
 				EABDA7B420513E950019DE47 /* HttpCall.swift */,
 				EA9AD41720507F2200C2D401 /* SessionService.swift */,
-				EA8FF24A22CC88FE0047BA07 /* RxURLSession.swift */,
-				EA980AE422C5FA030060A8A9 /* RxURLSessionDelegateProxy.swift */,
 			);
 			path = Session;
 			sourceTree = "<group>";

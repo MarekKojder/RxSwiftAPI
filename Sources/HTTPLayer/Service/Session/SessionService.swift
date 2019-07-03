@@ -47,10 +47,7 @@ extension SessionService {
      */
     func data(request: URLRequest, progress: @escaping SessionServiceProgressHandler, success: @escaping SessionServiceSuccessHandler, failure: @escaping SessionServiceFailureHandler) {
         performInSesionQueue(failure: failure) { [unowned self] in
-            guard let task = self.urlSession.dataTask(with: request) else {
-                failure(NSError(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil))
-                return
-            }
+            let task = self.urlSession.dataTask(with: request)
             self.activeCalls[task] = HttpCall(progressBlock: progress, successBlock: success, failureBlock: failure)
             DispatchQueue.global().async {
                 task.resume()
@@ -69,10 +66,7 @@ extension SessionService {
      */
     func upload(request: URLRequest, file: URL, progress: @escaping SessionServiceProgressHandler, success: @escaping SessionServiceSuccessHandler, failure: @escaping SessionServiceFailureHandler) {
         performInSesionQueue(failure: failure) { [unowned self] in
-            guard let task = self.urlSession.uploadTask(with: request, fromFile: file) else {
-                failure(NSError(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil))
-                return
-            }
+            let task = self.urlSession.uploadTask(with: request, fromFile: file)
             self.activeCalls[task] = HttpCall(progressBlock: progress, successBlock: success, failureBlock: failure)
             DispatchQueue.global().async {
                 task.resume()
@@ -91,10 +85,7 @@ extension SessionService {
      */
     func download(request: URLRequest, progress: @escaping SessionServiceProgressHandler, success: @escaping SessionServiceSuccessHandler, failure: @escaping SessionServiceFailureHandler) {
         performInSesionQueue(failure: failure) { [unowned self] in
-            guard let task = self.urlSession.downloadTask(with: request) else {
-                failure(NSError(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil))
-                return
-            }
+            let task = self.urlSession.downloadTask(with: request)
             self.activeCalls[task] = HttpCall(progressBlock: progress, successBlock: success, failureBlock: failure)
             DispatchQueue.global().async {
                 task.resume()

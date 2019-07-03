@@ -10,15 +10,15 @@ import RxCocoa
 
 class RxURLSessionDelegateProxy: DelegateProxy<RxURLSession, RxURLSessionDelegate> {
 
+    private weak var urlSession: RxURLSession?
     fileprivate let downloadSubject = PublishSubject<(session: URLSession, task: URLSessionDownloadTask, location: URL)>()
-    private(set) weak var urlSession: RxURLSession?
 
     init(urlSession: ParentObject) {
         self.urlSession = urlSession
         super.init(parentObject: urlSession, delegateProxy: RxURLSessionDelegateProxy.self)
     }
 
-    public static func registerKnownImplementations() {
+    static func registerKnownImplementations() {
         register { RxURLSessionDelegateProxy(urlSession: $0) }
     }
 
@@ -31,7 +31,7 @@ extension RxURLSessionDelegateProxy: DelegateProxyType {}
 
 extension RxURLSessionDelegateProxy: RxURLSessionDelegate {
 
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+    public func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         downloadSubject.on(.next((session, downloadTask, location)))
         _forwardToDelegate?.urlSession(session, downloadTask: downloadTask, didFinishDownloadingTo: location)
     }
@@ -48,7 +48,7 @@ extension Reactive where Base: RxURLSession {
     }
 
     //MARK: URLSessionDelegate
-    var didBecomeInvalidWithError: Observable<(session: URLSession, error: Error?)> {
+    public var didBecomeInvalidWithError: Observable<(session: URLSession, error: Error?)> {
         return delegate.methodInvoked(#selector(RxURLSessionDelegate.urlSession(_:didBecomeInvalidWithError:))).map { parameters in
             return (parameters[0] as! URLSession,
                     parameters[1] as? Error)
@@ -56,7 +56,7 @@ extension Reactive where Base: RxURLSession {
     }
 
     //MARK: URLSessionTaskDelegate
-    var didSendBodyData: Observable<(session: URLSession, task: URLSessionTask, bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64)> {
+    public var didSendBodyData: Observable<(session: URLSession, task: URLSessionTask, bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64)> {
         return delegate.methodInvoked(#selector(RxURLSessionDelegate.urlSession(_:task:didSendBodyData:totalBytesSent:totalBytesExpectedToSend:))).map { parameters in
             return (parameters[0] as! URLSession,
                     parameters[1] as! URLSessionTask,
@@ -66,7 +66,7 @@ extension Reactive where Base: RxURLSession {
         }
     }
 
-    var didCompleteWithError: Observable<(session: URLSession, task: URLSessionTask, error: Error?)> {
+    public var didCompleteWithError: Observable<(session: URLSession, task: URLSessionTask, error: Error?)> {
         return delegate.methodInvoked(#selector(RxURLSessionDelegate.urlSession(_:task:didCompleteWithError:))).map { parameters in
             return (parameters[0] as! URLSession,
                     parameters[1] as! URLSessionTask,
@@ -77,7 +77,7 @@ extension Reactive where Base: RxURLSession {
     //MARK: URLSessionDataDelegate
     private typealias DataTaskResponseHandler = @convention(block) (URLSession.ResponseDisposition) -> Void
     
-    var didReceiveResponse: Observable<(session: URLSession, task: URLSessionDataTask, response: URLResponse, completion: (URLSession.ResponseDisposition) -> Void)> {
+    public var didReceiveResponse: Observable<(session: URLSession, task: URLSessionDataTask, response: URLResponse, completion: (URLSession.ResponseDisposition) -> Void)> {
         return delegate.methodInvoked(#selector(RxURLSessionDelegate.urlSession(_:dataTask:didReceive:completionHandler:))).map { parameters in
             return (parameters[0] as! URLSession,
                     parameters[1] as! URLSessionDataTask,
@@ -86,7 +86,7 @@ extension Reactive where Base: RxURLSession {
         }
     }
 
-    var didReceiveData: Observable<(session: URLSession, task: URLSessionDataTask, response: Data)> {
+    public var didReceiveData: Observable<(session: URLSession, task: URLSessionDataTask, response: Data)> {
         return delegate.methodInvoked(#selector(RxURLSessionDelegate.urlSession(_:dataTask:didReceive:))).map { parameters in
             return (parameters[0] as! URLSession,
                     parameters[1] as! URLSessionDataTask,
@@ -95,11 +95,11 @@ extension Reactive where Base: RxURLSession {
     }
 
     //MARK: URLSessionDownloadDelegate
-    var didFinishDownloading: Observable<(session: URLSession, task: URLSessionDownloadTask, location: URL)> {
+    public var didFinishDownloading: Observable<(session: URLSession, task: URLSessionDownloadTask, location: URL)> {
         return delegateProxy.downloadSubject
     }
 
-    var didWriteData: Observable<(session: URLSession, task: URLSessionDownloadTask, bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64)> {
+    public var didWriteData: Observable<(session: URLSession, task: URLSessionDownloadTask, bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64)> {
         return delegate.methodInvoked(#selector(RxURLSessionDelegate.urlSession(_:downloadTask:didWriteData:totalBytesWritten:totalBytesExpectedToWrite:))).map { parameters in
             return (parameters[0] as! URLSession,
                     parameters[1] as! URLSessionDownloadTask,
