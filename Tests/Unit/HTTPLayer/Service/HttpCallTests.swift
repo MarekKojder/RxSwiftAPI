@@ -14,12 +14,8 @@ class HttpCallTests: XCTestCase {
         return { (_, _) in }
     }
 
-    var successBlock: SessionServiceSuccessHandler {
-        return { (_) in }
-    }
-
-    var failureBlock: SessionServiceFailureHandler {
-        return { (_) in }
+    var completionBlock: SessionServiceCompletionHandler {
+        return { (_, _) in }
     }
 
     func testProgressBlock() {
@@ -31,9 +27,8 @@ class HttpCallTests: XCTestCase {
             expectedToProcess = totalBytesExpectedToProcess
             blockExpectation.fulfill()
         }
-        let call = HttpCall(progressBlock: progress, successBlock: successBlock, failureBlock: failureBlock)
-        call.performFailure(with: nil)
-        call.performSuccess(with: HttpResponse(body: Data()))
+        let call = HttpCall(progress: progress, completion: completionBlock)
+        call.performCompletion(response: HttpResponse(body: Data()), error: nil)
         call.performProgress(totalBytesProcessed: 100, totalBytesExpectedToProcess: 200)
 
         waitForExpectations(timeout: 10) { error in
@@ -47,15 +42,14 @@ class HttpCallTests: XCTestCase {
         let blockExpectation = expectation(description: "Expect success block")
         let testResponse = HttpResponse(body: Data())
         var receivedResponse: HttpResponse?
-        let success: SessionServiceSuccessHandler = { (response) in
+        let success: SessionServiceCompletionHandler = { (response, _) in
             receivedResponse = response
             blockExpectation.fulfill()
         }
 
-        let call = HttpCall(progressBlock: progressBlock, successBlock: success, failureBlock: failureBlock)
-        call.performFailure(with: nil)
+        let call = HttpCall(progress: progressBlock, completion: success)
         call.performProgress(totalBytesProcessed: 0, totalBytesExpectedToProcess: 0)
-        call.performSuccess(with: testResponse)
+        call.performCompletion(response: testResponse, error: nil)
 
         waitForExpectations(timeout: 10) { error in
             XCTAssertNil(error, "Test failed with error: \(error!.localizedDescription)")
@@ -70,15 +64,14 @@ class HttpCallTests: XCTestCase {
         let blockExpectation = expectation(description: "Expect progress block")
         let testError = NSError(domain: NSURLErrorDomain, code: NSURLErrorBadURL, userInfo: nil)
         var receivedError: NSError?
-        let failure: SessionServiceFailureHandler = { (error) in
-            receivedError = error as NSError
+        let failure: SessionServiceCompletionHandler = { (_, error) in
+            receivedError = error as NSError?
             blockExpectation.fulfill()
         }
 
-        let call = HttpCall(progressBlock: progressBlock, successBlock: successBlock, failureBlock: failure)
-        call.performSuccess(with: HttpResponse(body: Data()))
+        let call = HttpCall(progress: progressBlock, completion: failure)
         call.performProgress(totalBytesProcessed: 0, totalBytesExpectedToProcess: 0)
-        call.performFailure(with: testError)
+        call.performCompletion(response: nil, error: testError)
 
         waitForExpectations(timeout: 10) { error in
             XCTAssertNil(error, "Test failed with error: \(error!.localizedDescription)")
@@ -87,7 +80,7 @@ class HttpCallTests: XCTestCase {
     }
 
     func testUpdateWithData() {
-        let call = HttpCall(progressBlock: progressBlock, successBlock: successBlock, failureBlock: failureBlock)
+        let call = HttpCall(progress: progressBlock, completion: completionBlock)
         let data = Data(capacity: 10)
 
         call.update(with: data)
@@ -97,7 +90,7 @@ class HttpCallTests: XCTestCase {
     }
 
     func testUpdateWithUrl() {
-        let call = HttpCall(progressBlock: progressBlock, successBlock: successBlock, failureBlock: failureBlock)
+        let call = HttpCall(progress: progressBlock, completion: completionBlock)
         let url1 = URL(string: "http://cocoapods.org/")!
         let url2 = URL(string: "http://cocoapods.org/pods/RxSwiftAPI")!
         call.update(with: URLResponse(url: url1, mimeType: nil, expectedContentLength: 0, textEncodingName: nil))

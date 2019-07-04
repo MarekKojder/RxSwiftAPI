@@ -9,17 +9,12 @@ import RxSwift
 
 final class SessionService {
 
-    let urlSession: RxURLSession
-    let observationQueue = SerialDispatchQueueScheduler(qos: .userInteractive, internalSerialQueueName: "RxSwiftAPI.SessionService.observationQueue")
-    let subscriptionQueue = ConcurrentDispatchQueueScheduler(queue: DispatchQueue(label: "RxSwiftAPI.SessionService.subscriptionQueue", qos: .utility))
-    
+    private let urlSession: RxURLSession
+    private let serialScheduler = SerialDispatchQueueScheduler(qos: .userInteractive, internalSerialQueueName: "RxSwiftAPI.SessionService.observationQueue")
+    private let concurrentScheduler = ConcurrentDispatchQueueScheduler(queue: DispatchQueue(label: "RxSwiftAPI.SessionService.subscriptionQueue", qos: .utility))
     private let disposeBag = DisposeBag()
-
-
-
-    private(set) var isValid = true
-    private let sessionQueue = DispatchQueue(label: "RxSwiftAPI.SessionService.sessionQueue", qos: .background)
     private var activeCalls = [URLSessionTask: HttpCall]()
+    private(set) var isValid = true
 
     init(configuration: RequestService.Configuration) {
         urlSession = RxURLSession(configuration: configuration.urlSessionConfiguration)
@@ -42,17 +37,19 @@ extension SessionService {
      - Parameters:
        - request: An URLRequest object to send in download task.
        - progress: Block for hangling request progress.
-       - success: Block for hangling request success.
-       - failure: Block for hangling request failure.
+       - completion: Block for hangling request completion.
      */
-    func data(request: URLRequest, progress: @escaping SessionServiceProgressHandler, success: @escaping SessionServiceSuccessHandler, failure: @escaping SessionServiceFailureHandler) {
-        performInSesionQueue(failure: failure) { [unowned self] in
-            let task = self.urlSession.dataTask(with: request)
-            self.activeCalls[task] = HttpCall(progressBlock: progress, successBlock: success, failureBlock: failure)
-            DispatchQueue.global().async {
+    func data(request: URLRequest, progress: @escaping SessionServiceProgressHandler, completion: @escaping SessionServiceCompletionHandler) {
+        safely(add: HttpCall(progress: progress, completion: completion), and: { [unowned self] in
+            return self.urlSession.dataTask(with: request)
+        })
+            .subscribeOn(serialScheduler)
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .subscribe(onSuccess: { task in
                 task.resume()
-            }
-        }
+            }, onError: { error in
+                completion(nil, error)
+            }).disposed(by: disposeBag)
     }
 
     /**
@@ -61,17 +58,19 @@ extension SessionService {
      - Parameters:
        - request: An URLRequest object to send in download task.
        - progress: Block for hangling request progress.
-       - success: Block for hangling request success.
-       - failure: Block for hangling request failure.
+       - completion: Block for hangling request completion.
      */
-    func upload(request: URLRequest, file: URL, progress: @escaping SessionServiceProgressHandler, success: @escaping SessionServiceSuccessHandler, failure: @escaping SessionServiceFailureHandler) {
-        performInSesionQueue(failure: failure) { [unowned self] in
-            let task = self.urlSession.uploadTask(with: request, fromFile: file)
-            self.activeCalls[task] = HttpCall(progressBlock: progress, successBlock: success, failureBlock: failure)
-            DispatchQueue.global().async {
+    func upload(request: URLRequest, file: URL, progress: @escaping SessionServiceProgressHandler, completion: @escaping SessionServiceCompletionHandler) {
+        safely(add: HttpCall(progress: progress, completion: completion), and: { [unowned self] in
+            return self.urlSession.uploadTask(with: request, fromFile: file)
+        })
+            .subscribeOn(serialScheduler)
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .subscribe(onSuccess: { task in
                 task.resume()
-            }
-        }
+            }, onError: { error in
+                completion(nil, error)
+            }).disposed(by: disposeBag)
     }
 
     /**
@@ -80,34 +79,19 @@ extension SessionService {
      - Parameters:
        - request: An URLRequest object to send in download task.
        - progress: Block for hangling request progress.
-       - success: Block for hangling request success.
-       - failure: Block for hangling request failure.
+       - completion: Block for hangling request completion.
      */
-    func download(request: URLRequest, progress: @escaping SessionServiceProgressHandler, success: @escaping SessionServiceSuccessHandler, failure: @escaping SessionServiceFailureHandler) {
-        performInSesionQueue(failure: failure) { [unowned self] in
-            let task = self.urlSession.downloadTask(with: request)
-            self.activeCalls[task] = HttpCall(progressBlock: progress, successBlock: success, failureBlock: failure)
-            DispatchQueue.global().async {
+    func download(request: URLRequest, progress: @escaping SessionServiceProgressHandler, completion: @escaping SessionServiceCompletionHandler) {
+        safely(add: HttpCall(progress: progress, completion: completion), and: { [unowned self] in
+            return self.urlSession.downloadTask(with: request)
+        })
+            .subscribeOn(serialScheduler)
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .subscribe(onSuccess: { task in
                 task.resume()
-            }
-        }
-    }
-
-    ///Validates self and performs given block in session queue.
-    private func performInSesionQueue(failure: @escaping SessionServiceFailureHandler, block: () -> Void) {
-        sessionQueue.sync { [weak self] in
-            guard let strongSelf = self else {
-                let description = "Attempted to create task in a session that has been invalidated."
-                failure(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: [NSLocalizedDescriptionKey : description]))
-                return
-            }
-            guard strongSelf.isValid else {
-                let description = "Lost reference to self."
-                failure(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: [NSLocalizedDescriptionKey : description]))
-                return
-            }
-            block()
-        }
+            }, onError: { error in
+                completion(nil, error)
+            }).disposed(by: disposeBag)
     }
 
     /**
@@ -116,10 +100,17 @@ extension SessionService {
      - Parameter request: An URLRequest to suspend.
      */
     func suspend(_ request: URLRequest) {
-        activeCalls.forEach { (task, _) in
-            guard task.currentRequest == request else { return }
-            task.suspend()
-        }
+        Completable.create(subscribe: { [weak self] completable in
+            self?.activeCalls.forEach { (task, _) in
+                guard task.currentRequest == request else { return }
+                task.suspend()
+            }
+            completable(.completed)
+            return Disposables.create()
+        })
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .subscribe()
+            .disposed(by: disposeBag)
     }
 
     /**
@@ -129,10 +120,17 @@ extension SessionService {
      */
     @available(iOS 9.0, OSX 10.11, *)
     func resume(_ request: URLRequest) {
-        activeCalls.forEach { (task, _) in
-            guard task.currentRequest == request else { return }
-            task.resume()
-        }
+        Completable.create(subscribe: { [weak self] completable in
+            self?.activeCalls.forEach { (task, _) in
+                guard task.currentRequest == request else { return }
+                task.resume()
+            }
+            completable(.completed)
+            return Disposables.create()
+        })
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .subscribe()
+            .disposed(by: disposeBag)
     }
 
     /**
@@ -141,33 +139,87 @@ extension SessionService {
      - Parameter request: An URLRequest to cancel.
      */
     func cancel(_ request: URLRequest) {
-        activeCalls.forEach { (task, _) in
-            guard task.currentRequest == request else { return }
-            task.cancel()
-        }
+        Completable.create(subscribe: { [weak self] completable in
+            self?.activeCalls.forEach { (task, _) in
+                guard task.currentRequest == request else { return }
+                task.cancel()
+            }
+            completable(.completed)
+            return Disposables.create()
+        })
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .subscribe()
+            .disposed(by: disposeBag)
+
+
     }
 
     ///Cancels all currently running HTTP requests.
     func cancelAllRequests() {
-        activeCalls.forEach { $0.key.cancel() }
+        Completable.create(subscribe: { [weak self] completable in
+            self?.activeCalls.forEach { $0.key.cancel() }
+            completable(.completed)
+            return Disposables.create()
+        })
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .subscribe()
+            .disposed(by: disposeBag)
+
     }
 
     ///Cancels all currently running HTTP requests and invalidates session.
     func invalidateAndCancel() {
-        sessionQueue.sync { [weak self] in
+        Completable.create(subscribe: { [weak self] completable in
             self?.isValid = false
             self?.urlSession.invalidateAndCancel()
-        }
+            completable(.completed)
+            return Disposables.create()
+        })
+            .subscribeOn(serialScheduler)
+            .subscribe()
+            .disposed(by: disposeBag)
     }
 }
 
 private extension SessionService {
 
+    static func error(_ description: String) -> Error {
+        return NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: [NSLocalizedDescriptionKey : description])
+    }
+
+    func safely(add httpCall: HttpCall, and createTask: @escaping () -> URLSessionTask?) -> Single<URLSessionTask> {
+        return Single.create { [weak self] single in
+            guard let `self` = self else {
+                single(.error(SessionService.error("Lost reference to SessionService.")))
+                return Disposables.create()
+            }
+            guard self.isValid else {
+                single(.error(SessionService.error("Attempted to create URLSessionTask in a session that has been invalidated.")))
+                return Disposables.create()
+            }
+            guard let task = createTask() else {
+                single(.error(SessionService.error("URLSessionTask could not be created.")))
+                return Disposables.create()
+            }
+            if let call = self.activeCalls[task], !call.isFinished {
+                single(.error(SessionService.error("Attempted to add URLSessionTask which is already running.")))
+                return Disposables.create()
+            }
+
+            self.activeCalls[task] = httpCall
+            single(.success(task))
+
+            return Disposables.create {
+                task.cancel()
+            }
+        }
+    }
+
     func setupURLSessionDelegate() {
         urlSession.rx.didBecomeInvalidWithError
             .asObservable()
-            .subscribeOn(subscriptionQueue)
-            .observeOn(observationQueue)
+            .subscribeOn(concurrentScheduler)
+            .observeOn(serialScheduler)
             .subscribe(onNext: { [weak self] (session: URLSession, error: Error?) in
                 self?.isValid = false
             })
@@ -177,8 +229,8 @@ private extension SessionService {
     func setupURLSessionTaskDelegate() {
         urlSession.rx.didSendBodyData
             .asObservable()
-            .subscribeOn(subscriptionQueue)
-            .observeOn(observationQueue)
+            .subscribeOn(concurrentScheduler)
+            .observeOn(serialScheduler)
             .subscribe(onNext: { [weak self] (session: URLSession, task: URLSessionTask, bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) in
                 self?.activeCalls[task]?.performProgress(totalBytesProcessed: totalBytesSent, totalBytesExpectedToProcess: totalBytesExpectedToSend)
             })
@@ -186,21 +238,22 @@ private extension SessionService {
 
         urlSession.rx.didCompleteWithError
             .asObservable()
-            .subscribeOn(subscriptionQueue)
-            .observeOn(observationQueue).subscribe(onNext: { [weak self] (session: URLSession, task: URLSessionTask, error: Error?) in
+            .subscribeOn(concurrentScheduler)
+            .observeOn(serialScheduler)
+            .subscribe(onNext: { [weak self] (session: URLSession, task: URLSessionTask, error: Error?) in
                 guard let call = self?.activeCalls[task] else {
                     return
                 }
                 guard let taskResponse = task.response else {
-                    call.performFailure(with: error)
+                    call.performCompletion(response: nil, error: error)
                     return
                 }
                 call.update(with: taskResponse)
                 guard let response = call.response else {
-                    call.performFailure(with: error)
+                    call.performCompletion(response: nil, error: error)
                     return
                 }
-                call.performSuccess(with: response)
+                call.performCompletion(response: response, error: nil)
                 self?.activeCalls.removeValue(forKey: task)
             })
             .disposed(by: disposeBag)
@@ -209,8 +262,8 @@ private extension SessionService {
     func setupURLSessionDataDelegate() {
         urlSession.rx.didReceiveResponse
             .asObservable()
-            .subscribeOn(subscriptionQueue)
-            .observeOn(observationQueue)
+            .subscribeOn(concurrentScheduler)
+            .observeOn(serialScheduler)
             .subscribe(onNext: { [weak self] (session: URLSession, task: URLSessionDataTask, response: URLResponse, completion: (URLSession.ResponseDisposition) -> Void) in
                 self?.activeCalls[task]?.update(with: response)
                 self?.activeCalls[task] != nil ? completion(.allow) : completion(.cancel)
@@ -219,8 +272,8 @@ private extension SessionService {
 
         urlSession.rx.didReceiveData
             .asObservable()
-            .subscribeOn(subscriptionQueue)
-            .observeOn(observationQueue)
+            .subscribeOn(concurrentScheduler)
+            .observeOn(serialScheduler)
             .subscribe(onNext: { [weak self] (session: URLSession, task: URLSessionDataTask, response: Data) in
                 self?.activeCalls[task]?.update(with: response)
             })
@@ -230,8 +283,8 @@ private extension SessionService {
     func setupURLSessionDownloadDelegate() {
         urlSession.rx.didFinishDownloading
             .asObservable()
-            .subscribeOn(subscriptionQueue)
-            .observeOn(observationQueue)
+            .subscribeOn(concurrentScheduler)
+            .observeOn(serialScheduler)
             .subscribe(onNext: { [weak self] (session: URLSession, task: URLSessionDownloadTask, location: URL) in
                 self?.activeCalls[task]?.update(with: location)
             })
@@ -239,8 +292,8 @@ private extension SessionService {
 
         urlSession.rx.didWriteData
             .asObservable()
-            .subscribeOn(subscriptionQueue)
-            .observeOn(observationQueue)
+            .subscribeOn(concurrentScheduler)
+            .observeOn(serialScheduler)
             .subscribe(onNext: { [weak self] (session: URLSession, task: URLSessionDownloadTask, bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) in
                 self?.activeCalls[task]?.performProgress(totalBytesProcessed: totalBytesWritten, totalBytesExpectedToProcess: totalBytesExpectedToWrite)
             })

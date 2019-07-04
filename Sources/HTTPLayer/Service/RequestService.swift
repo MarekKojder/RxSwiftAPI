@@ -55,7 +55,7 @@ extension RequestService {
      */
     func sendHTTPRequest(_ request: HttpDataRequest, with configuration: Configuration = .foreground) {
         let session = activeSession(for: configuration)
-        session.data(request: request.urlRequest, progress: progress(for: request), success: success(for: request), failure: failure(for: request))
+        session.data(request: request.urlRequest, progress: progress(for: request), completion: completion(for: request))
     }
 
     /**
@@ -67,7 +67,7 @@ extension RequestService {
      */
     func sendHTTPRequest(_ request: HttpUploadRequest, with configuration: Configuration = .background) {
         let session = activeSession(for: configuration)
-        session.upload(request: request.urlRequest, file: request.resourceUrl, progress: progress(for: request), success: success(for: request), failure: failure(for: request))
+        session.upload(request: request.urlRequest, file: request.resourceUrl, progress: progress(for: request), completion: completion(for: request))
     }
 
     /**
@@ -79,7 +79,7 @@ extension RequestService {
      */
     func sendHTTPRequest(_ request: HttpDownloadRequest, with configuration: Configuration = .background) {
         let session = activeSession(for: configuration)
-        session.download(request: request.urlRequest, progress: progress(for: request), success: success(forDownload: request), failure: failure(for: request))
+        session.download(request: request.urlRequest, progress: progress(for: request), completion: completion(forDownload: request))
     }
 
     /**
@@ -129,31 +129,30 @@ private extension RequestService {
         }
     }
 
-    ///Creates success block for given request
-    func success(for request: HttpRequest) -> SessionServiceSuccessHandler {
-        return { (response) in
-            request.successAction?.perform(with: response)
+    ///Creates completion block for given request
+    func completion(for request: HttpRequest) -> SessionServiceCompletionHandler {
+        return { (response, error) in
+            if let error = error {
+                request.failureAction?.perform(with: error)
+            } else {
+                request.successAction?.perform(with: response)
+            }
         }
     }
 
     ///Creates success block for given download request
-    func success(forDownload request: HttpDownloadRequest) -> SessionServiceSuccessHandler {
-        return { [weak self] (response) in
-            if let location = response.resourceUrl {
+    func completion(forDownload request: HttpDownloadRequest) -> SessionServiceCompletionHandler {
+        return { [weak self] (response, error) in
+            if let error = error {
+                request.failureAction?.perform(with: error)
+            } else if let location = response?.resourceUrl {
                 if let error = self?.fileManager.copyFile(from: location, to: request.destinationUrl) {
                     request.failureAction?.perform(with: error)
                     return
                 }
-                response.update(with: request.destinationUrl)
+                response?.update(with: request.destinationUrl)
             }
             request.successAction?.perform(with: response)
-        }
-    }
-
-    ///Creates failure block for given request
-    func failure(for request: HttpRequest) -> SessionServiceFailureHandler {
-        return { (error) in
-            request.failureAction?.perform(with: error)
         }
     }
 }
