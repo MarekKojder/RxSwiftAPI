@@ -341,6 +341,7 @@
 		EA3B4E2D2163A16E00BC730D /* FunctionalTests OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FunctionalTests OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA3B4E512163A2D300BC730D /* UnitTests OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "UnitTests OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA54E3C520C535CF0096D989 /* RestServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestServiceError.swift; sourceTree = "<group>"; };
+		EA66932C22CDD9C300031AD9 /* redeploy.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = redeploy.sh; path = Scripts/redeploy.sh; sourceTree = "<group>"; };
 		EA695B8720209D1D004662B1 /* ResourcePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcePath.swift; sourceTree = "<group>"; };
 		EA695B8A2020B48A004662B1 /* DefaultCoderProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCoderProvider.swift; sourceTree = "<group>"; };
 		EA695B9120211B04004662B1 /* FailableDecodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailableDecodableTests.swift; sourceTree = "<group>"; };
@@ -985,6 +986,7 @@
 				EAA0E2A91E5DC4AA00A7AA3A /* LICENSE */,
 				EA083AE822BD81F70041213C /* RxSwiftAPI.podspec */,
 				EA992AA81E56FB4D007E7222 /* deploy.sh */,
+				EA66932C22CDD9C300031AD9 /* redeploy.sh */,
 			);
 			name = Metadata;
 			sourceTree = "<group>";
