@@ -15,10 +15,10 @@ final class HttpCall {
     private let progressHandler: SessionServiceProgressHandler
     private let completionHandler: SessionServiceCompletionHandler
     private(set) var response: HttpResponse?
-    private(set) var isFinished: Bool
+    private(set) var isCompleted: Bool
 
     init(progress: @escaping SessionServiceProgressHandler, completion: @escaping SessionServiceCompletionHandler) {
-        isFinished = false
+        isCompleted = false
         progressHandler = progress
         completionHandler = completion
     }
@@ -51,8 +51,8 @@ final class HttpCall {
         progressHandler(totalBytesProcessed, totalBytesExpectedToProcess)
     }
 
-    func performCompletion(response: HttpResponse?, error: Error?) {
+    func performCompletion(response: HttpResponse? = nil, error: Error? = nil) {
         completionHandler(response, error)
-        isFinished = true
+        isCompleted = true
     }
 }
