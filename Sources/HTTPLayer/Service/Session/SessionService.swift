@@ -170,6 +170,15 @@ private extension SessionService {
         }
     }
 
+    func completeEveryTask(with error: Error) {
+        DispatchQueue.global(qos: .utility).async {
+            self.activeCalls.forEach { $0.value.performCompletion(error: error) }
+            self.sessionQueue.sync { [weak self] in
+                self?.activeCalls.removeAll()
+            }
+        }
+    }
+
     func setupURLSessionDelegate() {
         urlSession.rx.didBecomeInvalidWithError
             .asObservable()
@@ -177,6 +186,7 @@ private extension SessionService {
             .observeOn(serialScheduler)
             .subscribe(onNext: { [weak self] (session: URLSession, error: Error?) in
                 self?.isValid = false
+                self?.completeEveryTask(with: error ?? SessionService.error("Session invalidated", code: -30))
             })
             .disposed(by: disposeBag)
     }

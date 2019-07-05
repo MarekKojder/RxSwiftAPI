@@ -78,6 +78,8 @@ extension RestServiceTests {
         var responseFailed = true
         let completion = { [weak self] (data: ExampleData?, details: RestResponseDetails) in
             self?.log(details, for: path)
+            details.printPrettyBody()
+            print("--------------------")
             responseFailed = !details.statusCode.isSuccess
             responseExpectation.fulfill()
         }

@@ -53,6 +53,8 @@ extension ApiServiceTests {
         var responseError: Error?
         let completion = { [weak self] (response: ApiResponse?, error: Error?) in
             self?.log(response, with: error)
+            response?.printPrettyBody()
+            print("--------------------")
             responseError = error
             responseExpectation.fulfill()
         }

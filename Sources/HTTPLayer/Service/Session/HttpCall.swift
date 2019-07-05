@@ -52,7 +52,9 @@ final class HttpCall {
     }
 
     func performCompletion(response: HttpResponse? = nil, error: Error? = nil) {
-        completionHandler(response, error)
-        isCompleted = true
+        DispatchQueue.global(qos: .utility).async {
+            self.completionHandler(response, error)
+            self.isCompleted = true
+        }
     }
 }
