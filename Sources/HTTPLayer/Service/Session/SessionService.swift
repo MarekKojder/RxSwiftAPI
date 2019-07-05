@@ -183,8 +183,11 @@ extension SessionService {
 
 private extension SessionService {
 
+    ///Domain of RxSwiftAPI errors.
+    private static let sessionDomain = "RxSwiftAPISessionServiceErrorDomain"
+
     static func error(_ description: String) -> Error {
-        return NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: [NSLocalizedDescriptionKey : description])
+        return NSError(domain: sessionDomain, code: -20, userInfo: [NSLocalizedDescriptionKey : description])
     }
 
     func safely(add httpCall: HttpCall, and createTask: @escaping () -> URLSessionTask?) -> Single<URLSessionTask> {

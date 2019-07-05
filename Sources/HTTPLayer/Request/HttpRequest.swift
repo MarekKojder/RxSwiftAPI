@@ -21,12 +21,6 @@ class HttpRequest {
     ///Array of HTTP header fields
     let headerFields: [HttpHeader]?
 
-    ///Action which needs to be performed when response was received from server.
-    let successAction: ResponseAction?
-
-    ///Action which needs to be performed, when request has failed.
-    let failureAction: ResponseAction?
-
     ///Progress object which allows to follow request progress.
     var progress: Progress?
 
@@ -42,13 +36,11 @@ class HttpRequest {
 
      - Returns: An initialized a HttpRequest object.
      */
-    init(url: URL, method: HttpMethod, headers: [HttpHeader]? = nil, onSuccess: ResponseAction? = nil, onFailure: ResponseAction? = nil, useProgress: Bool = false) {
+    init(url: URL, method: HttpMethod, headers: [HttpHeader]? = nil, useProgress: Bool = false) {
         self.uuid = UUID()
         self.url = url
         self.method = method
         self.headerFields = headers
-        self.successAction = onSuccess
-        self.failureAction = onFailure
         if useProgress {
             self.progress = Progress(totalUnitCount: -1)
         }

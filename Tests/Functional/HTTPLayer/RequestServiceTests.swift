@@ -87,28 +87,33 @@ extension RequestServiceTests {
         let fileUrl = TestData.Url.smallFile
         let destinationUrl = TestData.Url.fileDestination
         let responseExpectation = expectation(description: "Expect response from \(fileUrl)")
-
         var successPerformed = false
-        let success = ResponseAction.success {response in
-            if let code = response?.statusCode {
-                print("--------------------")
-                print("Downloading from URL \(fileUrl) finished with status code \(code).")
-                print("--------------------")
-            }
-            successPerformed = true
-            responseExpectation.fulfill()
-        }
-
         var failurePerformed = false
-        var responseError: Error?
-        let failure = ResponseAction.failure {error in
-            failurePerformed = true
-            responseError = error
+        var responseError: NSError?
+        let completion: HttpRequestCompletionHandler = { response, error in
+            let message: String
+            if let error = error {
+                failurePerformed = true
+                responseError = error as NSError?
+                message = "failed with error: \(error.localizedDescription)."
+            } else if let response = response {
+                if let code = response.statusCode {
+                    message = "finished with status code \(code)."
+                } else {
+                    message = "finished."
+                }
+                successPerformed = true
+            } else {
+                message = "finished without success or error."
+            }
+            print("--------------------")
+            print("HttpDownloadRequest from URL \(fileUrl) \(message)")
+            print("--------------------")
             responseExpectation.fulfill()
         }
 
-        let request = HttpDownloadRequest(url: fileUrl, destinationUrl: destinationUrl, onSuccess: success, onFailure: failure, useProgress: false)
-        requestService.sendHTTPRequest(request, with: .foreground)
+        let request = HttpDownloadRequest(url: fileUrl, destinationUrl: destinationUrl, useProgress: false)
+        requestService.sendHTTPRequest(request, with: .foreground, completion: completion)
 
         waitForExpectations(timeout: 300) { error in
             XCTAssertNil(error, "Download request test failed with error: \(error!.localizedDescription)")
@@ -122,23 +127,33 @@ extension RequestServiceTests {
         let fileUrl = TestData.Url.smallFile
         let destinationUrl = TestData.Url.fileDestination
         let responseExpectation = expectation(description: "Expect response from \(fileUrl)")
-
         var successPerformed = false
-        let success = ResponseAction.success {response in
-            successPerformed = true
-            responseExpectation.fulfill()
-        }
-
         var failurePerformed = false
         var responseError: NSError?
-        let failure = ResponseAction.failure {error in
-            failurePerformed = true
-            responseError = error as NSError?
+        let completion: HttpRequestCompletionHandler = { response, error in
+            let message: String
+            if let error = error {
+                failurePerformed = true
+                responseError = error as NSError?
+                message = "failed with error: \(error.localizedDescription)."
+            } else if let response = response {
+                if let code = response.statusCode {
+                    message = "finished with status code \(code)."
+                } else {
+                    message = "finished."
+                }
+                successPerformed = true
+            } else {
+                message = "finished without success or error."
+            }
+            print("--------------------")
+            print("HttpDownloadRequest from URL \(fileUrl) \(message)")
+            print("--------------------")
             responseExpectation.fulfill()
         }
 
-        let request = HttpDownloadRequest(url: fileUrl, destinationUrl: destinationUrl, onSuccess: success, onFailure: failure, useProgress: false)
-        requestService.sendHTTPRequest(request, with: .foreground)
+        let request = HttpDownloadRequest(url: fileUrl, destinationUrl: destinationUrl, useProgress: false)
+        requestService.sendHTTPRequest(request, with: .foreground, completion: completion)
         requestService.cancel(request)
 
         waitForExpectations(timeout: 10) { error in
@@ -154,25 +169,36 @@ extension RequestServiceTests {
         let fileUrl2 = TestData.Url.bigFile
         let destinationUrl = TestData.Url.fileDestination
         let responseExpectation = expectation(description: "Expect file")
-
         var successPerformed = false
-        let success = ResponseAction.success {response in
-            successPerformed = true
-            responseExpectation.fulfill()
-        }
-
         var failurePerformed = false
         var responseError: NSError?
-        let failure = ResponseAction.failure {error in
-            failurePerformed = true
-            responseError = error as NSError?
+        let completion: HttpRequestCompletionHandler = { response, error in
+            let message: String
+            if let error = error {
+                failurePerformed = true
+                responseError = error as NSError?
+                message = "failed with error: \(error.localizedDescription)."
+            } else if let response = response {
+                if let code = response.statusCode {
+                    message = "finished with status code \(code)."
+                } else {
+                    message = "finished."
+                }
+                successPerformed = true
+            } else {
+                message = "finished without success or error."
+            }
+            print("--------------------")
+            print("HttpDownloadRequest from URL \(fileUrl2) \(message)")
+            print("--------------------")
             responseExpectation.fulfill()
         }
+        
         let request1 = HttpDownloadRequest(url: fileUrl1, destinationUrl: destinationUrl, useProgress: false)
-        let request2 = HttpDownloadRequest(url: fileUrl2, destinationUrl: destinationUrl, onSuccess: success, onFailure: failure, useProgress: false)
+        let request2 = HttpDownloadRequest(url: fileUrl2, destinationUrl: destinationUrl, useProgress: false)
 
-        requestService.sendHTTPRequest(request1, with: .foreground)
-        requestService.sendHTTPRequest(request2, with: .foreground)
+        requestService.sendHTTPRequest(request1, with: .foreground, completion: {_, _ in })
+        requestService.sendHTTPRequest(request2, with: .foreground, completion: completion)
         requestService.cancelAllRequests()
 
         waitForExpectations(timeout: 10) { error in
@@ -187,28 +213,33 @@ extension RequestServiceTests {
         let url = TestData.Url.root.appendingPathComponent("get")
         let method = HttpMethod.get
         let responseExpectation = expectation(description: "Expect response from \(url)")
-
         var successPerformed = false
-        let success = ResponseAction.success {response in
-            if let code = response?.statusCode {
-                print("--------------------")
-                print("\(method.rawValue) request to URL \(url) finished with status code \(code).")
-                print("--------------------")
-            }
-            successPerformed = true
-            responseExpectation.fulfill()
-        }
-
         var failurePerformed = false
         var responseError: Error?
-        let failure = ResponseAction.failure {error in
-            failurePerformed = true
-            responseError = error
+        let completion: HttpRequestCompletionHandler = { response, error in
+            let message: String
+            if let error = error {
+                failurePerformed = true
+                responseError = error
+                message = "failed with error: \(error.localizedDescription)."
+            } else if let response = response {
+                if let code = response.statusCode {
+                    message = "finished with status code \(code)."
+                } else {
+                    message = "finished."
+                }
+                successPerformed = true
+            } else {
+                message = "finished without success or error."
+            }
+            print("--------------------")
+            print("\(method.rawValue) request to URL \(url) \(message)")
+            print("--------------------")
             responseExpectation.fulfill()
         }
 
-        let request = HttpDataRequest(url: url, method: method, onSuccess: success, onFailure: failure)
-        requestService.sendHTTPRequest(request)
+        let request = HttpDataRequest(url: url, method: method)
+        requestService.sendHTTPRequest(request, completion: completion)
         requestService.suspend(request)
         requestService.resume(request)
 
@@ -231,28 +262,33 @@ extension RequestServiceTests {
     ///Perform test of data request with given parameters
     fileprivate func performTestDataRequest(url: URL, method: HttpMethod, body: Data? = nil, file: StaticString = #file, line: UInt = #line) {
         let responseExpectation = expectation(description: "Expect response from \(url)")
-
         var successPerformed = false
-        let success = ResponseAction.success {response in
-            if let code = response?.statusCode {
-                print("--------------------")
-                print("\(method.rawValue) request to URL \(url) finished with status code \(code).")
-                print("--------------------")
-            }
-            successPerformed = true
-            responseExpectation.fulfill()
-        }
-
         var failurePerformed = false
         var responseError: Error?
-        let failure = ResponseAction.failure {error in
-            failurePerformed = true
-            responseError = error
+        let completion: HttpRequestCompletionHandler = { response, error in
+            let message: String
+            if let error = error {
+                failurePerformed = true
+                responseError = error
+                message = "failed with error: \(error.localizedDescription)."
+            } else if let response = response {
+                if let code = response.statusCode {
+                    message = "finished with status code \(code)."
+                } else {
+                    message = "finished."
+                }
+                successPerformed = true
+            } else {
+                message = "finished without success or error."
+            }
+            print("--------------------")
+            print("\(method.rawValue) request to URL \(url) \(message)")
+            print("--------------------")
             responseExpectation.fulfill()
         }
 
-        let request = HttpDataRequest(url: url, method: method, body: body, onSuccess: success, onFailure: failure)
-        requestService.sendHTTPRequest(request)
+        let request = HttpDataRequest(url: url, method: method, body: body)
+        requestService.sendHTTPRequest(request, completion: completion)
 
         waitForExpectations(timeout: 30) { error in
             XCTAssertNil(error, "\(method.rawValue) request test failed with error: \(error!.localizedDescription)", file: file, line: line)
@@ -264,28 +300,33 @@ extension RequestServiceTests {
     ///Perform test of upload request with given parameters
     fileprivate func performTestUploadRequest(url: URL, method: HttpMethod, resourceUrl: URL, file: StaticString = #file, line: UInt = #line) {
         let responseExpectation = expectation(description: "Expect response from \(url)")
-
         var successPerformed = false
-        let success = ResponseAction.success {response in
-            if let code = response?.statusCode {
-                print("--------------------")
-                print("\(method.rawValue) request to URL \(url) finished with status code \(code).")
-                print("--------------------")
-            }
-            successPerformed = true
-            responseExpectation.fulfill()
-        }
-
         var failurePerformed = false
         var responseError: Error?
-        let failure = ResponseAction.failure {error in
-            failurePerformed = true
-            responseError = error
+        let completion: HttpRequestCompletionHandler = { response, error in
+            let message: String
+            if let error = error {
+                failurePerformed = true
+                responseError = error
+                message = "failed with error: \(error.localizedDescription)."
+            } else if let response = response {
+                if let code = response.statusCode {
+                    message = "finished with status code \(code)."
+                } else {
+                    message = "finished."
+                }
+                successPerformed = true
+            } else {
+                message = "finished without success or error."
+            }
+            print("--------------------")
+            print("\(method.rawValue) request to URL \(url) \(message)")
+            print("--------------------")
             responseExpectation.fulfill()
         }
 
-        let request = HttpUploadRequest(url: url, method: method, resourceUrl: resourceUrl, onSuccess: success, onFailure: failure, useProgress: false)
-        requestService.sendHTTPRequest(request, with: .foreground)
+        let request = HttpUploadRequest(url: url, method: method, resourceUrl: resourceUrl, useProgress: false)
+        requestService.sendHTTPRequest(request, with: .foreground, completion: completion)
 
         waitForExpectations(timeout: 300) { error in
             XCTAssertNil(error, "\(method.rawValue) request test failed with error: \(error!.localizedDescription)", file: file, line: line)

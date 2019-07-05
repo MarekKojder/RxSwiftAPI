@@ -7,6 +7,8 @@
 
 import Foundation
 
+public typealias ApiResponseCompletionHandler = (_ response: ApiResponse?, _ error: Error?) -> ()
+
 final public class ApiService {
 
     ///Service managing requests
@@ -22,54 +24,6 @@ final public class ApiService {
     ///Cancels all currently running requests.
     public func cancelAllRequests() {
         requestService.cancelAllRequests()
-    }
-}
-
-private extension ApiService {
-
-    ///Converts array of *ApiHeader* to array of *HttpHeader*
-    func httpHeaders(for apiHeaders: [ApiHeader]?) -> [HttpHeader]? {
-        guard let apiHeaders = apiHeaders else {
-            return nil
-        }
-        var headers = [HttpHeader]()
-        for header in apiHeaders {
-            headers.append(header.httpHeader)
-        }
-        return headers
-    }
-
-    ///Sends data request with given parameters
-    func sendRequest(url: URL, method: ApiMethod, body: Data?, apiHeaders: [ApiHeader]?, configuration: Configuration, useProgress: Bool, completion: ApiResponseCompletionHandler?) -> ApiRequest {
-        let headers = httpHeaders(for: apiHeaders)
-        let action = ResponseAction.completionActions(for: completion)
-        let httpRequest = HttpDataRequest(url: url, method: method.httpMethod, body: body, headers: headers, onSuccess: action.success, onFailure: action.failure, useProgress: useProgress)
-
-        requestService.sendHTTPRequest(httpRequest, with: configuration.requestServiceConfiguration)
-
-        return ApiRequest(httpRequest: httpRequest, httpRequestService: requestService)
-    }
-
-    ///Uploads file with given parameters
-    func uploadFile(at localFileUrl: URL, to destinationUrl: URL, method: ApiMethod, apiHeaders: [ApiHeader]?, configuration: Configuration, useProgress: Bool, completion: ApiResponseCompletionHandler?) -> ApiRequest  {
-        let headers = httpHeaders(for: apiHeaders)
-        let action = ResponseAction.completionActions(for: completion)
-        let uploadRequest = HttpUploadRequest(url: destinationUrl, method: method.httpMethod, resourceUrl: localFileUrl, headers: headers, onSuccess: action.success, onFailure: action.failure, useProgress: useProgress)
-
-        requestService.sendHTTPRequest(uploadRequest, with: configuration.requestServiceConfiguration)
-
-        return ApiRequest(httpRequest: uploadRequest, httpRequestService: requestService)
-    }
-
-    ///Downloads file with given parameters
-    func downloadFile(from remoteFileUrl: URL, to localUrl: URL, apiHeaders: [ApiHeader]?, configuration: Configuration, useProgress: Bool, completion: ApiResponseCompletionHandler?) -> ApiRequest  {
-        let headers = httpHeaders(for: apiHeaders)
-        let action = ResponseAction.completionActions(for: completion)
-        let downloadRequest = HttpDownloadRequest(url: remoteFileUrl, destinationUrl: localUrl, headers: headers, onSuccess: action.success, onFailure: action.failure, useProgress: useProgress)
-
-        requestService.sendHTTPRequest(downloadRequest, with: configuration.requestServiceConfiguration)
-
-        return ApiRequest(httpRequest: downloadRequest, httpRequestService: requestService)
     }
 }
 
@@ -290,5 +244,60 @@ public extension ApiService {
      */
     func downloadFile(from remoteFileUrl: URL, to localUrl: URL, with aditionalHeaders: [ApiHeader]? = nil, configuration: Configuration = .background, progress: Bool = true, completion: ApiResponseCompletionHandler? = nil) -> ApiRequest {
         return downloadFile(from: remoteFileUrl, to: localUrl, apiHeaders: aditionalHeaders, configuration: configuration, useProgress: progress, completion: completion)
+    }
+}
+
+private extension ApiService {
+
+    ///Converts array of *ApiHeader* to array of *HttpHeader*
+    func httpHeaders(for apiHeaders: [ApiHeader]?) -> [HttpHeader]? {
+        guard let apiHeaders = apiHeaders else {
+            return nil
+        }
+        var headers = [HttpHeader]()
+        for header in apiHeaders {
+            headers.append(header.httpHeader)
+        }
+        return headers
+    }
+
+    ///Creates success and failure action for single completion handler.
+    func requestCompletion(for completion: ApiResponseCompletionHandler?) -> HttpRequestCompletionHandler {
+        return { (response: HttpResponse?, error: Error?) in
+            completion?(ApiResponse(response), error)
+        }
+    }
+
+    ///Sends data request with given parameters
+    func sendRequest(url: URL, method: ApiMethod, body: Data?, apiHeaders: [ApiHeader]?, configuration: Configuration, useProgress: Bool, completion: ApiResponseCompletionHandler?) -> ApiRequest {
+        let headers = httpHeaders(for: apiHeaders)
+        let action = requestCompletion(for: completion)
+        let httpRequest = HttpDataRequest(url: url, method: method.httpMethod, body: body, headers: headers, useProgress: useProgress)
+
+        requestService.sendHTTPRequest(httpRequest, with: configuration.requestServiceConfiguration, completion: action)
+
+        return ApiRequest(httpRequest: httpRequest, httpRequestService: requestService)
+    }
+
+    ///Uploads file with given parameters
+    func uploadFile(at localFileUrl: URL, to destinationUrl: URL, method: ApiMethod, apiHeaders: [ApiHeader]?, configuration: Configuration, useProgress: Bool, completion: ApiResponseCompletionHandler?) -> ApiRequest  {
+        let headers = httpHeaders(for: apiHeaders)
+        let action = requestCompletion(for: completion)
+        let uploadRequest = HttpUploadRequest(url: destinationUrl, method: method.httpMethod, resourceUrl: localFileUrl, headers: headers, useProgress: useProgress)
+
+        requestService.sendHTTPRequest(uploadRequest, with: configuration.requestServiceConfiguration, completion: action)
+
+        return ApiRequest(httpRequest: uploadRequest, httpRequestService: requestService)
+    }
+
+    ///Downloads file with given parameters
+    func downloadFile(from remoteFileUrl: URL, to localUrl: URL, apiHeaders: [ApiHeader]?, configuration: Configuration, useProgress: Bool, completion: ApiResponseCompletionHandler?) -> ApiRequest  {
+        let headers = httpHeaders(for: apiHeaders)
+        let action = requestCompletion(for: completion)
+        let downloadRequest = HttpDownloadRequest(url: remoteFileUrl, destinationUrl: localUrl, headers: headers, useProgress: useProgress)
+
+        requestService.sendHTTPRequest(downloadRequest, with: configuration.requestServiceConfiguration, completion: action)
+
+        return ApiRequest(httpRequest: downloadRequest, httpRequestService: requestService)
     }
 }

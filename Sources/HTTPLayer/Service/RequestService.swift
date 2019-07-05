@@ -8,6 +8,8 @@
 import Foundation
 import RxSwift
 
+typealias HttpRequestCompletionHandler = SessionServiceCompletionHandler
+
 final class RequestService: NSObject {
 
     private let fileManager: FileManager
@@ -17,10 +19,13 @@ final class RequestService: NSObject {
 
     ///Returns URLSession for given configuration. If session does not exist, it creates one.
     private func activeSession(for configuration: Configuration) -> SessionService {
-        if let session = activeSessions[configuration], session.isValid {
-            return session
+        if let session = activeSessions[configuration] {
+            if session.isValid {
+                return session
+            } else {
+                activeSessions.removeValue(forKey: configuration)
+            }
         }
-        activeSessions.removeValue(forKey: configuration)
         let service = SessionService(configuration: configuration)
         activeSessions[configuration] = service
         return service
@@ -53,9 +58,9 @@ extension RequestService {
 
      HttpDataRequest may run only with foreground configuration.
      */
-    func sendHTTPRequest(_ request: HttpDataRequest, with configuration: Configuration = .foreground) {
+    func sendHTTPRequest(_ request: HttpDataRequest, with configuration: Configuration = .foreground, completion: @escaping HttpRequestCompletionHandler) {
         let session = activeSession(for: configuration)
-        session.data(request: request.urlRequest, progress: progress(for: request), completion: completion(for: request))
+        session.data(request: request.urlRequest, progress: progress(for: request), completion: completion)
     }
 
     /**
@@ -65,9 +70,9 @@ extension RequestService {
        - request: An HttpUploadRequest object provides request-specific information such as the URL, HTTP method or URL of the file to upload.
        - configuration: RequestService.Configuration indicates upload request configuration.
      */
-    func sendHTTPRequest(_ request: HttpUploadRequest, with configuration: Configuration = .background) {
+    func sendHTTPRequest(_ request: HttpUploadRequest, with configuration: Configuration = .background, completion: @escaping HttpRequestCompletionHandler) {
         let session = activeSession(for: configuration)
-        session.upload(request: request.urlRequest, file: request.resourceUrl, progress: progress(for: request), completion: completion(for: request))
+        session.upload(request: request.urlRequest, file: request.resourceUrl, progress: progress(for: request), completion: completion)
     }
 
     /**
@@ -77,9 +82,9 @@ extension RequestService {
        - request: An HttpUploadRequest object provides request-specific information such as the URL, HTTP method or URL of the place on disc for downloading file.
        - configuration: RequestService.Configuration indicates download request configuration.
      */
-    func sendHTTPRequest(_ request: HttpDownloadRequest, with configuration: Configuration = .background) {
+    func sendHTTPRequest(_ request: HttpDownloadRequest, with configuration: Configuration = .background, completion: @escaping HttpRequestCompletionHandler) {
         let session = activeSession(for: configuration)
-        session.download(request: request.urlRequest, progress: progress(for: request), completion: completion(forDownload: request))
+        session.download(request: request.urlRequest, progress: progress(for: request), completion: completion)
     }
 
     /**
@@ -126,33 +131,6 @@ private extension RequestService {
         return { (totalBytesProcessed, totalBytesExpectedToProcess) in
             request.progress?.completedUnitCount = totalBytesProcessed
             request.progress?.totalUnitCount = totalBytesExpectedToProcess
-        }
-    }
-
-    ///Creates completion block for given request
-    func completion(for request: HttpRequest) -> SessionServiceCompletionHandler {
-        return { (response, error) in
-            if let error = error {
-                request.failureAction?.perform(with: error)
-            } else {
-                request.successAction?.perform(with: response)
-            }
-        }
-    }
-
-    ///Creates success block for given download request
-    func completion(forDownload request: HttpDownloadRequest) -> SessionServiceCompletionHandler {
-        return { [weak self] (response, error) in
-            if let error = error {
-                request.failureAction?.perform(with: error)
-            } else if let location = response?.resourceUrl {
-                if let error = self?.fileManager.copyFile(from: location, to: request.destinationUrl) {
-                    request.failureAction?.perform(with: error)
-                    return
-                }
-                response?.update(with: request.destinationUrl)
-            }
-            request.successAction?.perform(with: response)
         }
     }
 }
