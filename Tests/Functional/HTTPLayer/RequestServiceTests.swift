@@ -326,7 +326,9 @@ extension RequestServiceTests {
         }
 
         let request = HttpUploadRequest(url: url, method: method, resourceUrl: resourceUrl, useProgress: false)
-        requestService.sendHTTPRequest(request, with: .foreground, completion: completion)
+        DispatchQueue.global(qos: .utility).async {
+            self.requestService.sendHTTPRequest(request, with: .foreground, completion: completion)
+        }
 
         waitForExpectations(timeout: 300) { error in
             XCTAssertNil(error, "\(method.rawValue) request test failed with error: \(error!.localizedDescription)", file: file, line: line)

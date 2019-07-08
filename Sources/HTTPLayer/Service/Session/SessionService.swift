@@ -23,10 +23,12 @@ final class SessionService {
         serialScheduler = SerialDispatchQueueScheduler(queue: sessionQueue, internalSerialQueueName: "RxSwiftAPI.SessionService.serialScheduler")
         concurrentScheduler = ConcurrentDispatchQueueScheduler(queue: DispatchQueue(label: "RxSwiftAPI.SessionService.concurrentScheduler", qos: .utility))
 
-        setupURLSessionDelegate()
-        setupURLSessionTaskDelegate()
-        setupURLSessionDataDelegate()
-        setupURLSessionDownloadDelegate()
+        DispatchQueue.main.async {
+            self.setupURLSessionDelegate()
+            self.setupURLSessionTaskDelegate()
+            self.setupURLSessionDataDelegate()
+            self.setupURLSessionDownloadDelegate()
+        }
     }
 
     deinit {
