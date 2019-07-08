@@ -34,7 +34,7 @@ class ApiServiceTests: XCTestCase {
         if let response = response, let responseUrl = response.url {
             message = "Request to URL \(responseUrl) finished with status code \(response.statusCode.rawValue)."
         } else if let errorMessage = error?.localizedDescription {
-            message = "Request failed \(errorMessage)."
+            message = "Request failed: \(errorMessage)."
         } else {
             message = "Request failed."
         }
@@ -53,6 +53,8 @@ extension ApiServiceTests {
         var responseError: Error?
         let completion = { [weak self] (response: ApiResponse?, error: Error?) in
             self?.log(response, with: error)
+            response?.printPrettyBody()
+            print("--------------------")
             responseError = error
             responseExpectation.fulfill()
         }

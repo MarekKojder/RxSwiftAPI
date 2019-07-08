@@ -8,24 +8,19 @@
 import Foundation
 
 typealias SessionServiceProgressHandler = (_ totalBytesProcessed: Int64, _ totalBytesExpectedToProcess: Int64) -> ()
-typealias SessionServiceSuccessHandler = (_ response: HttpResponse) -> ()
-typealias SessionServiceFailureHandler = (_ error: Error) -> ()
+typealias SessionServiceCompletionHandler = (_ response: HttpResponse?, _ error: Error?) -> ()
 
 final class HttpCall {
     
-    private let progressBlock: SessionServiceProgressHandler
-    private let successBlock: SessionServiceSuccessHandler
-    private let failureBlock: SessionServiceFailureHandler
+    private let progressHandler: SessionServiceProgressHandler
+    private let completionHandler: SessionServiceCompletionHandler
     private(set) var response: HttpResponse?
+    private(set) var isCompleted: Bool
 
-    private var unknownError: Error {
-        return NSError(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil)
-    }
-
-    init(progressBlock: @escaping SessionServiceProgressHandler, successBlock: @escaping SessionServiceSuccessHandler, failureBlock: @escaping SessionServiceFailureHandler) {
-        self.progressBlock = progressBlock
-        self.successBlock = successBlock
-        self.failureBlock = failureBlock
+    init(progress: @escaping SessionServiceProgressHandler, completion: @escaping SessionServiceCompletionHandler) {
+        isCompleted = false
+        progressHandler = progress
+        completionHandler = completion
     }
 
     func update(with urlResponse: URLResponse) {
@@ -53,20 +48,13 @@ final class HttpCall {
     }
 
     func performProgress(totalBytesProcessed: Int64, totalBytesExpectedToProcess: Int64) {
-        progressBlock(totalBytesProcessed, totalBytesExpectedToProcess)
+        progressHandler(totalBytesProcessed, totalBytesExpectedToProcess)
     }
 
-    func performFailure(with error: Error?) {
-        //Action should run on other thread to not block delegate.
-        DispatchQueue.global().async {
-            self.failureBlock(error ?? self.unknownError)
-        }
-    }
-
-    func performSuccess(with response: HttpResponse) {
-        //Action should run on other thread to not block delegate.
-        DispatchQueue.global().async {
-            self.successBlock(response)
+    func performCompletion(response: HttpResponse? = nil, error: Error? = nil) {
+        DispatchQueue.global(qos: .utility).async {
+            self.completionHandler(response, error)
+            self.isCompleted = true
         }
     }
 }

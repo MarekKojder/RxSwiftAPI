@@ -18,9 +18,9 @@ class HttpDownloadRequest: HttpRequest {
 
     ///Method not allowed to use in current class.
     @available(*, unavailable)
-    private override init(url: URL, method: HttpMethod, headers: [HttpHeader]? = nil, onSuccess: ResponseAction? = nil, onFailure: ResponseAction? = nil, useProgress: Bool = false) {
+    private override init(url: URL, method: HttpMethod, headers: [HttpHeader]? = nil, useProgress: Bool = false) {
         self.destinationUrl = URL(fileURLWithPath: "")
-        super.init(url: url, method: method, onSuccess: onSuccess, onFailure: onFailure, useProgress: useProgress)
+        super.init(url: url, method: method, useProgress: useProgress)
     }
 
     /**
@@ -35,8 +35,8 @@ class HttpDownloadRequest: HttpRequest {
 
      - Returns: An initialized a HttpDownloadRequest object.
      */
-    init(url: URL, destinationUrl: URL, headers: [HttpHeader]? = nil, onSuccess: ResponseAction? = nil, onFailure: ResponseAction? = nil, useProgress: Bool = true) {
+    init(url: URL, destinationUrl: URL, headers: [HttpHeader]? = nil, useProgress: Bool = true) {
         self.destinationUrl = destinationUrl
-        super.init(url: url, method: .get, headers: headers, onSuccess: onSuccess, onFailure: onFailure, useProgress: useProgress)
+        super.init(url: url, method: .get, headers: headers, useProgress: useProgress)
     }
 }

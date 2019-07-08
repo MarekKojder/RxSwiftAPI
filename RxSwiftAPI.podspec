@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "RxSwiftAPI"
-  s.version      = "2.0.0"
+  s.version      = "2.0.1"
   s.summary      = "Simple reactive networking library based on URLSession with REST API support."
   s.description  = "RxSwiftAPI is simple networking library based on SwiftAPI, but improved ad uses RxSwift to allow using it in reactive applications."
   s.homepage     = "https://github.com/MarekKojder/RxSwiftAPI"
@@ -92,5 +92,6 @@ Pod::Spec.new do |s|
   #  you can include multiple dependencies to ensure it works.
 
   s.requires_arc = true
+  s.swift_version = "5.0"
 
 end

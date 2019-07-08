@@ -25,8 +25,8 @@ class HttpUploadRequest: HttpRequest {
 
      - Returns: An initialized a HttpUploadRequest object.
      */
-    init(url: URL, method: HttpMethod, resourceUrl: URL, headers: [HttpHeader]? = nil, onSuccess: ResponseAction? = nil, onFailure: ResponseAction? = nil, useProgress: Bool = true) {
+    init(url: URL, method: HttpMethod, resourceUrl: URL, headers: [HttpHeader]? = nil, useProgress: Bool = true) {
         self.resourceUrl = resourceUrl
-        super.init(url: url, method: method, headers: headers, onSuccess: onSuccess, onFailure: onFailure, useProgress: useProgress)
+        super.init(url: url, method: method, headers: headers, useProgress: useProgress)
     }
 }
