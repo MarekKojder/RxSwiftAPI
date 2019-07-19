@@ -1186,7 +1186,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 1020;
-				ORGANIZATIONNAME = XSolve;
+				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					EA3B4E1C2163A16E00BC730D = {
 						DevelopmentTeam = B4QB84STNF;

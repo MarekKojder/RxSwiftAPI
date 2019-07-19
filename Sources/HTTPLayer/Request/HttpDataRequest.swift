@@ -25,9 +25,9 @@ class HttpDataRequest: HttpRequest {
 
      - Returns: An initialized a HttpDataRequest object.
      */
-    init(url: URL, method: HttpMethod, body: Data? = nil, headers: [HttpHeader]? = nil, useProgress: Bool = false) {
+    init(url: URL, method: HttpMethod, body: Data? = nil, headers: [HttpHeader]? = nil) {
         self.body = body
-        super.init(url: url, method: method, headers: headers, useProgress: useProgress)
+        super.init(url: url, method: method, headers: headers)
     }
 
     override var urlRequest: URLRequest {

@@ -5,7 +5,8 @@
 //  Created by Marek Kojder on 13.01.2017.
 //
 
-import Foundation
+import RxSwift
+import RxCocoa
 
 public typealias ApiResponseCompletionHandler = (_ response: ApiResponse?, _ error: Error?) -> ()
 
@@ -272,20 +273,67 @@ private extension ApiService {
     func sendRequest(url: URL, method: ApiMethod, body: Data?, apiHeaders: [ApiHeader]?, configuration: Configuration, useProgress: Bool, completion: ApiResponseCompletionHandler?) -> ApiRequest {
         let headers = httpHeaders(for: apiHeaders)
         let action = requestCompletion(for: completion)
-        let httpRequest = HttpDataRequest(url: url, method: method.httpMethod, body: body, headers: headers, useProgress: useProgress)
+        let httpRequest = HttpDataRequest(url: url, method: method.httpMethod, body: body, headers: headers)
 
-        requestService.sendHTTPRequest(httpRequest, with: configuration.requestServiceConfiguration, completion: action)
+        requestService.sendHTTPRequest(httpRequest, with: configuration.requestServiceConfiguration, progress: nil, completion: action)
 
         return ApiRequest(httpRequest: httpRequest, httpRequestService: requestService)
     }
+
+    func sendRequest(url: URL, method: ApiMethod, body: Data?, apiHeaders: [ApiHeader]?, configuration: Configuration) -> Single<(ApiResponse)> {
+        return Single.create { [weak self] single in
+            guard let `self` = self else {
+                single(.error(ApiError.unknownError))
+                return Disposables.create()
+            }
+            let headers = self.httpHeaders(for: apiHeaders)
+            let httpRequest = HttpDataRequest(url: url, method: method.httpMethod, body: body, headers: headers)
+            let request = self.sendHTTPRequest(httpRequest, with: configuration, progress: nil) { (response, error) in
+                if let response = ApiResponse(response) {
+                    single(.success(response))
+                } else {
+                    single(.error(error ?? ApiError.unknownError))
+                }
+            }
+            return Disposables.create {
+                request.cancel()
+            }
+        }
+    }
+
+    func sendRequest(url: URL, method: ApiMethod, body: Data?, apiHeaders: [ApiHeader]?, configuration: Configuration) -> Observable<(Progress?, ApiResponse?)> {
+        return Observable.create { [weak self] observable in
+            guard let `self` = self else {
+                observable.onError(ApiError.unknownError)
+                return Disposables.create()
+            }
+
+            let headers = self.httpHeaders(for: apiHeaders)
+            let httpRequest = HttpDataRequest(url: url, method: method.httpMethod, body: body, headers: headers)
+
+            self.requestService.sendHTTPRequest(httpRequest, with: configuration.requestServiceConfiguration, progress: nil) { (response, error) in
+                if let response = ApiResponse(response) {
+                    observable.onNext((nil, response))
+                } else {
+                    observable.onError(error ?? ApiError.unknownError)
+                }
+            }
+            return Disposables.create { [weak self] in
+                self?.requestService.cancel(httpRequest)
+            }
+        }
+    }
+
+
+
 
     ///Uploads file with given parameters
     func uploadFile(at localFileUrl: URL, to destinationUrl: URL, method: ApiMethod, apiHeaders: [ApiHeader]?, configuration: Configuration, useProgress: Bool, completion: ApiResponseCompletionHandler?) -> ApiRequest  {
         let headers = httpHeaders(for: apiHeaders)
         let action = requestCompletion(for: completion)
-        let uploadRequest = HttpUploadRequest(url: destinationUrl, method: method.httpMethod, resourceUrl: localFileUrl, headers: headers, useProgress: useProgress)
+        let uploadRequest = HttpUploadRequest(url: destinationUrl, method: method.httpMethod, resourceUrl: localFileUrl, headers: headers)
 
-        requestService.sendHTTPRequest(uploadRequest, with: configuration.requestServiceConfiguration, completion: action)
+        requestService.sendHTTPRequest(uploadRequest, with: configuration.requestServiceConfiguration, progress: nil, completion: action)
 
         return ApiRequest(httpRequest: uploadRequest, httpRequestService: requestService)
     }
@@ -294,10 +342,28 @@ private extension ApiService {
     func downloadFile(from remoteFileUrl: URL, to localUrl: URL, apiHeaders: [ApiHeader]?, configuration: Configuration, useProgress: Bool, completion: ApiResponseCompletionHandler?) -> ApiRequest  {
         let headers = httpHeaders(for: apiHeaders)
         let action = requestCompletion(for: completion)
-        let downloadRequest = HttpDownloadRequest(url: remoteFileUrl, destinationUrl: localUrl, headers: headers, useProgress: useProgress)
+        let downloadRequest = HttpDownloadRequest(url: remoteFileUrl, destinationUrl: localUrl, headers: headers)
 
-        requestService.sendHTTPRequest(downloadRequest, with: configuration.requestServiceConfiguration, completion: action)
+        requestService.sendHTTPRequest(downloadRequest, with: configuration.requestServiceConfiguration, progress: nil, completion: action)
 
         return ApiRequest(httpRequest: downloadRequest, httpRequestService: requestService)
+    }
+}
+
+private extension ApiService {
+
+    func sendHTTPRequest(_ request: HttpDataRequest, with configuration: Configuration = .foreground, progress: SessionServiceProgressHandler?, completion: @escaping HttpRequestCompletionHandler) -> ApiRequest {
+        requestService.sendHTTPRequest(request, with: configuration.requestServiceConfiguration, progress: progress, completion: completion)
+        return ApiRequest(httpRequest: request, httpRequestService: requestService)
+    }
+
+    func sendHTTPRequest(_ request: HttpUploadRequest, with configuration: Configuration = .background, progress: SessionServiceProgressHandler?, completion: @escaping HttpRequestCompletionHandler) -> ApiRequest {
+        requestService.sendHTTPRequest(request, with: configuration.requestServiceConfiguration, progress: progress, completion: completion)
+        return ApiRequest(httpRequest: request, httpRequestService: requestService)
+    }
+
+    func sendHTTPRequest(_ request: HttpDownloadRequest, with configuration: Configuration = .background, progress: SessionServiceProgressHandler?, completion: @escaping HttpRequestCompletionHandler) -> ApiRequest {
+        requestService.sendHTTPRequest(request, with: configuration.requestServiceConfiguration, progress: progress, completion: completion)
+        return ApiRequest(httpRequest: request, httpRequestService: requestService)
     }
 }
