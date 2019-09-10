@@ -223,7 +223,6 @@ extension ApiServiceTests {
             XCTAssertNil(error, "Test failed with error: \(error!.localizedDescription)")
             XCTAssertNil(responseError, "Download request failed with error: \(responseError!.localizedDescription)")
             XCTAssertNotNil(request.uuid)
-            XCTAssertNotNil(request.progress)
         }
     }
 
@@ -265,7 +264,6 @@ extension ApiServiceTests {
             XCTAssertNil(error, "Test failed with error: \(error!.localizedDescription)")
             XCTAssertNil(responseError, "Custom download request failed with error: \(responseError!.localizedDescription)")
             XCTAssertNotNil(request.uuid)
-            XCTAssertNil(request.progress)
         }
     }
 

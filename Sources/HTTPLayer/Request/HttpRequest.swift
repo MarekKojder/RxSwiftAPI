@@ -21,9 +21,6 @@ class HttpRequest {
     ///Array of HTTP header fields
     let headerFields: [HttpHeader]?
 
-    ///Progress object which allows to follow request progress.
-    var progress: Progress?
-
     /**
      Creates and initializes a HttpRequest with the given parameters.
 
@@ -36,14 +33,11 @@ class HttpRequest {
 
      - Returns: An initialized a HttpRequest object.
      */
-    init(url: URL, method: HttpMethod, headers: [HttpHeader]? = nil, useProgress: Bool = false) {
+    init(url: URL, method: HttpMethod, headers: [HttpHeader]? = nil) {
         self.uuid = UUID()
         self.url = url
         self.method = method
         self.headerFields = headers
-        if useProgress {
-            self.progress = Progress(totalUnitCount: -1)
-        }
     }
 
     ///*URLRequest* representation of current object.

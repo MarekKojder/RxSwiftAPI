@@ -12,6 +12,11 @@ struct ExampleData: Codable {
     let url: URL
 }
 
+struct ExampleParameters: Codable {
+    let parameter: String
+    let count: Int
+}
+
 struct ExampleFailData: Codable {
     let notExistingProperty: Int
 }
@@ -74,9 +79,10 @@ extension RestServiceTests {
     func testGet() {
         let type = ExampleData.self
         let path = ExamplePath.get
+        let parameters = ExampleParameters(parameter: "parameter", count: 1)
         let responseExpectation = expectation(description: "Expect GET response")
         var responseFailed = true
-        let completion = { [weak self] (data: ExampleData?, details: RestResponseDetails) in
+        let completion: RestResponseCompletionHandler<ExampleData> = { [weak self] (data, details) in
             self?.log(details, for: path)
             details.printPrettyBody()
             print("--------------------")
@@ -84,7 +90,7 @@ extension RestServiceTests {
             responseExpectation.fulfill()
         }
         do {
-            try restService.get(type: type, from: path, completion: completion)
+            try restService.get(type: type, from: path, parameters: parameters, completion: completion)
         } catch {
             XCTFail(error.localizedDescription)
         }
@@ -99,7 +105,7 @@ extension RestServiceTests {
         let path = ExamplePath.get
         let responseExpectation = expectation(description: "Expect GET response")
         var responseError: Error? = nil
-        let completion = { [weak self] (data: ExampleFailData?, details: RestResponseDetails) in
+        let completion: RestResponseCompletionHandler<ExampleFailData> = { [weak self] (data, details) in
             self?.log(details, for: path)
             responseError = details.error
             responseExpectation.fulfill()
@@ -120,7 +126,7 @@ extension RestServiceTests {
         let path = ExamplePath.notFound
         let responseExpectation = expectation(description: "Expect GET response")
         var responseFailed = true
-        let completion = { [weak self] (data: ExampleData?, details: RestResponseDetails) in
+        let completion: RestResponseCompletionHandler<ExampleData> = { [weak self] (data, details) in
             self?.log(details, for: path)
             responseFailed = !details.statusCode.isSuccess
             responseExpectation.fulfill()

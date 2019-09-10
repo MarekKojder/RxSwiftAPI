@@ -22,6 +22,11 @@ struct ApiError {
         return errorWith(code: -10, description: "Rest service did not receive response.")
     }
 
+    ///Error called when service did not received response.
+    static var unknownError: Error {
+        return errorWith(code: -11, description: "Unknown error.")
+    }
+
     /**
      Creates Error representation of not success status code.
 

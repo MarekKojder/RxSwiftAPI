@@ -21,33 +21,30 @@ class HttpRequestTests: XCTestCase {
 
         XCTAssertEqual(request.url, url)
         XCTAssertEqual(request.method, method)
-        XCTAssertNil(request.progress)
     }
 
     func testFullConstructorWithoutProgress() {
         let url = rootURL.appendingPathComponent("posts/1")
         let method = HttpMethod.get
-        let request = HttpRequest(url: url, method: method, useProgress: false)
+        let request = HttpRequest(url: url, method: method)
 
         XCTAssertEqual(request.url, url)
         XCTAssertEqual(request.method, method)
-        XCTAssertNil(request.progress)
     }
 
     func testFullConstructorWithProgress() {
         let url = rootURL.appendingPathComponent("posts/1")
         let method = HttpMethod.get
-        let request = HttpRequest(url: url, method: method, useProgress: true)
+        let request = HttpRequest(url: url, method: method)
 
         XCTAssertEqual(request.url, url)
         XCTAssertEqual(request.method, method)
-        XCTAssertNotNil(request.progress)
     }
 
     func testEqualityOfEqualRequests() {
         let url = rootURL.appendingPathComponent("posts/1")
         let method = HttpMethod.get
-        let request1 = HttpRequest(url: url, method: method, useProgress: true)
+        let request1 = HttpRequest(url: url, method: method)
         let request2 = request1
 
         XCTAssertTrue(request1 == request2)
@@ -55,9 +52,9 @@ class HttpRequestTests: XCTestCase {
 
     func testEqualityOfNotEqualRequests() {
         let url = rootURL.appendingPathComponent("posts/1")
-        let request1 = HttpRequest(url: url, method: .get, useProgress: true)
-        let request2 = HttpRequest(url: url, method: .post, useProgress: true)
-        let request3 = HttpRequest(url: url, method: .post, useProgress: true)
+        let request1 = HttpRequest(url: url, method: .get)
+        let request2 = HttpRequest(url: url, method: .post)
+        let request3 = HttpRequest(url: url, method: .post)
 
         XCTAssertFalse(request1 == request2)
         XCTAssertFalse(request1 == request3)
@@ -67,7 +64,7 @@ class HttpRequestTests: XCTestCase {
     func testUrlRequest() {
         let url = rootURL.appendingPathComponent("posts/1")
         let method = HttpMethod.get
-        let request = HttpRequest(url: url, method: method, useProgress: true)
+        let request = HttpRequest(url: url, method: method)
         let urlRequest = request.urlRequest
 
         XCTAssertEqual(urlRequest.url, url)
@@ -76,8 +73,8 @@ class HttpRequestTests: XCTestCase {
 
     func testHashValue() {
         let url = rootURL.appendingPathComponent("posts/1")
-        let request1 = HttpRequest(url: url, method: .post, useProgress: true)
-        let request2 = HttpRequest(url: url, method: .get, useProgress: true)
+        let request1 = HttpRequest(url: url, method: .post)
+        let request2 = HttpRequest(url: url, method: .get)
 
         XCTAssertTrue(request1.hashValue == request1.hashValue)
         XCTAssertFalse(request1.hashValue == request2.hashValue)

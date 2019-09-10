@@ -66,7 +66,7 @@ else
 fi
 
 #Checking if version in podspec fits to current tag
-spec_version=$(grep ".version[^.]" $spec_file | grep -o '".*"' | sed 's/"//g')
+spec_version=$(grep "s.version[^.]" $spec_file | grep -o '".*"' | sed 's/"//g')
 tag_version=${last_tag%"-beta"}
 
 if [ "$spec_version" != "$tag_version" ]; then

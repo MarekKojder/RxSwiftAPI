@@ -26,11 +26,6 @@ public struct ApiRequest {
         return request.uuid
     }
 
-    ///Progress object which allows to follow request progress.
-    public var progress: Progress? {
-        return request.progress
-    }
-
     ///Temporarily suspends request.
     public func suspend() {
         requestService.suspend(request)

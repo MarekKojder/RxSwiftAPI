@@ -46,7 +46,7 @@ extension SessionService {
        - progress: Block for hangling request progress.
        - completion: Block for hangling request completion.
      */
-    func data(request: URLRequest, progress: @escaping SessionServiceProgressHandler, completion: @escaping SessionServiceCompletionHandler) {
+    func data(request: URLRequest, progress: SessionServiceProgressHandler?, completion: @escaping SessionServiceCompletionHandler) {
         safely(add: HttpCall(progress: progress, completion: completion)) { [weak self] in
             return self?.urlSession.dataTask(with: request)
         }
@@ -60,7 +60,7 @@ extension SessionService {
        - progress: Block for hangling request progress.
        - completion: Block for hangling request completion.
      */
-    func upload(request: URLRequest, file: URL, progress: @escaping SessionServiceProgressHandler, completion: @escaping SessionServiceCompletionHandler) {
+    func upload(request: URLRequest, file: URL, progress: SessionServiceProgressHandler?, completion: @escaping SessionServiceCompletionHandler) {
         safely(add: HttpCall(progress: progress, completion: completion)) { [weak self] in
             return self?.urlSession.uploadTask(with: request, fromFile: file)
         }
@@ -74,7 +74,7 @@ extension SessionService {
        - progress: Block for hangling request progress.
        - completion: Block for hangling request completion.
      */
-    func download(request: URLRequest, progress: @escaping SessionServiceProgressHandler, completion: @escaping SessionServiceCompletionHandler) {
+    func download(request: URLRequest, progress: SessionServiceProgressHandler?, completion: @escaping SessionServiceCompletionHandler) {
         safely(add: HttpCall(progress: progress, completion: completion)) { [weak self] in
             return self?.urlSession.downloadTask(with: request)
         }

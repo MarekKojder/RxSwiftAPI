@@ -3,6 +3,10 @@
 ## Upcoming
 - Refactor and migration to Rx of APILayer
 
+## [v2.0.2](https://github.com/MarekKojder/RxSwiftAPI/tree/2.0.2) (2019-09-10)
+- Fixed failing tests
+- Added possibility to send get request with codable parameters.
+
 ## [v2.0.1](https://github.com/MarekKojder/RxSwiftAPI/tree/2.0.1) (2019-07-08)
 - Refactored HTTPLayer
 - Improved thread management for URLSessionTasks

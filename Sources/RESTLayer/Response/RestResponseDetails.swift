@@ -41,11 +41,6 @@ public struct RestResponseDetails {
             print("Body is nil.")
             return
         }
-        do {
-            let jsonObject = try JSONSerialization.jsonObject(with: body)
-            print(NSString(data: try JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted), encoding: String.Encoding.utf8.rawValue) ?? "Body could not be serialized!")
-        } catch {
-            print(error.localizedDescription)
-        }
+        body.print()
     }
 }

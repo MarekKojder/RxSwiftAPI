@@ -12,12 +12,12 @@ typealias SessionServiceCompletionHandler = (_ response: HttpResponse?, _ error:
 
 final class HttpCall {
     
-    private let progressHandler: SessionServiceProgressHandler
+    private let progressHandler: SessionServiceProgressHandler?
     private let completionHandler: SessionServiceCompletionHandler
     private(set) var response: HttpResponse?
     private(set) var isCompleted: Bool
 
-    init(progress: @escaping SessionServiceProgressHandler, completion: @escaping SessionServiceCompletionHandler) {
+    init(progress: SessionServiceProgressHandler?, completion: @escaping SessionServiceCompletionHandler) {
         isCompleted = false
         progressHandler = progress
         completionHandler = completion
@@ -48,7 +48,7 @@ final class HttpCall {
     }
 
     func performProgress(totalBytesProcessed: Int64, totalBytesExpectedToProcess: Int64) {
-        progressHandler(totalBytesProcessed, totalBytesExpectedToProcess)
+        progressHandler?(totalBytesProcessed, totalBytesExpectedToProcess)
     }
 
     func performCompletion(response: HttpResponse? = nil, error: Error? = nil) {

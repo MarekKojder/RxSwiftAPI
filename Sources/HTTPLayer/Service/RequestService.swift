@@ -58,9 +58,9 @@ extension RequestService {
 
      HttpDataRequest may run only with foreground configuration.
      */
-    func sendHTTPRequest(_ request: HttpDataRequest, with configuration: Configuration = .foreground, completion: @escaping HttpRequestCompletionHandler) {
+    func sendHTTPRequest(_ request: HttpDataRequest, with configuration: Configuration = .foreground, progress: SessionServiceProgressHandler?, completion: @escaping HttpRequestCompletionHandler) {
         let session = activeSession(for: configuration)
-        session.data(request: request.urlRequest, progress: progress(for: request), completion: completion)
+        session.data(request: request.urlRequest, progress: progress, completion: completion)
     }
 
     /**
@@ -70,9 +70,9 @@ extension RequestService {
        - request: An HttpUploadRequest object provides request-specific information such as the URL, HTTP method or URL of the file to upload.
        - configuration: RequestService.Configuration indicates upload request configuration.
      */
-    func sendHTTPRequest(_ request: HttpUploadRequest, with configuration: Configuration = .background, completion: @escaping HttpRequestCompletionHandler) {
+    func sendHTTPRequest(_ request: HttpUploadRequest, with configuration: Configuration = .background, progress: SessionServiceProgressHandler?, completion: @escaping HttpRequestCompletionHandler) {
         let session = activeSession(for: configuration)
-        session.upload(request: request.urlRequest, file: request.resourceUrl, progress: progress(for: request), completion: completion)
+        session.upload(request: request.urlRequest, file: request.resourceUrl, progress: progress, completion: completion)
     }
 
     /**
@@ -82,9 +82,9 @@ extension RequestService {
        - request: An HttpUploadRequest object provides request-specific information such as the URL, HTTP method or URL of the place on disc for downloading file.
        - configuration: RequestService.Configuration indicates download request configuration.
      */
-    func sendHTTPRequest(_ request: HttpDownloadRequest, with configuration: Configuration = .background, completion: @escaping HttpRequestCompletionHandler) {
+    func sendHTTPRequest(_ request: HttpDownloadRequest, with configuration: Configuration = .background, progress: SessionServiceProgressHandler?, completion: @escaping HttpRequestCompletionHandler) {
         let session = activeSession(for: configuration)
-        session.download(request: request.urlRequest, progress: progress(for: request), completion: completion)
+        session.download(request: request.urlRequest, progress: progress, completion: completion)
     }
 
     /**
@@ -94,7 +94,6 @@ extension RequestService {
      */
     func suspend(_ request: HttpRequest) {
         activeSessions.forEach{ $0.value.suspend(request.urlRequest) }
-        request.progress?.pause()
     }
 
     /**
@@ -105,7 +104,6 @@ extension RequestService {
     @available(iOS 9.0, OSX 10.11, *)
     func resume(_ request: HttpRequest) {
         activeSessions.forEach{ $0.value.resume(request.urlRequest) }
-        request.progress?.resume()
     }
 
     /**
@@ -115,22 +113,10 @@ extension RequestService {
      */
     func cancel(_ request: HttpRequest) {
         activeSessions.forEach{ $0.value.cancel(request.urlRequest) }
-        request.progress?.cancel()
     }
 
     ///Cancels all currently running HTTP requests.
     func cancelAllRequests() {
         activeSessions.forEach{ $0.value.cancelAllRequests() }
-    }
-}
-
-private extension RequestService {
-
-    ///Creates progress block for given request
-    func progress(for request: HttpRequest) -> SessionServiceProgressHandler {
-        return { (totalBytesProcessed, totalBytesExpectedToProcess) in
-            request.progress?.completedUnitCount = totalBytesProcessed
-            request.progress?.totalUnitCount = totalBytesExpectedToProcess
-        }
     }
 }

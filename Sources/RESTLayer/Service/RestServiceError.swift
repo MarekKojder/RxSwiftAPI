@@ -16,6 +16,7 @@ public extension RestService {
      */
     enum Error: Swift.Error {
         case url
+        case urlComponents
     }
 }
 
@@ -24,7 +25,9 @@ extension RestService.Error: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .url:
-            return "URL cannot be formed with given base URL, API path and resource path."
+            return "URL cannot be formed with given base URL, API path, resource path and parameters."
+        case .urlComponents:
+            return "Could not create URLComponent from given URL."
         }
     }
 }
