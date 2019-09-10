@@ -63,6 +63,26 @@ public extension RestService {
     }
 
     /**
+     Sends HTTP GET request.
+     - Parameters:
+       - type: Type conforming *Decodable* protocol which should be returned in completion block.
+       - path: Path of the resource.
+       - parameters: Query items for request.
+       - aditionalHeaders: Additional header fields which should be sent with request.
+       - useProgress: Flag indicates if Progress object should be created.
+       - completion: Closure called when request is finished.
+       - Throws: RestService.Error if creating *URL* failed.
+     - Returns: ApiRequest object which allows to follow progress and manage request.
+     */
+    @discardableResult
+    func get<Parameters: Encodable, Response: Decodable>(type: Response.Type, from path: ResourcePath, parameters: Parameters, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = false, completion: RestResponseCompletionHandler<Response>? = nil) throws -> ApiRequest {
+        let url = try requestUrl(for: path, with: parameters)
+        let headers = apiHeaders(adding: aditionalHeaders)
+        let completion = completionHandler(for: type, coder: coder, with: completion)
+        return apiService.getData(from: url, with: headers, useProgress: useProgress, completion: completion)
+    }
+
+    /**
      Sends HTTP POST request.
      - Parameters:
        - value: Value of type conforming *Encodable* protocol which data should be sent with request.
@@ -225,6 +245,26 @@ public extension RestService {
     }
 
     /**
+     Sends HTTP GET request for file.
+     - Parameters:
+       - path: Path of file to download.
+       - parameters: Query items for request.
+       - destinationUrl: Local url, where file should be saved.
+       - inBackground: Flag indicates if downloading should be performed in background or foreground.
+       - aditionalHeaders: Additional header fields which should be sent with request.
+       - useProgress: Flag indicates if Progress object should be created.
+       - completion: Closure called when request is finished.
+     - Throws: RestService.Error if creating *URL* failed.
+     - Returns: ApiRequest object which allows to follow progress and manage request.
+     */
+    func getFile<Parameters: Encodable>(at path: ResourcePath, parameters: Parameters, saveAt destinationUrl: URL, inBackground: Bool = true, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = true, completion: RestSimpleResponseCompletionHandler? = nil) throws -> ApiRequest {
+        let url = try requestUrl(for: path, with: parameters)
+        let headers = apiHeaders(adding: aditionalHeaders)
+        let completion = completionHandler(with: completion)
+        return apiService.downloadFile(from: url, to: destinationUrl, with: headers, inBackground: inBackground, useProgress: useProgress, completion: completion)
+    }
+
+    /**
      Sends HTTP POST request with file.
      - Parameters:
        - url: Local url, where file should be saved.
@@ -306,6 +346,28 @@ private extension RestService {
             throw RestService.Error.url
         }
         return finalUrl
+    }
+
+    ///Creates full url by joining `baseUrl`, `apiPath` given `path` and `parameters`.
+    func requestUrl<T: Encodable>(for path: ResourcePath, with parameters: T) throws -> URL {
+        let fullUrl = try requestUrl(for: path)
+        let data = try coder.encode(parameters)
+        guard let dictionary = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any?] else {
+            let message = "Could not encode parameters to [String : Any?] dictionary!"
+            throw EncodingError.invalidValue(parameters, EncodingError.Context(codingPath: [], debugDescription: message))
+        }
+        guard var components = URLComponents(url: fullUrl, resolvingAgainstBaseURL: false) else {
+            throw RestService.Error.urlComponents
+        }
+        var items = components.queryItems ?? [URLQueryItem]()
+        let itemsToAppend = dictionary.map({ URLQueryItem(name: $0.key, value: $0.value != nil ? "\($0.value!)" : nil) })
+        items.append(contentsOf: itemsToAppend)
+        components.queryItems = items
+
+        guard let urlWithParameters = components.url else {
+            throw RestService.Error.url
+        }
+        return urlWithParameters
     }
 
     ///Merges `headerFields` with giver aditional `headers`.

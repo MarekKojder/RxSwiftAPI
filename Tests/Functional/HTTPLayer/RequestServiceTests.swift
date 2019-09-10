@@ -112,8 +112,8 @@ extension RequestServiceTests {
             responseExpectation.fulfill()
         }
 
-        let request = HttpDownloadRequest(url: fileUrl, destinationUrl: destinationUrl, useProgress: false)
-        requestService.sendHTTPRequest(request, with: .foreground, completion: completion)
+        let request = HttpDownloadRequest(url: fileUrl, destinationUrl: destinationUrl)
+        requestService.sendHTTPRequest(request, with: .foreground, progress: nil, completion: completion)
 
         waitForExpectations(timeout: 300) { error in
             XCTAssertNil(error, "Download request test failed with error: \(error!.localizedDescription)")
@@ -152,8 +152,8 @@ extension RequestServiceTests {
             responseExpectation.fulfill()
         }
 
-        let request = HttpDownloadRequest(url: fileUrl, destinationUrl: destinationUrl, useProgress: false)
-        requestService.sendHTTPRequest(request, with: .foreground, completion: completion)
+        let request = HttpDownloadRequest(url: fileUrl, destinationUrl: destinationUrl)
+        requestService.sendHTTPRequest(request, with: .foreground, progress: nil, completion: completion)
         requestService.cancel(request)
 
         waitForExpectations(timeout: 10) { error in
@@ -194,11 +194,11 @@ extension RequestServiceTests {
             responseExpectation.fulfill()
         }
         
-        let request1 = HttpDownloadRequest(url: fileUrl1, destinationUrl: destinationUrl, useProgress: false)
-        let request2 = HttpDownloadRequest(url: fileUrl2, destinationUrl: destinationUrl, useProgress: false)
+        let request1 = HttpDownloadRequest(url: fileUrl1, destinationUrl: destinationUrl)
+        let request2 = HttpDownloadRequest(url: fileUrl2, destinationUrl: destinationUrl)
 
-        requestService.sendHTTPRequest(request1, with: .foreground, completion: {_, _ in })
-        requestService.sendHTTPRequest(request2, with: .foreground, completion: completion)
+        requestService.sendHTTPRequest(request1, with: .foreground, progress: nil, completion: {_, _ in })
+        requestService.sendHTTPRequest(request2, with: .foreground, progress: nil, completion: completion)
         requestService.cancelAllRequests()
 
         waitForExpectations(timeout: 10) { error in
@@ -239,7 +239,7 @@ extension RequestServiceTests {
         }
 
         let request = HttpDataRequest(url: url, method: method)
-        requestService.sendHTTPRequest(request, completion: completion)
+        requestService.sendHTTPRequest(request, progress: nil, completion: completion)
         requestService.suspend(request)
         requestService.resume(request)
 
@@ -288,7 +288,7 @@ extension RequestServiceTests {
         }
 
         let request = HttpDataRequest(url: url, method: method, body: body)
-        requestService.sendHTTPRequest(request, completion: completion)
+        requestService.sendHTTPRequest(request, progress: nil, completion: completion)
 
         waitForExpectations(timeout: 30) { error in
             XCTAssertNil(error, "\(method.rawValue) request test failed with error: \(error!.localizedDescription)", file: file, line: line)
@@ -325,9 +325,9 @@ extension RequestServiceTests {
             responseExpectation.fulfill()
         }
 
-        let request = HttpUploadRequest(url: url, method: method, resourceUrl: resourceUrl, useProgress: false)
+        let request = HttpUploadRequest(url: url, method: method, resourceUrl: resourceUrl)
         DispatchQueue.global(qos: .utility).async {
-            self.requestService.sendHTTPRequest(request, with: .foreground, completion: completion)
+            self.requestService.sendHTTPRequest(request, with: .foreground, progress: nil, completion: completion)
         }
 
         waitForExpectations(timeout: 300) { error in

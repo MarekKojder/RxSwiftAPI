@@ -22,19 +22,18 @@ class HttpDataRequestTests: XCTestCase {
         let url = rootURL.appendingPathComponent("posts/1")
         let method = HttpMethod.get
         let body = exampleBody
-        let request = HttpDataRequest(url: url, method: method, body: body, useProgress: true)
+        let request = HttpDataRequest(url: url, method: method, body: body)
 
         XCTAssertEqual(request.url, url)
         XCTAssertEqual(request.method, method)
         XCTAssertEqual(request.body, body)
-        XCTAssertNotNil(request.progress)
     }
 
     func testUrlRequest() {
         let url = rootURL.appendingPathComponent("posts/1")
         let method = HttpMethod.get
         let body = exampleBody
-        let request = HttpDataRequest(url: url, method: method, body: body, useProgress: true)
+        let request = HttpDataRequest(url: url, method: method, body: body)
         let urlRequest = request.urlRequest
 
         XCTAssertEqual(urlRequest.url, url)
@@ -46,8 +45,8 @@ class HttpDataRequestTests: XCTestCase {
         let url = rootURL.appendingPathComponent("posts/1")
         let method = HttpMethod.get
         let body = exampleBody
-        let request1 = HttpDataRequest(url: url, method: method, body: body, useProgress: true)
-        let request2 = HttpDataRequest(url: url, method: method, body: nil, useProgress: true)
+        let request1 = HttpDataRequest(url: url, method: method, body: body)
+        let request2 = HttpDataRequest(url: url, method: method, body: nil)
 
         XCTAssertTrue(request1.hashValue == request1.hashValue)
         XCTAssertFalse(request1.hashValue == request2.hashValue)
