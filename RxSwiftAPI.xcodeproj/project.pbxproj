@@ -1247,11 +1247,11 @@
 			};
 			buildConfigurationList = EA06580B1E03EBF000B46CEA /* Build configuration list for PBXProject "RxSwiftAPI" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
+				Base,
 			);
 			mainGroup = EA0658071E03EBF000B46CEA;
 			productRefGroup = EA0658121E03EBF000B46CEA /* Products */;
