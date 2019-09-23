@@ -3,6 +3,9 @@
 ## Upcoming
 - Refactor and migration to Rx of APILayer
 
+## [v2.0.4](https://github.com/MarekKojder/RxSwiftAPI/tree/2.0.4) (2019-09-23)
+- Small cleanup of `RestService`.
+
 ## [v2.0.3](https://github.com/MarekKojder/RxSwiftAPI/tree/2.0.3) (2019-09-23)
 - Added possibility to send get request in background.
 
