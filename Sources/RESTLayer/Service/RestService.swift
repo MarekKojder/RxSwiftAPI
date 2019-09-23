@@ -55,11 +55,11 @@ public extension RestService {
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
     @discardableResult
-    func get<Response: Decodable>(type: Response.Type, from path: ResourcePath, with aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = false, completion: RestResponseCompletionHandler<Response>? = nil) throws -> ApiRequest {
+    func get<Response: Decodable>(type: Response.Type, from path: ResourcePath, with aditionalHeaders: [ApiHeader]? = nil, configuration: ApiService.Configuration = .foreground, useProgress: Bool = false, completion: RestResponseCompletionHandler<Response>? = nil) throws -> ApiRequest {
         let url = try requestUrl(for: path)
         let headers = apiHeaders(adding: aditionalHeaders)
         let completion = completionHandler(for: type, coder: coder, with: completion)
-        return apiService.getData(from: url, with: headers, useProgress: useProgress, completion: completion)
+        return apiService.getData(from: url, with: headers, configuration: configuration, useProgress: useProgress, completion: completion)
     }
 
     /**
@@ -75,11 +75,11 @@ public extension RestService {
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
     @discardableResult
-    func get<Parameters: Encodable, Response: Decodable>(type: Response.Type, from path: ResourcePath, parameters: Parameters, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = false, completion: RestResponseCompletionHandler<Response>? = nil) throws -> ApiRequest {
+    func get<Parameters: Encodable, Response: Decodable>(type: Response.Type, from path: ResourcePath, parameters: Parameters, aditionalHeaders: [ApiHeader]? = nil, configuration: ApiService.Configuration = .foreground, useProgress: Bool = false, completion: RestResponseCompletionHandler<Response>? = nil) throws -> ApiRequest {
         let url = try requestUrl(for: path, with: parameters)
         let headers = apiHeaders(adding: aditionalHeaders)
         let completion = completionHandler(for: type, coder: coder, with: completion)
-        return apiService.getData(from: url, with: headers, useProgress: useProgress, completion: completion)
+        return apiService.getData(from: url, with: headers, configuration: configuration, useProgress: useProgress, completion: completion)
     }
 
     /**
@@ -238,10 +238,8 @@ public extension RestService {
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
     func getFile(at path: ResourcePath, saveAt destinationUrl: URL, inBackground: Bool = true, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = true, completion: RestSimpleResponseCompletionHandler? = nil) throws -> ApiRequest {
-        let url = try requestUrl(for: path)
-        let headers = apiHeaders(adding: aditionalHeaders)
-        let completion = completionHandler(with: completion)
-        return apiService.downloadFile(from: url, to: destinationUrl, with: headers, inBackground: inBackground, useProgress: useProgress, completion: completion)
+        let parameters: EmptyData? = nil
+        return try getFile(at: path, parameters: parameters, saveAt: destinationUrl, inBackground: inBackground, aditionalHeaders: aditionalHeaders, useProgress: useProgress, completion: completion)
     }
 
     /**
@@ -257,7 +255,7 @@ public extension RestService {
      - Throws: RestService.Error if creating *URL* failed.
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
-    func getFile<Parameters: Encodable>(at path: ResourcePath, parameters: Parameters, saveAt destinationUrl: URL, inBackground: Bool = true, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = true, completion: RestSimpleResponseCompletionHandler? = nil) throws -> ApiRequest {
+    func getFile<Parameters: Encodable>(at path: ResourcePath, parameters: Parameters?, saveAt destinationUrl: URL, inBackground: Bool = true, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = true, completion: RestSimpleResponseCompletionHandler? = nil) throws -> ApiRequest {
         let url = try requestUrl(for: path, with: parameters)
         let headers = apiHeaders(adding: aditionalHeaders)
         let completion = completionHandler(with: completion)
@@ -334,6 +332,8 @@ public extension RestService {
 //MARK: - Parameter factories
 private extension RestService {
 
+    struct EmptyData: Codable {}
+
     ///Creates full url by joining `baseUrl`, `apiPath` and given `path`.
     func requestUrl(for path: ResourcePath) throws -> URL {
         let url: String
@@ -349,12 +349,18 @@ private extension RestService {
     }
 
     ///Creates full url by joining `baseUrl`, `apiPath` given `path` and `parameters`.
-    func requestUrl<T: Encodable>(for path: ResourcePath, with parameters: T) throws -> URL {
+    func requestUrl<T: Encodable>(for path: ResourcePath, with parameters: T?) throws -> URL {
         let fullUrl = try requestUrl(for: path)
+        guard let parameters = parameters else {
+            return fullUrl
+        }
         let data = try coder.encode(parameters)
         guard let dictionary = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any?] else {
             let message = "Could not encode parameters to [String : Any?] dictionary!"
             throw EncodingError.invalidValue(parameters, EncodingError.Context(codingPath: [], debugDescription: message))
+        }
+        if dictionary.isEmpty {
+            return fullUrl
         }
         guard var components = URLComponents(url: fullUrl, resolvingAgainstBaseURL: false) else {
             throw RestService.Error.urlComponents
