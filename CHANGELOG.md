@@ -3,6 +3,9 @@
 ## Upcoming
 - Refactor and migration to Rx of APILayer
 
+## [v2.0.3](https://github.com/MarekKojder/RxSwiftAPI/tree/2.0.3) (2019-09-23)
+- Added possibility to send get request in background.
+
 ## [v2.0.2](https://github.com/MarekKojder/RxSwiftAPI/tree/2.0.2) (2019-09-10)
 - Fixed failing tests
 - Added possibility to send get request with codable parameters.
