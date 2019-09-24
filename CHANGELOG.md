@@ -3,6 +3,9 @@
 ## Upcoming
 - Refactor and migration to Rx of APILayer
 
+## [v2.0.5](https://github.com/MarekKojder/RxSwiftAPI/tree/2.0.5) (2019-09-24)
+- Hotfix of `RestService`.
+
 ## [v2.0.4](https://github.com/MarekKojder/RxSwiftAPI/tree/2.0.4) (2019-09-23)
 - Small cleanup of `RestService`.
 
