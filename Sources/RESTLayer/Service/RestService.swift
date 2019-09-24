@@ -57,14 +57,11 @@ public extension RestService {
      */
     @discardableResult
     func get<Response: Decodable>(type: Response.Type, from path: ResourcePath, with aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = false, inBackground: Bool = false, completion: RestResponseCompletionHandler<Response>? = nil) throws -> ApiRequest {
-        let parameters: EmptyData? = nil
-        return try get(type: type,
-                       from: path,
-                       parameters: parameters,
-                       aditionalHeaders: aditionalHeaders,
-                       useProgress: useProgress,
-                       inBackground: inBackground,
-                       completion: completion)
+        return apiService.getData(from: try requestUrl(for: path),
+                                  with: apiHeaders(adding: aditionalHeaders),
+                                  configuration: inBackground ? .background : .foreground,
+                                  useProgress: useProgress,
+                                  completion: completionHandler(for: type, coder: coder, with: completion))
     }
 
     /**
@@ -285,8 +282,12 @@ public extension RestService {
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
     func getFile(at path: ResourcePath, saveAt destinationUrl: URL, inBackground: Bool = true, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = true, completion: RestSimpleResponseCompletionHandler? = nil) throws -> ApiRequest {
-        let parameters: EmptyData? = nil
-        return try getFile(at: path, parameters: parameters, saveAt: destinationUrl, inBackground: inBackground, aditionalHeaders: aditionalHeaders, useProgress: useProgress, completion: completion)
+        return apiService.downloadFile(from: try requestUrl(for: path),
+                                       to: destinationUrl,
+                                       with: apiHeaders(adding: aditionalHeaders),
+                                       inBackground: inBackground,
+                                       useProgress: useProgress,
+                                       completion: completionHandler(with: completion))
     }
 
     /**
@@ -303,10 +304,12 @@ public extension RestService {
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
     func getFile<Parameters: Encodable>(at path: ResourcePath, parameters: Parameters?, saveAt destinationUrl: URL, inBackground: Bool = true, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = true, completion: RestSimpleResponseCompletionHandler? = nil) throws -> ApiRequest {
-        let url = try requestUrl(for: path, with: parameters)
-        let headers = apiHeaders(adding: aditionalHeaders)
-        let completion = completionHandler(with: completion)
-        return apiService.downloadFile(from: url, to: destinationUrl, with: headers, inBackground: inBackground, useProgress: useProgress, completion: completion)
+        return apiService.downloadFile(from: try requestUrl(for: path, with: parameters),
+                                       to: destinationUrl,
+                                       with: apiHeaders(adding: aditionalHeaders),
+                                       inBackground: inBackground,
+                                       useProgress: useProgress,
+                                       completion: completionHandler(with: completion))
     }
 
     /**
@@ -322,10 +325,12 @@ public extension RestService {
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
     func postFile(from url: URL, at path: ResourcePath, inBackground: Bool = true, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = true, completion: RestSimpleResponseCompletionHandler? = nil) throws -> ApiRequest {
-        let destinationUrl = try requestUrl(for: path)
-        let headers = apiHeaders(adding: aditionalHeaders)
-        let completion = completionHandler(with: completion)
-        return apiService.postFile(from: url, to: destinationUrl, with: headers, inBackground: inBackground, useProgress: useProgress, completion: completion)
+        return apiService.postFile(from: url,
+                                   to: try requestUrl(for: path),
+                                   with: apiHeaders(adding: aditionalHeaders),
+                                   inBackground: inBackground,
+                                   useProgress: useProgress,
+                                   completion: completionHandler(with: completion))
     }
 
     /**
@@ -341,10 +346,12 @@ public extension RestService {
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
     func putFile(from url: URL, at path: ResourcePath, inBackground: Bool = true, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = true, completion: RestSimpleResponseCompletionHandler? = nil) throws -> ApiRequest {
-        let destinationUrl = try requestUrl(for: path)
-        let headers = apiHeaders(adding: aditionalHeaders)
-        let completion = completionHandler(with: completion)
-        return apiService.putFile(from: url, to: destinationUrl, with: headers, inBackground: inBackground, useProgress: useProgress, completion: completion)
+        return apiService.putFile(from: url,
+                                  to: try requestUrl(for: path),
+                                  with: apiHeaders(adding: aditionalHeaders),
+                                  inBackground: inBackground,
+                                  useProgress: useProgress,
+                                  completion: completionHandler(with: completion))
     }
 
     /**
@@ -360,10 +367,12 @@ public extension RestService {
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
     func patchFile(from url: URL, at path: ResourcePath, inBackground: Bool = true, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = true, completion: RestSimpleResponseCompletionHandler? = nil) throws -> ApiRequest {
-        let destinationUrl = try requestUrl(for: path)
-        let headers = apiHeaders(adding: aditionalHeaders)
-        let completion = completionHandler(with: completion)
-        return apiService.patchFile(from: url, to: destinationUrl, with: headers, inBackground: inBackground, useProgress: useProgress, completion: completion)
+        return apiService.patchFile(from: url,
+                                    to: try requestUrl(for: path),
+                                    with: apiHeaders(adding: aditionalHeaders),
+                                    inBackground: inBackground,
+                                    useProgress: useProgress,
+                                    completion: completionHandler(with: completion))
     }
 }
 
@@ -378,8 +387,6 @@ public extension RestService {
 
 //MARK: - Parameter factories
 private extension RestService {
-
-    struct EmptyData: Codable {}
 
     ///Creates full url by joining `baseUrl`, `apiPath` and given `path`.
     func requestUrl(for path: ResourcePath) throws -> URL {
