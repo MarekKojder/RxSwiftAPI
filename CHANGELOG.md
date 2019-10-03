@@ -3,6 +3,9 @@
 ## Upcoming
 - Refactor and migration to Rx of APILayer
 
+## [v2.0.6](https://github.com/MarekKojder/RxSwiftAPI/tree/2.0.6) (2019-10-03)
+- Experimental solution for `SessionService` and `Configuration`.
+
 ## [v2.0.5](https://github.com/MarekKojder/RxSwiftAPI/tree/2.0.5) (2019-09-24)
 - Hotfix of `RestService`.
 

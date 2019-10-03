@@ -15,19 +15,17 @@ final class RequestService: NSObject {
     private let fileManager: FileManager
 
     //MARK: - Handling multiple sessions
-    private var activeSessions = [Configuration: SessionService]()
+    private var sessions = [SessionService]()
+    private let sessionsQueue = DispatchQueue(label: "RxSwiftAPI.RequestService.sessionsQueue", attributes: .concurrent)
 
     ///Returns URLSession for given configuration. If session does not exist, it creates one.
     private func activeSession(for configuration: Configuration) -> SessionService {
-        if let session = activeSessions[configuration] {
-            if session.isValid {
-                return session
-            } else {
-                activeSessions.removeValue(forKey: configuration)
-            }
+        if let session = sessions.first(where: { $0.configuration == configuration }), session.status == .valid {
+            return session
         }
+        sessions.removeAll(where: { $0.status == .invalidated })
         let service = SessionService(configuration: configuration)
-        activeSessions[configuration] = service
+        sessions.append(service)
         return service
     }
 
@@ -42,7 +40,7 @@ final class RequestService: NSObject {
     }
 
     deinit {
-        activeSessions.forEach { $0.value.invalidateAndCancel() }
+        sessions.forEach { $0.invalidateAndCancel() }
     }
 }
 
@@ -93,7 +91,7 @@ extension RequestService {
      - Parameter request: An HttpRequest to suspend.
      */
     func suspend(_ request: HttpRequest) {
-        activeSessions.forEach{ $0.value.suspend(request.urlRequest) }
+        sessions.forEach { $0.suspend(request.urlRequest) }
     }
 
     /**
@@ -103,7 +101,7 @@ extension RequestService {
      */
     @available(iOS 9.0, OSX 10.11, *)
     func resume(_ request: HttpRequest) {
-        activeSessions.forEach{ $0.value.resume(request.urlRequest) }
+        sessions.forEach { $0.resume(request.urlRequest) }
     }
 
     /**
@@ -112,11 +110,11 @@ extension RequestService {
      - Parameter request: An HttpRequest to cancel.
      */
     func cancel(_ request: HttpRequest) {
-        activeSessions.forEach{ $0.value.cancel(request.urlRequest) }
+        sessions.forEach { $0.cancel(request.urlRequest) }
     }
 
     ///Cancels all currently running HTTP requests.
     func cancelAllRequests() {
-        activeSessions.forEach{ $0.value.cancelAllRequests() }
+        sessions.forEach { $0.cancelAllRequests() }
     }
 }

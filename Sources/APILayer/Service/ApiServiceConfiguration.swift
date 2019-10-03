@@ -10,42 +10,48 @@ import Foundation
 public extension ApiService {
 
     typealias CachePolicy = NSURLRequest.CachePolicy
-
     typealias CookieAcceptPolicy = HTTPCookie.AcceptPolicy
-
     typealias CookieStorage = HTTPCookieStorage
 
-    ///Struct containing most common behaviors and policies for requests.
-    struct Configuration {
+    ///Enum containing most common behaviors and policies for requests.
+    enum Configuration {
+        case foreground
+        case ephemeral
+        case background
+        case custom(URLSessionConfiguration)
+    }
+}
 
-        let requestServiceConfiguration: RequestService.Configuration
+extension ApiService.Configuration {
 
-        private init(configuration: RequestService.Configuration) {
-            requestServiceConfiguration = configuration
+    ///*URLSessionConfiguration* object for current session.
+    var requestServiceConfiguration: RequestService.Configuration {
+        switch self {
+        case .foreground:
+            return .foreground
+        case .ephemeral:
+            return .ephemeral
+        case .background:
+            return .background
+        case .custom(let config):
+            return .custom(config)
         }
     }
 }
 
-public extension ApiService.Configuration {
+extension ApiService.Configuration: Equatable {
 
-    ///Indicates sending request only when app is running.
-    static var foreground: ApiService.Configuration {
-        return ApiService.Configuration(configuration: .foreground)
-    }
-
-    ///Indicates sending request only when app is running.
-    static var ephemeral: ApiService.Configuration {
-        return ApiService.Configuration(configuration: .ephemeral)
-    }
-
-    ///Indicates sending request also when app is not running or when is terminated by system.
-    static var background: ApiService.Configuration {
-        return ApiService.Configuration(configuration: .background)
-    }
-
-    ///Creates custom configuration based on URLSessionConfiguration.
-    static func custom(with urlSessionConfiguration: URLSessionConfiguration) -> ApiService.Configuration {
-        return ApiService.Configuration(configuration: .custom(with: urlSessionConfiguration))
+    public static func ==(lhs: ApiService.Configuration, rhs: ApiService.Configuration) -> Bool {
+        switch (lhs, rhs) {
+        case (.foreground, .foreground),
+             (.ephemeral, .ephemeral),
+             (.background, .background):
+            return true
+        case (.custom(let lhsConfig), .custom(let rhsConfig)):
+            return lhsConfig == rhsConfig
+        default:
+            return false
+        }
     }
 }
 
@@ -53,49 +59,41 @@ public extension ApiService.Configuration {
 
     ///A Boolean value that determines whether connections should be made over a cellular network. The default value is true.
     var allowsCellularAccess: Bool {
-        get { return requestServiceConfiguration.allowsCellularAccess }
-        set { requestServiceConfiguration.allowsCellularAccess = newValue }
+        return requestServiceConfiguration.allowsCellularAccess
     }
 
     ///The timeout interval to use when waiting for additional data. The default value is 60.
     var timeoutForRequest: TimeInterval {
-        get { return requestServiceConfiguration.timeoutForRequest }
-        set { requestServiceConfiguration.timeoutForRequest = newValue }
+        return requestServiceConfiguration.timeoutForRequest
     }
 
     ///The maximum amount of time (in seconds) that a resource request should be allowed to take. The default value is 7 days.
     var timeoutForResource: TimeInterval {
-        get { return requestServiceConfiguration.timeoutForResource }
-        set { requestServiceConfiguration.timeoutForResource = newValue }
+        return requestServiceConfiguration.timeoutForResource
     }
 
     ///The maximum number of simultaneous connections to make to a given host. The default value is 6 in macOS, or 4 in iOS.
     var maximumConnectionsPerHost: Int {
-        get { return requestServiceConfiguration.maximumConnectionsPerHost }
-        set { requestServiceConfiguration.maximumConnectionsPerHost = newValue }
+        return requestServiceConfiguration.maximumConnectionsPerHost
     }
 
     ///A predefined constant that determines when to return a response from the cache. The default value is *.useProtocolCachePolicy*.
     var cachePolicy: ApiService.CachePolicy {
-        get { return requestServiceConfiguration.cachePolicy }
-        set { requestServiceConfiguration.cachePolicy = newValue }
+        return requestServiceConfiguration.cachePolicy
     }
 
     ///A Boolean value that determines whether requests should contain cookies from the cookie store. The default value is true.
     var shouldSetCookies: Bool {
-        get { return requestServiceConfiguration.shouldSetCookies }
-        set { requestServiceConfiguration.shouldSetCookies = newValue }
+        return requestServiceConfiguration.shouldSetCookies
     }
 
     ///A policy constant that determines when cookies should be accepted. The default value is *.onlyFromMainDocumentDomain*.
     var cookieAcceptPolicy: ApiService.CookieAcceptPolicy {
-        get { return requestServiceConfiguration.cookieAcceptPolicy }
-        set { requestServiceConfiguration.cookieAcceptPolicy = newValue }
+        return requestServiceConfiguration.cookieAcceptPolicy
     }
 
     ///The cookie store for storing cookies within this session. For *foreground* and *background* sessions, the default value is the shared cookie storage object.
     var cookieStorage: ApiService.CookieStorage? {
-        get { return requestServiceConfiguration.cookieStorage }
-        set { requestServiceConfiguration.cookieStorage = newValue }
+        return requestServiceConfiguration.cookieStorage
     }
 }

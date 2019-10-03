@@ -169,43 +169,45 @@ extension RequestServiceTests {
         let fileUrl2 = TestData.Url.bigFile
         let destinationUrl = TestData.Url.fileDestination
         let responseExpectation = expectation(description: "Expect file")
-        var successPerformed = false
         var failurePerformed = false
         var responseError: NSError?
         let completion: HttpRequestCompletionHandler = { response, error in
             let message: String
             if let error = error {
+                let firstError = !failurePerformed
                 failurePerformed = true
                 responseError = error as NSError?
                 message = "failed with error: \(error.localizedDescription)."
+                if firstError {
+                    responseExpectation.fulfill()
+                }
             } else if let response = response {
                 if let code = response.statusCode {
                     message = "finished with status code \(code)."
                 } else {
                     message = "finished."
                 }
-                successPerformed = true
             } else {
                 message = "finished without success or error."
             }
             print("--------------------")
             print("HttpDownloadRequest from URL \(fileUrl2) \(message)")
             print("--------------------")
-            responseExpectation.fulfill()
         }
         
         let request1 = HttpDownloadRequest(url: fileUrl1, destinationUrl: destinationUrl)
         let request2 = HttpDownloadRequest(url: fileUrl2, destinationUrl: destinationUrl)
 
-        requestService.sendHTTPRequest(request1, with: .foreground, progress: nil, completion: {_, _ in })
+        requestService.sendHTTPRequest(request1, with: .foreground, progress: nil, completion: completion)
+        requestService.sendHTTPRequest(request2, with: .foreground, progress: nil, completion: completion)
+        requestService.sendHTTPRequest(request1, with: .foreground, progress: nil, completion: completion)
         requestService.sendHTTPRequest(request2, with: .foreground, progress: nil, completion: completion)
         requestService.cancelAllRequests()
 
         waitForExpectations(timeout: 10) { error in
             XCTAssertNil(error, "Download request test failed with error: \(error!.localizedDescription)")
             XCTAssertTrue(failurePerformed)
-            XCTAssertTrue(responseError?.domain == NSURLErrorDomain && responseError?.code == -999, "Resposne should finnish with cancel error!")
-            XCTAssertFalse(successPerformed)
+            XCTAssertNotNil(responseError, "Resposne should finnish with error!")
         }
     }
 
