@@ -16,7 +16,7 @@ final class RequestService: NSObject {
 
     //MARK: - Handling multiple sessions
     private var sessions = [SessionService]()
-    private let disposeBag = DisposeBag()
+    private let sessionsQueue = DispatchQueue(label: "RxSwiftAPI.RequestService.sessionsQueue", attributes: .concurrent)
 
     ///Returns URLSession for given configuration. If session does not exist, it creates one.
     private func activeSession(for configuration: Configuration) -> SessionService {
