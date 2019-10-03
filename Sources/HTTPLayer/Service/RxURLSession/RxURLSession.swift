@@ -16,7 +16,7 @@ public typealias RxURLSessionDelegate = URLSessionDataDelegate & URLSessionDownl
  Read and write access to delegate is required by *DelegateProxyType* protocol which is required for creating delegate proxy to RxSwift.
  */
 open class RxURLSession: NSObject {
-    private let configuration: URLSessionConfiguration
+    let configuration: URLSessionConfiguration
     private lazy var urlSession: URLSession = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
 
     public weak var delegate: RxURLSessionDelegate?

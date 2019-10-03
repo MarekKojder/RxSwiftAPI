@@ -7,7 +7,18 @@
 
 import RxSwift
 
+extension SessionService {
+    enum Status {
+        case valid
+        case invalid
+        case invalidated
+    }
+}
+
 final class SessionService {
+
+    private(set) var status = Status.valid
+    let configuration: RequestService.Configuration
 
     private let urlSession: RxURLSession
     private let sessionQueue:  DispatchQueue
@@ -15,13 +26,14 @@ final class SessionService {
     private let concurrentScheduler: ConcurrentDispatchQueueScheduler
     private let disposeBag = DisposeBag()
     private var activeCalls = [URLSessionTask: HttpCall]()
-    private(set) var isValid = true
 
     init(configuration: RequestService.Configuration) {
+        self.configuration = configuration
         urlSession = RxURLSession(configuration: configuration.urlSessionConfiguration)
-        sessionQueue = DispatchQueue(label: "RxSwiftAPI.SessionService.sessionQueue", qos: .userInteractive)
-        serialScheduler = SerialDispatchQueueScheduler(queue: sessionQueue, internalSerialQueueName: "RxSwiftAPI.SessionService.serialScheduler")
-        concurrentScheduler = ConcurrentDispatchQueueScheduler(queue: DispatchQueue(label: "RxSwiftAPI.SessionService.concurrentScheduler", qos: .utility))
+        let timestamp = Date().timeIntervalSince1970
+        sessionQueue = DispatchQueue(label: "RxSwiftAPI.SessionService.sessionQueue.\(timestamp)", qos: .utility)
+        serialScheduler = SerialDispatchQueueScheduler(queue: sessionQueue, internalSerialQueueName: "RxSwiftAPI.SessionService.serialScheduler.\(timestamp)")
+        concurrentScheduler = ConcurrentDispatchQueueScheduler(queue: DispatchQueue(label: "RxSwiftAPI.SessionService.concurrentScheduler.\(timestamp)", qos: .utility))
 
         DispatchQueue.main.async {
             self.setupURLSessionDelegate()
@@ -116,9 +128,20 @@ extension SessionService {
     ///Cancels all currently running HTTP requests and invalidates session.
     func invalidateAndCancel() {
         sessionQueue.sync { [weak self] in
-            self?.isValid = false
+            self?.status = .invalid
             self?.urlSession.invalidateAndCancel()
         }
+    }
+}
+
+extension SessionService: Hashable {
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(urlSession.configuration)
+    }
+
+    public static func ==(lhs: SessionService, rhs: SessionService) -> Bool {
+        return lhs.urlSession.configuration == rhs.urlSession.configuration
     }
 }
 
@@ -137,7 +160,7 @@ private extension SessionService {
                 httpCall.performCompletion(error: SessionService.error("Lost reference to SessionService."))
                 return
             }
-            guard self.isValid else {
+            guard self.status == .valid else {
                 httpCall.performCompletion(error: SessionService.error("Attempted to create URLSessionTask in a session that has been invalidated."))
                 return
             }
@@ -172,11 +195,12 @@ private extension SessionService {
         }
     }
 
-    func completeEveryTask(with error: Error) {
+    func completeEveryTask(with error: Error, completion: (() -> Void)? = nil) {
         DispatchQueue.global(qos: .utility).async {
             self.activeCalls.forEach { $0.value.performCompletion(error: error) }
             self.sessionQueue.sync { [weak self] in
                 self?.activeCalls.removeAll()
+                completion?()
             }
         }
     }
@@ -187,8 +211,15 @@ private extension SessionService {
             .subscribeOn(concurrentScheduler)
             .observeOn(serialScheduler)
             .subscribe(onNext: { [weak self] (session: URLSession, error: Error?) in
-                self?.isValid = false
-                self?.completeEveryTask(with: error ?? SessionService.error("Session invalidated", code: -30))
+                guard let `self` = self else {
+                    return
+                }
+                if self.status == .valid {
+                    self.status = .invalid
+                }
+                self.completeEveryTask(with: error ?? SessionService.error("Session invalidated", code: -30)) { [weak self] in
+                    self?.status = .invalidated
+                }
             })
             .disposed(by: disposeBag)
     }
