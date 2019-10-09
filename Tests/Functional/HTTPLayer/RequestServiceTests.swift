@@ -90,7 +90,7 @@ extension RequestServiceTests {
         var successPerformed = false
         var failurePerformed = false
         var responseError: NSError?
-        let completion: HttpRequestCompletionHandler = { response, error in
+        let completion: RequestService.CompletionHandler = { response, error in
             let message: String
             if let error = error {
                 failurePerformed = true
@@ -130,7 +130,7 @@ extension RequestServiceTests {
         var successPerformed = false
         var failurePerformed = false
         var responseError: NSError?
-        let completion: HttpRequestCompletionHandler = { response, error in
+        let completion: RequestService.CompletionHandler = { response, error in
             let message: String
             if let error = error {
                 failurePerformed = true
@@ -171,7 +171,7 @@ extension RequestServiceTests {
         let responseExpectation = expectation(description: "Expect file")
         var failurePerformed = false
         var responseError: NSError?
-        let completion: HttpRequestCompletionHandler = { response, error in
+        let completion: RequestService.CompletionHandler = { response, error in
             let message: String
             if let error = error {
                 let firstError = !failurePerformed
@@ -218,7 +218,7 @@ extension RequestServiceTests {
         var successPerformed = false
         var failurePerformed = false
         var responseError: Error?
-        let completion: HttpRequestCompletionHandler = { response, error in
+        let completion: RequestService.CompletionHandler = { response, error in
             let message: String
             if let error = error {
                 failurePerformed = true
@@ -267,7 +267,7 @@ extension RequestServiceTests {
         var successPerformed = false
         var failurePerformed = false
         var responseError: Error?
-        let completion: HttpRequestCompletionHandler = { response, error in
+        let completion: RequestService.CompletionHandler = { response, error in
             let message: String
             if let error = error {
                 failurePerformed = true
@@ -305,7 +305,7 @@ extension RequestServiceTests {
         var successPerformed = false
         var failurePerformed = false
         var responseError: Error?
-        let completion: HttpRequestCompletionHandler = { response, error in
+        let completion: RequestService.CompletionHandler = { response, error in
             let message: String
             if let error = error {
                 failurePerformed = true

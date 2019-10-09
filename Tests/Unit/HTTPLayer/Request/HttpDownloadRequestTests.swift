@@ -14,7 +14,7 @@ class HttpDownloadRequestTests: XCTestCase {
         return URL(string: "https://jsonplaceholder.typicode.com")!
     }
 
-    private var exampleCompletionAction: HttpRequestCompletionHandler {
+    private var exampleCompletionAction: RequestService.CompletionHandler {
         return {_, _ in}
     }
 

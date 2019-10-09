@@ -10,11 +10,11 @@ import XCTest
 
 class HttpCallTests: XCTestCase {
 
-    var progressBlock: SessionServiceProgressHandler {
+    var progressBlock: SessionService.ProgressHandler {
         return { (_, _) in }
     }
 
-    var completionBlock: SessionServiceCompletionHandler {
+    var completionBlock: SessionService.CompletionHandler {
         return { (_, _) in }
     }
 
@@ -22,7 +22,7 @@ class HttpCallTests: XCTestCase {
         let blockExpectation = expectation(description: "Expect progress block")
         var processed = Int64(0)
         var expectedToProcess = Int64(0)
-        let progress: SessionServiceProgressHandler = { (totalBytesProcessed, totalBytesExpectedToProcess) in
+        let progress: SessionService.ProgressHandler = { (totalBytesProcessed, totalBytesExpectedToProcess) in
             processed = totalBytesProcessed
             expectedToProcess = totalBytesExpectedToProcess
             blockExpectation.fulfill()
@@ -42,7 +42,7 @@ class HttpCallTests: XCTestCase {
         let blockExpectation = expectation(description: "Expect success block")
         let testResponse = HttpResponse(body: Data())
         var receivedResponse: HttpResponse?
-        let success: SessionServiceCompletionHandler = { (response, _) in
+        let success: SessionService.CompletionHandler = { (response, _) in
             receivedResponse = response
             blockExpectation.fulfill()
         }
@@ -64,7 +64,7 @@ class HttpCallTests: XCTestCase {
         let blockExpectation = expectation(description: "Expect progress block")
         let testError = NSError(domain: NSURLErrorDomain, code: NSURLErrorBadURL, userInfo: nil)
         var receivedError: NSError?
-        let failure: SessionServiceCompletionHandler = { (_, error) in
+        let failure: SessionService.CompletionHandler = { (_, error) in
             receivedError = error as NSError?
             blockExpectation.fulfill()
         }

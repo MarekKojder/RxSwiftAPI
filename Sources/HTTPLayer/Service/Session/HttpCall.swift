@@ -7,17 +7,14 @@
 
 import Foundation
 
-typealias SessionServiceProgressHandler = (_ totalBytesProcessed: Int64, _ totalBytesExpectedToProcess: Int64) -> ()
-typealias SessionServiceCompletionHandler = (_ response: HttpResponse?, _ error: Error?) -> ()
-
 final class HttpCall {
-    
-    private let progressHandler: SessionServiceProgressHandler?
-    private let completionHandler: SessionServiceCompletionHandler
+
+    private let progressHandler: SessionService.ProgressHandler?
+    private let completionHandler: SessionService.CompletionHandler
     private(set) var response: HttpResponse?
     private(set) var isCompleted: Bool
 
-    init(progress: SessionServiceProgressHandler?, completion: @escaping SessionServiceCompletionHandler) {
+    init(progress: SessionService.ProgressHandler?, completion: @escaping SessionService.CompletionHandler) {
         isCompleted = false
         progressHandler = progress
         completionHandler = completion

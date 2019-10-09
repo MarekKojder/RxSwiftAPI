@@ -8,9 +8,10 @@
 import Foundation
 import RxSwift
 
-typealias HttpRequestCompletionHandler = SessionServiceCompletionHandler
 
 final class RequestService: NSObject {
+
+    typealias CompletionHandler = SessionService.CompletionHandler
 
     private let fileManager: FileManager
 
@@ -56,7 +57,7 @@ extension RequestService {
 
      HttpDataRequest may run only with foreground configuration.
      */
-    func sendHTTPRequest(_ request: HttpDataRequest, with configuration: Configuration = .foreground, progress: SessionServiceProgressHandler?, completion: @escaping HttpRequestCompletionHandler) {
+    func sendHTTPRequest(_ request: HttpDataRequest, with configuration: Configuration = .foreground, progress: SessionService.ProgressHandler?, completion: @escaping CompletionHandler) {
         let session = activeSession(for: configuration)
         session.data(request: request.urlRequest, progress: progress, completion: completion)
     }
@@ -68,7 +69,7 @@ extension RequestService {
        - request: An HttpUploadRequest object provides request-specific information such as the URL, HTTP method or URL of the file to upload.
        - configuration: RequestService.Configuration indicates upload request configuration.
      */
-    func sendHTTPRequest(_ request: HttpUploadRequest, with configuration: Configuration = .background, progress: SessionServiceProgressHandler?, completion: @escaping HttpRequestCompletionHandler) {
+    func sendHTTPRequest(_ request: HttpUploadRequest, with configuration: Configuration = .background, progress: SessionService.ProgressHandler?, completion: @escaping CompletionHandler) {
         let session = activeSession(for: configuration)
         session.upload(request: request.urlRequest, file: request.resourceUrl, progress: progress, completion: completion)
     }
@@ -80,7 +81,7 @@ extension RequestService {
        - request: An HttpUploadRequest object provides request-specific information such as the URL, HTTP method or URL of the place on disc for downloading file.
        - configuration: RequestService.Configuration indicates download request configuration.
      */
-    func sendHTTPRequest(_ request: HttpDownloadRequest, with configuration: Configuration = .background, progress: SessionServiceProgressHandler?, completion: @escaping HttpRequestCompletionHandler) {
+    func sendHTTPRequest(_ request: HttpDownloadRequest, with configuration: Configuration = .background, progress: SessionService.ProgressHandler?, completion: @escaping CompletionHandler) {
         let session = activeSession(for: configuration)
         session.download(request: request.urlRequest, progress: progress, completion: completion)
     }

@@ -17,11 +17,14 @@ extension SessionService {
 
 final class SessionService {
 
+    typealias ProgressHandler = (_ totalBytesProcessed: Int64, _ totalBytesExpectedToProcess: Int64) -> ()
+    typealias CompletionHandler = (_ response: HttpResponse?, _ error: Error?) -> ()
+
     private(set) var status = Status.valid
     let configuration: RequestService.Configuration
 
     private let urlSession: RxURLSession
-    private let sessionQueue:  DispatchQueue
+    private let sessionQueue: DispatchQueue
     private let serialScheduler: SerialDispatchQueueScheduler
     private let concurrentScheduler: ConcurrentDispatchQueueScheduler
     private let disposeBag = DisposeBag()
@@ -31,7 +34,7 @@ final class SessionService {
         self.configuration = configuration
         urlSession = RxURLSession(configuration: configuration.urlSessionConfiguration)
         let timestamp = Date().timeIntervalSince1970
-        sessionQueue = DispatchQueue(label: "RxSwiftAPI.SessionService.sessionQueue.\(timestamp)", qos: .utility)
+        sessionQueue = DispatchQueue(label: "RxSwiftAPI.SessionService.sessionQueue.\(timestamp)")
         serialScheduler = SerialDispatchQueueScheduler(queue: sessionQueue, internalSerialQueueName: "RxSwiftAPI.SessionService.serialScheduler.\(timestamp)")
         concurrentScheduler = ConcurrentDispatchQueueScheduler(queue: DispatchQueue(label: "RxSwiftAPI.SessionService.concurrentScheduler.\(timestamp)", qos: .utility))
 
@@ -58,7 +61,7 @@ extension SessionService {
        - progress: Block for hangling request progress.
        - completion: Block for hangling request completion.
      */
-    func data(request: URLRequest, progress: SessionServiceProgressHandler?, completion: @escaping SessionServiceCompletionHandler) {
+    func data(request: URLRequest, progress: ProgressHandler?, completion: @escaping CompletionHandler) {
         safely(add: HttpCall(progress: progress, completion: completion)) { [weak self] in
             return self?.urlSession.dataTask(with: request)
         }
@@ -72,7 +75,7 @@ extension SessionService {
        - progress: Block for hangling request progress.
        - completion: Block for hangling request completion.
      */
-    func upload(request: URLRequest, file: URL, progress: SessionServiceProgressHandler?, completion: @escaping SessionServiceCompletionHandler) {
+    func upload(request: URLRequest, file: URL, progress: ProgressHandler?, completion: @escaping CompletionHandler) {
         safely(add: HttpCall(progress: progress, completion: completion)) { [weak self] in
             return self?.urlSession.uploadTask(with: request, fromFile: file)
         }
@@ -86,7 +89,7 @@ extension SessionService {
        - progress: Block for hangling request progress.
        - completion: Block for hangling request completion.
      */
-    func download(request: URLRequest, progress: SessionServiceProgressHandler?, completion: @escaping SessionServiceCompletionHandler) {
+    func download(request: URLRequest, progress: ProgressHandler?, completion: @escaping CompletionHandler) {
         safely(add: HttpCall(progress: progress, completion: completion)) { [weak self] in
             return self?.urlSession.downloadTask(with: request)
         }
@@ -148,7 +151,7 @@ extension SessionService: Hashable {
 private extension SessionService {
 
     ///Domain of RxSwiftAPI errors.
-    private static let sessionDomain = "RxSwiftAPISessionServiceErrorDomain"
+    private static let sessionDomain = "RxSwiftAPI.SessionService.ErrorDomain"
 
     static func error(_ description: String, code: Int = -20) -> Error {
         return NSError(domain: sessionDomain, code: code, userInfo: [NSLocalizedDescriptionKey : description])
@@ -204,13 +207,16 @@ private extension SessionService {
             }
         }
     }
+}
 
+//MARK: Setup observable
+private extension SessionService {
     func setupURLSessionDelegate() {
         urlSession.rx.didBecomeInvalidWithError
             .asObservable()
             .subscribeOn(concurrentScheduler)
             .observeOn(serialScheduler)
-            .subscribe(onNext: { [weak self] (session: URLSession, error: Error?) in
+            .subscribe(onNext: { [weak self] error in
                 guard let `self` = self else {
                     return
                 }
@@ -229,7 +235,7 @@ private extension SessionService {
             .asObservable()
             .subscribeOn(concurrentScheduler)
             .observeOn(serialScheduler)
-            .subscribe(onNext: { [weak self] (session: URLSession, task: URLSessionTask, bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) in
+            .subscribe(onNext: { [weak self] (task: URLSessionTask, bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) in
                 self?.activeCalls[task]?.performProgress(totalBytesProcessed: totalBytesSent, totalBytesExpectedToProcess: totalBytesExpectedToSend)
             })
             .disposed(by: disposeBag)
@@ -238,7 +244,7 @@ private extension SessionService {
             .asObservable()
             .subscribeOn(concurrentScheduler)
             .observeOn(serialScheduler)
-            .subscribe(onNext: { [weak self] (session: URLSession, task: URLSessionTask, error: Error?) in
+            .subscribe(onNext: { [weak self] (task: URLSessionTask, error: Error?) in
                 defer {
                     self?.activeCalls.removeValue(forKey: task)
                 }
@@ -266,7 +272,7 @@ private extension SessionService {
             .asObservable()
             .subscribeOn(concurrentScheduler)
             .observeOn(serialScheduler)
-            .subscribe(onNext: { [weak self] (session: URLSession, task: URLSessionDataTask, response: URLResponse, completion: (URLSession.ResponseDisposition) -> Void) in
+            .subscribe(onNext: { [weak self] (task: URLSessionDataTask, response: URLResponse, completion: (URLSession.ResponseDisposition) -> Void) in
                 self?.activeCalls[task]?.update(with: response)
                 self?.activeCalls[task] != nil ? completion(.allow) : completion(.cancel)
             })
@@ -276,7 +282,7 @@ private extension SessionService {
             .asObservable()
             .subscribeOn(concurrentScheduler)
             .observeOn(serialScheduler)
-            .subscribe(onNext: { [weak self] (session: URLSession, task: URLSessionDataTask, response: Data) in
+            .subscribe(onNext: { [weak self] (task: URLSessionDataTask, response: Data) in
                 self?.activeCalls[task]?.update(with: response)
             })
             .disposed(by: disposeBag)
@@ -287,7 +293,7 @@ private extension SessionService {
             .asObservable()
             .subscribeOn(concurrentScheduler)
             .observeOn(serialScheduler)
-            .subscribe(onNext: { [weak self] (session: URLSession, task: URLSessionDownloadTask, location: URL) in
+            .subscribe(onNext: { [weak self] (task: URLSessionDownloadTask, location: URL) in
                 self?.activeCalls[task]?.update(with: location)
             })
             .disposed(by: disposeBag)
@@ -296,7 +302,7 @@ private extension SessionService {
             .asObservable()
             .subscribeOn(concurrentScheduler)
             .observeOn(serialScheduler)
-            .subscribe(onNext: { [weak self] (session: URLSession, task: URLSessionDownloadTask, bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) in
+            .subscribe(onNext: { [weak self] (task: URLSessionDownloadTask, bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) in
                 self?.activeCalls[task]?.performProgress(totalBytesProcessed: totalBytesWritten, totalBytesExpectedToProcess: totalBytesExpectedToWrite)
             })
             .disposed(by: disposeBag)

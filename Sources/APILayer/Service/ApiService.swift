@@ -263,7 +263,7 @@ private extension ApiService {
     }
 
     ///Creates success and failure action for single completion handler.
-    func requestCompletion(for completion: ApiResponseCompletionHandler?) -> HttpRequestCompletionHandler {
+    func requestCompletion(for completion: ApiResponseCompletionHandler?) -> RequestService.CompletionHandler {
         return { (response: HttpResponse?, error: Error?) in
             completion?(ApiResponse(response), error)
         }
@@ -352,17 +352,17 @@ private extension ApiService {
 
 private extension ApiService {
 
-    func sendHTTPRequest(_ request: HttpDataRequest, with configuration: Configuration = .foreground, progress: SessionServiceProgressHandler?, completion: @escaping HttpRequestCompletionHandler) -> ApiRequest {
+    func sendHTTPRequest(_ request: HttpDataRequest, with configuration: Configuration = .foreground, progress: SessionService.ProgressHandler?, completion: @escaping RequestService.CompletionHandler) -> ApiRequest {
         requestService.sendHTTPRequest(request, with: configuration.requestServiceConfiguration, progress: progress, completion: completion)
         return ApiRequest(httpRequest: request, httpRequestService: requestService)
     }
 
-    func sendHTTPRequest(_ request: HttpUploadRequest, with configuration: Configuration = .background, progress: SessionServiceProgressHandler?, completion: @escaping HttpRequestCompletionHandler) -> ApiRequest {
+    func sendHTTPRequest(_ request: HttpUploadRequest, with configuration: Configuration = .background, progress: SessionService.ProgressHandler?, completion: @escaping RequestService.CompletionHandler) -> ApiRequest {
         requestService.sendHTTPRequest(request, with: configuration.requestServiceConfiguration, progress: progress, completion: completion)
         return ApiRequest(httpRequest: request, httpRequestService: requestService)
     }
 
-    func sendHTTPRequest(_ request: HttpDownloadRequest, with configuration: Configuration = .background, progress: SessionServiceProgressHandler?, completion: @escaping HttpRequestCompletionHandler) -> ApiRequest {
+    func sendHTTPRequest(_ request: HttpDownloadRequest, with configuration: Configuration = .background, progress: SessionService.ProgressHandler?, completion: @escaping RequestService.CompletionHandler) -> ApiRequest {
         requestService.sendHTTPRequest(request, with: configuration.requestServiceConfiguration, progress: progress, completion: completion)
         return ApiRequest(httpRequest: request, httpRequestService: requestService)
     }
