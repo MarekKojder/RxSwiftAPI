@@ -208,9 +208,9 @@ private extension SessionService {
                 }
                 let error = error ?? SessionService.error("Session invalidated", code: -5)
                 self.activeTasks.forEach { $0.performCompletion(error: error) }
-                self.sessionQueue.sync { [weak self] in
-                    self?.activeTasks.removeAll()
-                    self?.status = .invalidated
+                do { //TODO: Maybe after finishing all completions. Use DispatchGroup here.
+                    self.activeTasks.removeAll()
+                    self.status = .invalidated
                 }
             })
             .disposed(by: disposeBag)
