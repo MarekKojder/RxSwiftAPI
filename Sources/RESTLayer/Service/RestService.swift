@@ -49,19 +49,17 @@ public extension RestService {
        - type: Type conforming *Decodable* protocol which should be returned in completion block.
        - path: Path of the resource.
        - aditionalHeaders: Additional header fields which should be sent with request.
-       - useProgress: Flag indicates if Progress object should be created.
        - inBackground: Flag indicates if request should be performed in background or foreground.
        - completion: Closure called when request is finished.
      - Throws: RestService.Error if creating *URL* failed.
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
     @discardableResult
-    func get<Response: Decodable>(type: Response.Type, from path: ResourcePath, with aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = false, inBackground: Bool = false, completion: RestResponseCompletionHandler<Response>? = nil) throws -> ApiRequest {
-        return apiService.getData(from: try requestUrl(for: path),
-                                  with: apiHeaders(adding: aditionalHeaders),
-                                  configuration: inBackground ? .background : .foreground,
-                                  useProgress: useProgress,
-                                  completion: completionHandler(for: type, coder: coder, with: completion))
+    func get<Response: Decodable>(type: Response.Type, from path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, inBackground: Bool = false, completion: RestResponse.CompletionHandler<Response>? = nil) throws -> ApiService.Task {
+        return try apiService.getData(from: try requestUrl(for: path),
+                                      with: apiHeaders(adding: aditionalHeaders),
+                                      configuration: inBackground ? .background : .foreground,
+                                      completion: completionHandler(coder: coder, with: completion))
     }
 
     /**
@@ -71,19 +69,17 @@ public extension RestService {
        - path: Path of the resource.
        - parameters: Query items for request.
        - aditionalHeaders: Additional header fields which should be sent with request.
-       - useProgress: Flag indicates if Progress object should be created.
        - inBackground: Flag indicates if request should be performed in background or foreground.
        - completion: Closure called when request is finished.
        - Throws: RestService.Error if creating *URL* failed.
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
     @discardableResult
-    func get<Parameters: Encodable, Response: Decodable>(type: Response.Type, from path: ResourcePath, parameters: Parameters, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = false, inBackground: Bool = false, completion: RestResponseCompletionHandler<Response>? = nil) throws -> ApiRequest {
-        return apiService.getData(from: try requestUrl(for: path, with: parameters),
-                                  with: apiHeaders(adding: aditionalHeaders),
-                                  configuration: inBackground ? .background : .foreground,
-                                  useProgress: useProgress,
-                                  completion: completionHandler(for: type, coder: coder, with: completion))
+    func get<Parameters: Encodable, Response: Decodable>(type: Response.Type, from path: ResourcePath, parameters: Parameters, aditionalHeaders: [ApiHeader]? = nil, inBackground: Bool = false, completion: RestResponse.CompletionHandler<Response>? = nil) throws -> ApiService.Task {
+        return try apiService.getData(from: try requestUrl(for: path, with: parameters),
+                                      with: apiHeaders(adding: aditionalHeaders),
+                                      configuration: inBackground ? .background : .foreground,
+                                      completion: completionHandler(coder: coder, with: completion))
     }
 
     /**
@@ -92,7 +88,6 @@ public extension RestService {
        - value: Value of type conforming *Encodable* protocol which data should be sent with request.
        - path: Path of the resource.
        - aditionalHeaders: Additional header fields which should be sent with request.
-       - useProgress: Flag indicates if Progress object should be created.
        - inBackground: Flag indicates if request should be performed in background or foreground.
        - responseType: Type conforming *Decodable* protocol which should be returned in completion block.
        - completion: Closure called when request is finished.
@@ -100,13 +95,12 @@ public extension RestService {
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
     @discardableResult
-    func post<Request: Encodable, Response: Decodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = false, inBackground: Bool = false, responseType: Response.Type? = nil, completion: RestResponseCompletionHandler<Response>? = nil) throws -> ApiRequest {
+    func post<Request: Encodable, Response: Decodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, inBackground: Bool = false, responseType: Response.Type? = nil, completion: RestResponse.CompletionHandler<Response>? = nil) throws -> ApiService.Task {
         return try post(value,
                         at: path,
                         aditionalHeaders: aditionalHeaders,
-                        useProgress: useProgress,
                         inBackground: inBackground,
-                        completion: completionHandler(for: Response.self, coder: coder, with: completion))
+                        completion: completionHandler(coder: coder, with: completion))
     }
 
     /**
@@ -115,18 +109,16 @@ public extension RestService {
        - value: Value of type conforming *Encodable* protocol which data should be sent with request.
        - path: Path of the resource.
        - aditionalHeaders: Additional header fields which should be sent with request.
-       - useProgress: Flag indicates if Progress object should be created.
        - inBackground: Flag indicates if request should be performed in background or foreground.
        - completion: Closure called when request is finished.
      - Throws: RestService.Error if creating *URL* failed or JSONEncoder error if encoding given value failed.
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
     @discardableResult
-    func post<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = false, inBackground: Bool = false, completion: RestSimpleResponseCompletionHandler? = nil) throws -> ApiRequest {
+    func post<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, inBackground: Bool = false, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task {
         return try post(value,
                         at: path,
                         aditionalHeaders: aditionalHeaders,
-                        useProgress: useProgress,
                         inBackground: inBackground,
                         completion: completionHandler(with: completion))
     }
@@ -137,7 +129,6 @@ public extension RestService {
        - value: Value of type conforming *Encodable* protocol which data should be sent with request.
        - path: Path of the resource.
        - aditionalHeaders: Additional header fields which should be sent with request.
-       - useProgress: Flag indicates if Progress object should be created.
        - inBackground: Flag indicates if request should be performed in background or foreground.
        - responseType: Type conforming *Decodable* protocol which should be returned in completion block.
        - completion: Closure called when request is finished.
@@ -145,13 +136,12 @@ public extension RestService {
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
     @discardableResult
-    func put<Request: Encodable, Response: Decodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = false, inBackground: Bool = false, responseType: Response.Type? = nil, completion: RestResponseCompletionHandler<Response>? = nil) throws -> ApiRequest {
+    func put<Request: Encodable, Response: Decodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, inBackground: Bool = false, responseType: Response.Type? = nil, completion: RestResponse.CompletionHandler<Response>? = nil) throws -> ApiService.Task {
         return try put(value,
                        at: path,
                        aditionalHeaders: aditionalHeaders,
-                       useProgress: useProgress,
                        inBackground: inBackground,
-                       completion: completionHandler(for: Response.self, coder: coder, with: completion))
+                       completion: completionHandler(coder: coder, with: completion))
     }
 
     /**
@@ -160,18 +150,16 @@ public extension RestService {
        - value: Value of type conforming *Encodable* protocol which data should be sent with request.
        - path: Path of the resource.
        - aditionalHeaders: Additional header fields which should be sent with request.
-       - useProgress: Flag indicates if Progress object should be created.
        - inBackground: Flag indicates if request should be performed in background or foreground.
        - completion: Closure called when request is finished.
      - Throws: RestService.Error if creating *URL* failed or JSONEncoder error if encoding given value failed.
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
     @discardableResult
-    func put<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = false, inBackground: Bool = false, completion: RestSimpleResponseCompletionHandler? = nil) throws -> ApiRequest {
+    func put<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, inBackground: Bool = false, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task {
         return try put(value,
                        at: path,
                        aditionalHeaders: aditionalHeaders,
-                       useProgress: useProgress,
                        inBackground: inBackground,
                        completion: completionHandler(with: completion))
     }
@@ -181,7 +169,6 @@ public extension RestService {
      - Parameters:
        - value: Value of type conforming *Encodable* protocol which data should be sent with request.
        - aditionalHeaders: Additional header fields which should be sent with request.
-       - useProgress: Flag indicates if Progress object should be created.
        - inBackground: Flag indicates if request should be performed in background or foreground.
        - responseType: Type conforming *Decodable* protocol which should be returned in completion block.
        - completion: Closure called when request is finished.
@@ -189,13 +176,12 @@ public extension RestService {
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
     @discardableResult
-    func patch<Request: Encodable, Response: Decodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = false, inBackground: Bool = false, responseType: Response.Type? = nil, completion: RestResponseCompletionHandler<Response>? = nil) throws -> ApiRequest {
+    func patch<Request: Encodable, Response: Decodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, inBackground: Bool = false, responseType: Response.Type? = nil, completion: RestResponse.CompletionHandler<Response>? = nil) throws -> ApiService.Task {
         return try patch(value,
                          at: path,
                          aditionalHeaders: aditionalHeaders,
-                         useProgress: useProgress,
                          inBackground: inBackground,
-                         completion: completionHandler(for: Response.self, coder: coder, with: completion))
+                         completion: completionHandler(coder: coder, with: completion))
     }
 
     /**
@@ -204,18 +190,16 @@ public extension RestService {
        - value: Value of type conforming *Encodable* protocol which data should be sent with request.
        - path: Path of the resource.
        - aditionalHeaders: Additional header fields which should be sent with request.
-       - useProgress: Flag indicates if Progress object should be created.
        - inBackground: Flag indicates if request should be performed in background or foreground.
        - completion: Closure called when request is finished.
      - Throws: RestService.Error if creating *URL* failed or JSONEncoder error if encoding given value failed.
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
     @discardableResult
-    func patch<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = false, inBackground: Bool = false, completion: RestSimpleResponseCompletionHandler? = nil) throws -> ApiRequest {
+    func patch<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, inBackground: Bool = false, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task {
         return try patch(value,
                          at: path,
                          aditionalHeaders: aditionalHeaders,
-                         useProgress: useProgress,
                          inBackground: inBackground,
                          completion: completionHandler(with: completion))
     }
@@ -226,7 +210,6 @@ public extension RestService {
        - value: Value of type conforming *Encodable* protocol which data should be sent with request.
        - path: Path of the resource.
        - aditionalHeaders: Additional header fields which should be sent with request.
-       - useProgress: Flag indicates if Progress object should be created.
        - inBackground: Flag indicates if request should be performed in background or foreground.
        - responseType: Type conforming *Decodable* protocol which should be returned in completion block.
        - completion: Closure called when request is finished.
@@ -234,13 +217,12 @@ public extension RestService {
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
     @discardableResult
-    func delete<Request: Encodable, Response: Decodable>(_ value: Request? = nil, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = false, inBackground: Bool = false, responseType: Response.Type? = nil, completion: RestResponseCompletionHandler<Response>? = nil) throws -> ApiRequest {
+    func delete<Request: Encodable, Response: Decodable>(_ value: Request? = nil, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, inBackground: Bool = false, responseType: Response.Type? = nil, completion: RestResponse.CompletionHandler<Response>? = nil) throws -> ApiService.Task {
         return try delete(value,
                           at: path,
                           aditionalHeaders: aditionalHeaders,
-                          useProgress: useProgress,
                           inBackground: inBackground,
-                          completion: completionHandler(for: Response.self, coder: coder, with: completion))
+                          completion: completionHandler(coder: coder, with: completion))
     }
 
     /**
@@ -249,18 +231,16 @@ public extension RestService {
        - value: Value of type conforming *Encodable* protocol which data should be sent with request.
        - path: Path of the resource.
        - aditionalHeaders: Additional header fields which should be sent with request.
-       - useProgress: Flag indicates if Progress object should be created.
        - inBackground: Flag indicates if request should be performed in background or foreground.
        - completion: Closure called when request is finished.
      - Throws: RestService.Error if creating *URL* failed or JSONEncoder error if encoding given value failed.
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
     @discardableResult
-    func delete<Request: Encodable>(_ value: Request? = nil, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = false, inBackground: Bool = false, completion: RestSimpleResponseCompletionHandler? = nil) throws -> ApiRequest {
+    func delete<Request: Encodable>(_ value: Request? = nil, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, inBackground: Bool = false, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task {
         return try delete(value,
                           at: path,
                           aditionalHeaders: aditionalHeaders,
-                          useProgress: useProgress,
                           inBackground: inBackground,
                           completion: completionHandler(with: completion))
     }
@@ -276,18 +256,16 @@ public extension RestService {
        - destinationUrl: Local url, where file should be saved.
        - inBackground: Flag indicates if downloading should be performed in background or foreground.
        - aditionalHeaders: Additional header fields which should be sent with request.
-       - useProgress: Flag indicates if Progress object should be created.
        - completion: Closure called when request is finished.
      - Throws: RestService.Error if creating *URL* failed.
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
-    func getFile(at path: ResourcePath, saveAt destinationUrl: URL, inBackground: Bool = true, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = true, completion: RestSimpleResponseCompletionHandler? = nil) throws -> ApiRequest {
-        return apiService.downloadFile(from: try requestUrl(for: path),
-                                       to: destinationUrl,
-                                       with: apiHeaders(adding: aditionalHeaders),
-                                       inBackground: inBackground,
-                                       useProgress: useProgress,
-                                       completion: completionHandler(with: completion))
+    func getFile(at path: ResourcePath, saveAt destinationUrl: URL, inBackground: Bool = true, aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task {
+        return try apiService.downloadFile(from: try requestUrl(for: path),
+                                           to: destinationUrl,
+                                           with: apiHeaders(adding: aditionalHeaders),
+                                           configuration: inBackground ? .background : .foreground,
+                                           completion: completionHandler(with: completion))
     }
 
     /**
@@ -298,18 +276,16 @@ public extension RestService {
        - destinationUrl: Local url, where file should be saved.
        - inBackground: Flag indicates if downloading should be performed in background or foreground.
        - aditionalHeaders: Additional header fields which should be sent with request.
-       - useProgress: Flag indicates if Progress object should be created.
        - completion: Closure called when request is finished.
      - Throws: RestService.Error if creating *URL* failed.
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
-    func getFile<Parameters: Encodable>(at path: ResourcePath, parameters: Parameters?, saveAt destinationUrl: URL, inBackground: Bool = true, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = true, completion: RestSimpleResponseCompletionHandler? = nil) throws -> ApiRequest {
-        return apiService.downloadFile(from: try requestUrl(for: path, with: parameters),
-                                       to: destinationUrl,
-                                       with: apiHeaders(adding: aditionalHeaders),
-                                       inBackground: inBackground,
-                                       useProgress: useProgress,
-                                       completion: completionHandler(with: completion))
+    func getFile<Parameters: Encodable>(at path: ResourcePath, parameters: Parameters?, saveAt destinationUrl: URL, inBackground: Bool = true, aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task {
+        return try apiService.downloadFile(from: try requestUrl(for: path, with: parameters),
+                                           to: destinationUrl,
+                                           with: apiHeaders(adding: aditionalHeaders),
+                                           configuration: inBackground ? .background : .foreground,
+                                           completion: completionHandler(with: completion))
     }
 
     /**
@@ -319,18 +295,16 @@ public extension RestService {
        - path: Destination path of file.
        - inBackground: Flag indicates if downloading should be performed in background or foreground.
        - aditionalHeaders: Additional header fields which should be sent with request.
-       - useProgress: Flag indicates if Progress object should be created.
        - completion: Closure called when request is finished.
      - Throws: RestService.Error if creating *URL* failed.
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
-    func postFile(from url: URL, at path: ResourcePath, inBackground: Bool = true, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = true, completion: RestSimpleResponseCompletionHandler? = nil) throws -> ApiRequest {
-        return apiService.postFile(from: url,
-                                   to: try requestUrl(for: path),
-                                   with: apiHeaders(adding: aditionalHeaders),
-                                   inBackground: inBackground,
-                                   useProgress: useProgress,
-                                   completion: completionHandler(with: completion))
+    func postFile(from url: URL, at path: ResourcePath, inBackground: Bool = true, aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task? {
+        return try apiService.postFile(from: url,
+                                       to: try requestUrl(for: path),
+                                       with: apiHeaders(adding: aditionalHeaders),
+                                       configuration: inBackground ? .background : .foreground,
+                                       completion: completionHandler(with: completion))
     }
 
     /**
@@ -340,18 +314,16 @@ public extension RestService {
        - path: Destination path of file.
        - inBackground: Flag indicates if downloading should be performed in background or foreground.
        - aditionalHeaders: Additional header fields which should be sent with request.
-       - useProgress: Flag indicates if Progress object should be created.
        - completion: Closure called when request is finished.
      - Throws: RestService.Error if creating *URL* failed.
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
-    func putFile(from url: URL, at path: ResourcePath, inBackground: Bool = true, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = true, completion: RestSimpleResponseCompletionHandler? = nil) throws -> ApiRequest {
-        return apiService.putFile(from: url,
-                                  to: try requestUrl(for: path),
-                                  with: apiHeaders(adding: aditionalHeaders),
-                                  inBackground: inBackground,
-                                  useProgress: useProgress,
-                                  completion: completionHandler(with: completion))
+    func putFile(from url: URL, at path: ResourcePath, inBackground: Bool = true, aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task? {
+        return try apiService.putFile(from: url,
+                                      to: try requestUrl(for: path),
+                                      with: apiHeaders(adding: aditionalHeaders),
+                                      configuration: inBackground ? .background : .foreground,
+                                      completion: completionHandler(with: completion))
     }
 
     /**
@@ -361,18 +333,16 @@ public extension RestService {
        - path: Destination path of file.
        - inBackground: Flag indicates if downloading should be performed in background or foreground.
        - aditionalHeaders: Additional header fields which should be sent with request.
-       - useProgress: Flag indicates if Progress object should be created.
        - completion: Closure called when request is finished.
      - Throws: RestService.Error if creating *URL* failed.
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
-    func patchFile(from url: URL, at path: ResourcePath, inBackground: Bool = true, aditionalHeaders: [ApiHeader]? = nil, useProgress: Bool = true, completion: RestSimpleResponseCompletionHandler? = nil) throws -> ApiRequest {
-        return apiService.patchFile(from: url,
-                                    to: try requestUrl(for: path),
-                                    with: apiHeaders(adding: aditionalHeaders),
-                                    inBackground: inBackground,
-                                    useProgress: useProgress,
-                                    completion: completionHandler(with: completion))
+    func patchFile(from url: URL, at path: ResourcePath, inBackground: Bool = true, aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task? {
+        return try apiService.patchFile(from: url,
+                                        to: try requestUrl(for: path),
+                                        with: apiHeaders(adding: aditionalHeaders),
+                                        configuration: inBackground ? .background : .foreground,
+                                        completion: completionHandler(with: completion))
     }
 }
 
@@ -438,14 +408,8 @@ private extension RestService {
         guard let headers = headers else {
             return headerFields
         }
-        var mergedHeders = headerFields
-        for header in headers {
-            if let index = mergedHeders.firstIndex(where: { $0.name == header.name }) {
-                mergedHeders.remove(at: index)
-            }
-            mergedHeders.append(header)
-        }
-        return mergedHeders
+        let headersSet = Set(headers).union(headerFields)
+        return Array(headersSet)
     }
 
     ///Encodes encodable `value` into *Data* object.
@@ -457,22 +421,22 @@ private extension RestService {
     }
 
     ///Converts *RestResponseCompletionHandler* into *ApiResponseCompletionHandler*.
-    func completionHandler<Response: Decodable>(for type: Response.Type?, coder: CoderProvider, with completion: RestResponseCompletionHandler<Response>?) -> ApiResponseCompletionHandler? {
-        guard let completion = completion, let type = type else {
+    func completionHandler<Response: Decodable>(coder: CoderProvider, with completion: RestResponse.CompletionHandler<Response>?) -> ApiService.CompletionHandler? {
+        guard let completion = completion else {
             return nil
         }
         return { (response, error) in
             guard let response = response, error == nil else {
-                completion(nil, RestResponseDetails(error))
+                completion(nil, RestResponse.Details(error))
                 return
             }
-            var details = RestResponseDetails(response)
+            var details = RestResponse.Details(response)
             guard let body = response.body else {
                 completion(nil, details)
                 return
             }
             do {
-                let decodedData = try coder.decode(type, from: body)
+                let decodedData = try coder.decode(Response.self, from: body)
                 completion(decodedData, details)
             } catch {
                 details.error = error
@@ -482,16 +446,16 @@ private extension RestService {
     }
 
     ///Converts *SimpleRestResponseCompletionHandler* into *ApiResponseCompletionHandler*.
-    func completionHandler(with completion: RestSimpleResponseCompletionHandler?) -> ApiResponseCompletionHandler? {
+    func completionHandler(with completion: RestResponse.SimpleCompletionHandler?) -> ApiService.CompletionHandler? {
         guard let completion = completion else {
             return nil
         }
         return { (response, error) in
             guard let response = response, error == nil else {
-                completion(false, RestResponseDetails(error))
+                completion(false, RestResponse.Details(error))
                 return
             }
-            completion(response.statusCode.isSuccess, RestResponseDetails(response))
+            completion(response.statusCode.isSuccess, RestResponse.Details(response))
         }
     }
 }
@@ -499,42 +463,38 @@ private extension RestService {
 private extension RestService {
 
     ///Posts given `value` using `apiService`.
-    func post<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]?, useProgress: Bool, inBackground: Bool, completion: ApiResponseCompletionHandler?) throws -> ApiRequest {
-        return apiService.post(data: try requestData(for: value),
-                               at: try requestUrl(for: path),
-                               with: apiHeaders(adding: aditionalHeaders),
-                               configuration: inBackground ? .background : .foreground,
-                               useProgress: useProgress,
-                               completion: completion)
+    func post<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]?, inBackground: Bool, completion: ApiService.CompletionHandler?) throws -> ApiService.Task {
+        return try apiService.post(data: try requestData(for: value),
+                                   at: try requestUrl(for: path),
+                                   with: apiHeaders(adding: aditionalHeaders),
+                                   configuration: inBackground ? .background : .foreground,
+                                   completion: completion)
     }
 
     ///Puts given `value` using `apiService`.
-    func put<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]?, useProgress: Bool, inBackground: Bool, completion: ApiResponseCompletionHandler?) throws -> ApiRequest {
-        return apiService.put(data: try requestData(for: value),
-                              at: try requestUrl(for: path),
-                              with: apiHeaders(adding: aditionalHeaders),
-                              configuration: inBackground ? .background : .foreground,
-                              useProgress: useProgress,
-                              completion: completion)
+    func put<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]?, inBackground: Bool, completion: ApiService.CompletionHandler?) throws -> ApiService.Task {
+        return try apiService.put(data: try requestData(for: value),
+                                  at: try requestUrl(for: path),
+                                  with: apiHeaders(adding: aditionalHeaders),
+                                  configuration: inBackground ? .background : .foreground,
+                                  completion: completion)
     }
 
     ///Patches given `value` using `apiService`.
-    func patch<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]?, useProgress: Bool, inBackground: Bool, completion: ApiResponseCompletionHandler?) throws -> ApiRequest {
-        return apiService.patch(data: try requestData(for: value),
-                                at: try requestUrl(for: path),
-                                with: apiHeaders(adding: aditionalHeaders),
-                                configuration: inBackground ? .background : .foreground,
-                                useProgress: useProgress,
-                                completion: completion)
+    func patch<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]?, inBackground: Bool, completion: ApiService.CompletionHandler?) throws -> ApiService.Task {
+        return try apiService.patch(data: try requestData(for: value),
+                                    at: try requestUrl(for: path),
+                                    with: apiHeaders(adding: aditionalHeaders),
+                                    configuration: inBackground ? .background : .foreground,
+                                    completion: completion)
     }
 
     ///Deletes given `value` using `apiService`.
-    func delete<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]?, useProgress: Bool, inBackground: Bool, completion: ApiResponseCompletionHandler?) throws -> ApiRequest {
-        return apiService.delete(data: try requestData(for: value),
-                                 at: try requestUrl(for: path),
-                                 with: apiHeaders(adding: aditionalHeaders),
-                                 configuration: inBackground ? .background : .foreground,
-                                 useProgress: useProgress,
-                                 completion: completion)
+    func delete<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]?, inBackground: Bool, completion: ApiService.CompletionHandler?) throws -> ApiService.Task {
+        return try apiService.delete(data: try requestData(for: value),
+                                     at: try requestUrl(for: path),
+                                     with: apiHeaders(adding: aditionalHeaders),
+                                     configuration: inBackground ? .background : .foreground,
+                                     completion: completion)
     }
 }

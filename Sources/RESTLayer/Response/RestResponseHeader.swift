@@ -7,21 +7,24 @@
 
 import Foundation
 
-public struct RestResponseHeader {
+public extension RestResponse {
+    
+    struct Header {
 
-    ///Header field name.
-    public let name: String
+        ///Header field name.
+        public let name: String
 
-    ///Header field value.
-    public let value: String
+        ///Header field value.
+        public let value: String
 
-    /**
-     - Parameters:
-       - name: String containing header field name.
-       - value: String containing header field value.
-     */
-    init(name: String, value: String) {
-        self.name = name
-        self.value = value
+        /**
+         - Parameters:
+           - name: String containing header field name.
+           - value: String containing header field value.
+         */
+        init(name: String, value: String) {
+            self.name = name
+            self.value = value
+        }
     }
 }

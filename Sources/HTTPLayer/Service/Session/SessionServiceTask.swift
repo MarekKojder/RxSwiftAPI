@@ -9,7 +9,7 @@ import Foundation
 
 extension SessionService.Task {
     enum Status {
-        case suspend
+        case suspended
         case running
         case finishing
         case finished
@@ -19,57 +19,77 @@ extension SessionService.Task {
 extension SessionService {
     final class Task {
 
-        private(set) var status: Status = .suspend
-
         private let task: URLSessionTask
         private var response: HttpResponse?
-        private var progressHandlers = [SessionService.ProgressHandler]()
         private var completionHandlers = [SessionService.CompletionHandler]()
+        private let statusQueue = DispatchQueue(label: "RxSwiftAPI.SessionService.Task.statusQueue", attributes: .concurrent)
 
-        init(task: URLSessionTask, progress: SessionService.ProgressHandler?, completion: @escaping SessionService.CompletionHandler) {
+        private(set) var status: Status = .suspended
+
+        ///A representation of the overall task progress.
+        var progress: Progress {
+            return task.progress
+        }
+
+        init(task: URLSessionTask, completion: @escaping SessionService.CompletionHandler) {
             self.task = task
-            if let progress = progress {
-                progressHandlers.append(progress)
-            }
-            completionHandlers.append(completion)
+            self.append(completion)
         }
 
         deinit {
             status = .finishing
-            progressHandlers.removeAll()
             completionHandlers.removeAll()
             status = .finished
         }
     }
 }
+
 extension SessionService.Task {
 
+    ///The original request object passed when the task was created.
     var request: URLRequest? {
         return task.originalRequest
     }
 
+    ///Resumes the task, if it is suspended.
     func resume() {
-        status = .running
-        task.resume()
+        statusQueue.async(qos: .userInteractive, flags: .barrier) { [weak self] in
+            guard let `self` = self, self.status == .suspended else {
+                return
+            }
+            self.status = .running
+            self.task.resume()
+        }
     }
 
+    ///Temporarily suspends a task.
     func suspend() {
-        status = .suspend
-        task.suspend()
+        statusQueue.async(qos: .userInteractive, flags: .barrier) { [weak self] in
+            guard let `self` = self, self.status == .running else {
+                return
+            }
+            self.status = .suspended
+            self.task.suspend()
+        }
     }
 
+    ///Cancels the task.
     func cancel(completion: (() -> Void)? = nil) {
-        task.cancel()
-        performCompletion(error: cancelationError, completion: completion)
+        statusQueue.async(qos: .userInteractive, flags: .barrier) { [weak self] in
+            guard let `self` = self, self.status != .finishing && self.status != .finished else {
+                return
+            }
+            self.task.cancel()
+            DispatchQueue.global(qos: .utility).async {
+                self.performCompletion(error: self.cancelationError, completion: completion)
+            }
+        }
     }
 }
 
 extension SessionService.Task {
 
-    func append(progress: SessionService.ProgressHandler?, completion: @escaping SessionService.CompletionHandler) {
-        if let progress = progress {
-            progressHandlers.append(progress)
-        }
+    func append(_ completion: @escaping SessionService.CompletionHandler) {
         completionHandlers.append(completion)
     }
 
@@ -97,22 +117,25 @@ extension SessionService.Task {
         }
     }
 
-    func performProgress(completed: Int64, total: Int64) {
-        progressHandlers.forEach { $0(task.progress) }
-    }
+    func performProgress(completed: Int64, total: Int64) { }
 
     func performCompletion(error: Error? = nil, completion: (() -> Void)? = nil) {
-        guard status != .finishing && status != .finished else {
-            return
-        }
-        status = .finishing
-        let completionError = (error == nil && response == nil) ? noResponseError : error
-        DispatchQueue.global(qos: .utility).async {
-            self.completionHandlers.forEach { $0(self.response, completionError) }
-            self.completionHandlers.removeAll()
-            self.progressHandlers.removeAll()
-            self.status = .finished
-            completion?()
+        statusQueue.async(qos: .userInteractive, flags: .barrier) { [weak self] in
+            guard let `self` = self, self.status != .finishing && self.status != .finished else {
+                return
+            }
+            self.status = .finishing
+            let completionError = (error == nil && self.response == nil) ? self.noResponseError : error
+            DispatchQueue.global(qos: .utility).async {
+                self.completionHandlers.forEach { $0(self.response, completionError) }
+                self.completionHandlers.removeAll()
+                self.statusQueue.async(qos: .userInteractive, flags: .barrier) { [weak self] in
+                    self?.status = .finished
+                    DispatchQueue.global(qos: .utility).async {
+                        completion?()
+                    }
+                }
+            }
         }
     }
 }

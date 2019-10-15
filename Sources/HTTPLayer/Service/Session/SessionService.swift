@@ -58,11 +58,14 @@ extension SessionService {
 
      - Parameters:
        - request: An URLRequest object to send in download task.
-       - progress: Block for hangling request progress.
        - completion: Block for hangling request completion.
+
+     - Returns: Task object which allows to follow progress and manage request.
+
+     - Throws: Error when Task could not be created.
      */
-    func data(request: URLRequest, progress: ProgressHandler?, completion: @escaping CompletionHandler) {
-        safely(add: progress, completion: completion) { [weak self] in
+    func data(request: URLRequest, completion: @escaping CompletionHandler) throws -> Task {
+        return try safely(add: completion) { [weak self] in
             return self?.urlSession.dataTask(with: request)
         }
     }
@@ -72,11 +75,14 @@ extension SessionService {
 
      - Parameters:
        - request: An URLRequest object to send in download task.
-       - progress: Block for hangling request progress.
        - completion: Block for hangling request completion.
+
+     - Returns: Task object which allows to follow progress and manage request.
+
+     - Throws: Error when Task could not be created.
      */
-    func upload(request: URLRequest, file: URL, progress: ProgressHandler?, completion: @escaping CompletionHandler) {
-        safely(add: progress, completion: completion) { [weak self] in
+    func upload(request: URLRequest, file: URL, completion: @escaping CompletionHandler) throws -> Task {
+           return try safely(add: completion) { [weak self] in
             return self?.urlSession.uploadTask(with: request, fromFile: file)
         }
     }
@@ -86,40 +92,16 @@ extension SessionService {
 
      - Parameters:
        - request: An URLRequest object to send in download task.
-       - progress: Block for hangling request progress.
        - completion: Block for hangling request completion.
+
+     - Returns: Task object which allows to follow progress and manage request.
+
+     - Throws: Error when Task could not be created.
      */
-    func download(request: URLRequest, progress: ProgressHandler?, completion: @escaping CompletionHandler) {
-        safely(add: progress, completion: completion) { [weak self] in
+    func download(request: URLRequest, completion: @escaping CompletionHandler) throws -> Task {
+           return try safely(add: completion) { [weak self] in
             return self?.urlSession.downloadTask(with: request)
         }
-    }
-
-    /**
-     Temporarily suspends given HTTP request.
-
-     - Parameter request: An URLRequest to suspend.
-     */
-    func suspend(_ request: URLRequest) {
-        forEvery(request) { $0.suspend() }
-    }
-
-    /**
-     Resumes given HTTP request, if it is suspended.
-
-     - Parameter request: An URLRequest to resume.
-     */
-    func resume(_ request: URLRequest) {
-        forEvery(request) { $0.resume() }
-    }
-
-    /**
-     Cancels given HTTP request.
-
-     - Parameter request: An URLRequest to cancel.
-     */
-    func cancel(_ request: URLRequest) {
-        forEvery(request) { $0.cancel() }
     }
 
     ///Cancels all currently running HTTP requests.
@@ -165,38 +147,23 @@ private extension SessionService {
         return NSError(domain: sessionDomain, code: code, userInfo: [NSLocalizedDescriptionKey : description])
     }
 
-    func safely(add progress: ProgressHandler?, completion: @escaping CompletionHandler, and createTask: @escaping () -> URLSessionTask?) {
-        sessionQueue.sync { [weak self] in
+    func safely(add completion: @escaping CompletionHandler, and createTask: @escaping () -> URLSessionTask?) throws -> Task {
+        try sessionQueue.sync { [weak self] in
             guard let `self` = self else {
-                completion(nil, SessionService.error("Lost reference to SessionService.", code: -1))
-                return
+                throw SessionService.error("Lost reference to SessionService.", code: -1)
             }
             guard self.status == .valid else {
-                completion(nil, SessionService.error("Attempted to create URLSessionTask in a session that has been invalidated.", code: -2))
-                return
+                throw  SessionService.error("Attempted to create URLSessionTask in a session that has been invalidated.", code: -2)
             }
             guard let urlSessionTask = createTask() else {
-                completion(nil, SessionService.error("URLSessionTask could not be created.", code: -3))
-                return
+                throw SessionService.error("URLSessionTask could not be created.", code: -3)
             }
-            if let index = self.activeTasks.lastIndex(where: { $0 == urlSessionTask }) {
-                switch self.activeTasks[index].status {
-                case .running,
-                     .suspend:
-                    self.activeTasks[index].append(progress: progress, completion: completion)
-                    return
-                case .finished:
-                    self.activeTasks.remove(at: index)
-                default:
-                    break
-                }
-            }
-            let task = Task(task: urlSessionTask, progress: progress, completion: completion)
+            let task = Task(task: urlSessionTask, completion: completion)
             self.activeTasks.append(task)
-
             DispatchQueue.global(qos: .utility).async {
                 task.resume()
             }
+            return task
         }
     }
 
@@ -328,10 +295,10 @@ private extension SessionService {
             .subscribeOn(concurrentScheduler)
             .observeOn(serialScheduler)
             .subscribe(onNext: { [weak self] (task: URLSessionDownloadTask, bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) in
-            guard let activeTask = self?.activeTasks.last(where: { $0 == task }) else {
-                return
-            }
-            activeTask.performProgress(completed: totalBytesWritten, total: totalBytesExpectedToWrite)
+                guard let activeTask = self?.activeTasks.last(where: { $0 == task }) else {
+                    return
+                }
+                activeTask.performProgress(completed: totalBytesWritten, total: totalBytesExpectedToWrite)
             })
             .disposed(by: disposeBag)
     }
