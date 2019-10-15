@@ -7,40 +7,43 @@
 
 import Foundation
 
-public struct RestResponseDetails {
+public extension RestResponse {
 
-    ///Error object containing internal errors
-    public internal(set) var error: Error?
+    struct Details {
 
-    ///The status code of the receiver.
-    public let statusCode: StatusCode
+        ///Error object containing internal errors.
+        public internal(set) var error: Error?
 
-    ///Data object returned by receiver.
-    public let rawBody: Data?
+        ///The status code of the receiver.
+        public let statusCode: StatusCode
 
-    ///A dictionary containing all the HTTP header fields of the receiver.
-    public let responseHeaderFields: [RestResponseHeader]
+        ///Data object returned by receiver.
+        public let rawBody: Data?
 
-    init(_ error: Error?) {
-        self.error = error
-        statusCode = StatusCode.internalError
-        rawBody = nil
-        responseHeaderFields = []
-    }
+        ///A dictionary containing all the HTTP header fields of the receiver.
+        public let responseHeaderFields: [Header]
 
-    init(_ response: ApiResponse) {
-        error = nil
-        statusCode = response.statusCode
-        rawBody = response.body
-        responseHeaderFields = response.allHeaderFields?.map({ RestResponseHeader(name: $0.0, value: $0.1) }) ?? []
-    }
+        init(_ error: Error?) {
+             self.error = error
+             statusCode = StatusCode.internalError
+             rawBody = nil
+             responseHeaderFields = []
+         }
 
-    ///Prints to console pretty formatted JSON docoded from body.
-    public func printPrettyBody() {
-        guard let body = rawBody else {
-            print("Body is nil.")
-            return
-        }
-        body.print()
-    }
+         init(_ response: ApiResponse) {
+             error = nil
+             statusCode = response.statusCode
+             rawBody = response.body
+             responseHeaderFields = response.allHeaderFields?.map { Header(name: $0.0, value: $0.1) } ?? []
+         }
+
+         ///Prints to console pretty formatted JSON docoded from body.
+         public func printPrettyBody() {
+             guard let body = rawBody else {
+                 print("Body is nil.")
+                 return
+             }
+             body.print()
+         }
+     }
 }

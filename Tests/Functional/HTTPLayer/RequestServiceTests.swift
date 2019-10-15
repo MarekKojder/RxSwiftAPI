@@ -90,7 +90,7 @@ extension RequestServiceTests {
         var successPerformed = false
         var failurePerformed = false
         var responseError: NSError?
-        let completion: HttpRequestCompletionHandler = { response, error in
+        let completion: RequestService.CompletionHandler = { response, error in
             let message: String
             if let error = error {
                 failurePerformed = true
@@ -113,7 +113,7 @@ extension RequestServiceTests {
         }
 
         let request = HttpDownloadRequest(url: fileUrl, destinationUrl: destinationUrl)
-        requestService.sendHTTPRequest(request, with: .foreground, progress: nil, completion: completion)
+        try? requestService.sendHTTP(request: request, with: .foreground, completion: completion)
 
         waitForExpectations(timeout: 300) { error in
             XCTAssertNil(error, "Download request test failed with error: \(error!.localizedDescription)")
@@ -130,7 +130,7 @@ extension RequestServiceTests {
         var successPerformed = false
         var failurePerformed = false
         var responseError: NSError?
-        let completion: HttpRequestCompletionHandler = { response, error in
+        let completion: RequestService.CompletionHandler = { response, error in
             let message: String
             if let error = error {
                 failurePerformed = true
@@ -153,8 +153,8 @@ extension RequestServiceTests {
         }
 
         let request = HttpDownloadRequest(url: fileUrl, destinationUrl: destinationUrl)
-        requestService.sendHTTPRequest(request, with: .foreground, progress: nil, completion: completion)
-        requestService.cancel(request)
+        let task = try? requestService.sendHTTP(request: request, with: .foreground, completion: completion)
+        task?.cancel()
 
         waitForExpectations(timeout: 10) { error in
             XCTAssertNil(error, "Download request test failed with error: \(error!.localizedDescription)")
@@ -171,7 +171,7 @@ extension RequestServiceTests {
         let responseExpectation = expectation(description: "Expect file")
         var failurePerformed = false
         var responseError: NSError?
-        let completion: HttpRequestCompletionHandler = { response, error in
+        let completion: RequestService.CompletionHandler = { response, error in
             let message: String
             if let error = error {
                 let firstError = !failurePerformed
@@ -198,10 +198,10 @@ extension RequestServiceTests {
         let request1 = HttpDownloadRequest(url: fileUrl1, destinationUrl: destinationUrl)
         let request2 = HttpDownloadRequest(url: fileUrl2, destinationUrl: destinationUrl)
 
-        requestService.sendHTTPRequest(request1, with: .foreground, progress: nil, completion: completion)
-        requestService.sendHTTPRequest(request2, with: .foreground, progress: nil, completion: completion)
-        requestService.sendHTTPRequest(request1, with: .foreground, progress: nil, completion: completion)
-        requestService.sendHTTPRequest(request2, with: .foreground, progress: nil, completion: completion)
+        try? requestService.sendHTTP(request: request1, with: .foreground, completion: completion)
+        try? requestService.sendHTTP(request: request2, with: .foreground, completion: completion)
+        try? requestService.sendHTTP(request: request1, with: .foreground, completion: completion)
+        try? requestService.sendHTTP(request: request2, with: .foreground, completion: completion)
         requestService.cancelAllRequests()
 
         waitForExpectations(timeout: 10) { error in
@@ -218,7 +218,7 @@ extension RequestServiceTests {
         var successPerformed = false
         var failurePerformed = false
         var responseError: Error?
-        let completion: HttpRequestCompletionHandler = { response, error in
+        let completion: RequestService.CompletionHandler = { response, error in
             let message: String
             if let error = error {
                 failurePerformed = true
@@ -241,9 +241,9 @@ extension RequestServiceTests {
         }
 
         let request = HttpDataRequest(url: url, method: method)
-        requestService.sendHTTPRequest(request, progress: nil, completion: completion)
-        requestService.suspend(request)
-        requestService.resume(request)
+        let task = try? requestService.sendHTTP(request: request, with: .foreground, completion: completion)
+        task?.suspend()
+        task?.resume()
 
         waitForExpectations(timeout: 30) { error in
             XCTAssertNil(error, "\(method.rawValue) request test failed with error: \(error!.localizedDescription)")
@@ -267,7 +267,7 @@ extension RequestServiceTests {
         var successPerformed = false
         var failurePerformed = false
         var responseError: Error?
-        let completion: HttpRequestCompletionHandler = { response, error in
+        let completion: RequestService.CompletionHandler = { response, error in
             let message: String
             if let error = error {
                 failurePerformed = true
@@ -290,7 +290,7 @@ extension RequestServiceTests {
         }
 
         let request = HttpDataRequest(url: url, method: method, body: body)
-        requestService.sendHTTPRequest(request, progress: nil, completion: completion)
+        try? requestService.sendHTTP(request: request, with: .foreground, completion: completion)
 
         waitForExpectations(timeout: 30) { error in
             XCTAssertNil(error, "\(method.rawValue) request test failed with error: \(error!.localizedDescription)", file: file, line: line)
@@ -305,7 +305,7 @@ extension RequestServiceTests {
         var successPerformed = false
         var failurePerformed = false
         var responseError: Error?
-        let completion: HttpRequestCompletionHandler = { response, error in
+        let completion: RequestService.CompletionHandler = { response, error in
             let message: String
             if let error = error {
                 failurePerformed = true
@@ -329,7 +329,7 @@ extension RequestServiceTests {
 
         let request = HttpUploadRequest(url: url, method: method, resourceUrl: resourceUrl)
         DispatchQueue.global(qos: .utility).async {
-            self.requestService.sendHTTPRequest(request, with: .foreground, progress: nil, completion: completion)
+            try? self.requestService.sendHTTP(request: request, with: .foreground, completion: completion)
         }
 
         waitForExpectations(timeout: 300) { error in

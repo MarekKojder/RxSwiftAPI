@@ -3,6 +3,12 @@
 ## Upcoming
 - Refactor and migration to Rx of APILayer
 
+## [v2.1.0](https://github.com/MarekKojder/RxSwiftAPI/tree/2.1.0) (2019-10-15)
+- Refactored core layer.
+- Unified naming convention.
+- Simplified running tasks managing.
+- It's still experimental version.
+
 ## [v2.0.6](https://github.com/MarekKojder/RxSwiftAPI/tree/2.0.6) (2019-10-03)
 - Experimental solution for `SessionService` and `Configuration`.
 

@@ -68,6 +68,10 @@
 		EA54E3C720C535CF0096D989 /* RestServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA54E3C520C535CF0096D989 /* RestServiceError.swift */; };
 		EA54E3C820C535CF0096D989 /* RestServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA54E3C520C535CF0096D989 /* RestServiceError.swift */; };
 		EA54E3C920C535CF0096D989 /* RestServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA54E3C520C535CF0096D989 /* RestServiceError.swift */; };
+		EA67E8BE2350B3FC009D2D9C /* ApiServiceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA67E8BD2350B3FC009D2D9C /* ApiServiceTask.swift */; };
+		EA67E8BF2350B3FC009D2D9C /* ApiServiceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA67E8BD2350B3FC009D2D9C /* ApiServiceTask.swift */; };
+		EA67E8C02350B3FC009D2D9C /* ApiServiceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA67E8BD2350B3FC009D2D9C /* ApiServiceTask.swift */; };
+		EA67E8C12350B3FC009D2D9C /* ApiServiceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA67E8BD2350B3FC009D2D9C /* ApiServiceTask.swift */; };
 		EA695B8820209D1D004662B1 /* ResourcePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA695B8720209D1D004662B1 /* ResourcePath.swift */; };
 		EA695B8B2020B48A004662B1 /* DefaultCoderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA695B8A2020B48A004662B1 /* DefaultCoderProvider.swift */; };
 		EA695B8C2020B48A004662B1 /* DefaultCoderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA695B8A2020B48A004662B1 /* DefaultCoderProvider.swift */; };
@@ -77,10 +81,6 @@
 		EA8A7F361FB18ACB00088163 /* ApiHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7EFC1FB18ACB00088163 /* ApiHeader.swift */; };
 		EA8A7F371FB18ACB00088163 /* ApiHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7EFC1FB18ACB00088163 /* ApiHeader.swift */; };
 		EA8A7F381FB18ACB00088163 /* ApiHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7EFC1FB18ACB00088163 /* ApiHeader.swift */; };
-		EA8A7F391FB18ACB00088163 /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7EFD1FB18ACB00088163 /* ApiRequest.swift */; };
-		EA8A7F3A1FB18ACB00088163 /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7EFD1FB18ACB00088163 /* ApiRequest.swift */; };
-		EA8A7F3B1FB18ACB00088163 /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7EFD1FB18ACB00088163 /* ApiRequest.swift */; };
-		EA8A7F3C1FB18ACB00088163 /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7EFD1FB18ACB00088163 /* ApiRequest.swift */; };
 		EA8A7F3D1FB18ACB00088163 /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7EFF1FB18ACB00088163 /* ApiError.swift */; };
 		EA8A7F3E1FB18ACB00088163 /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7EFF1FB18ACB00088163 /* ApiError.swift */; };
 		EA8A7F3F1FB18ACB00088163 /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7EFF1FB18ACB00088163 /* ApiError.swift */; };
@@ -238,6 +238,10 @@
 		EA9AD41A20507F2200C2D401 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AD41720507F2200C2D401 /* SessionService.swift */; };
 		EA9AD41B20507F2200C2D401 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AD41720507F2200C2D401 /* SessionService.swift */; };
 		EA9C72B21F31A720005DC978 /* ApiMethodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9C72B11F31A720005DC978 /* ApiMethodTests.swift */; };
+		EA9D659E23550A6200700D09 /* RestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D659D23550A6200700D09 /* RestResponse.swift */; };
+		EA9D659F23550A6200700D09 /* RestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D659D23550A6200700D09 /* RestResponse.swift */; };
+		EA9D65A023550A6200700D09 /* RestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D659D23550A6200700D09 /* RestResponse.swift */; };
+		EA9D65A123550A6200700D09 /* RestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D659D23550A6200700D09 /* RestResponse.swift */; };
 		EA9F374B20218FED008DEFF3 /* FailableDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA695B9120211B04004662B1 /* FailableDecodableTests.swift */; };
 		EA9F374C20219179008DEFF3 /* ResourcePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA695B8720209D1D004662B1 /* ResourcePath.swift */; };
 		EA9F374D20219179008DEFF3 /* ResourcePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA695B8720209D1D004662B1 /* ResourcePath.swift */; };
@@ -250,15 +254,15 @@
 		EAB1479920C70DF5009E1358 /* ApiServiceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB1479620C70DF5009E1358 /* ApiServiceConfiguration.swift */; };
 		EAB1479A20C70DF5009E1358 /* ApiServiceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB1479620C70DF5009E1358 /* ApiServiceConfiguration.swift */; };
 		EAB1479C20C7146C009E1358 /* ApiServiceConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB1479B20C7146C009E1358 /* ApiServiceConfigurationTests.swift */; };
-		EABDA7B520513E950019DE47 /* HttpCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDA7B420513E950019DE47 /* HttpCall.swift */; };
-		EABDA7B620513E950019DE47 /* HttpCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDA7B420513E950019DE47 /* HttpCall.swift */; };
-		EABDA7B720513E950019DE47 /* HttpCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDA7B420513E950019DE47 /* HttpCall.swift */; };
-		EABDA7B820513E950019DE47 /* HttpCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDA7B420513E950019DE47 /* HttpCall.swift */; };
 		EABDA7BA20515B210019DE47 /* HttpCallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDA7B920515B210019DE47 /* HttpCallTests.swift */; };
 		EAC18313201B6E5500767037 /* CoderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC18312201B6E5500767037 /* CoderProvider.swift */; };
 		EAC18314201B6E5500767037 /* CoderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC18312201B6E5500767037 /* CoderProvider.swift */; };
 		EAC18315201B6E5500767037 /* CoderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC18312201B6E5500767037 /* CoderProvider.swift */; };
 		EAC18316201B6E5500767037 /* CoderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC18312201B6E5500767037 /* CoderProvider.swift */; };
+		EAD87206234DD48F007A4D0E /* SessionServiceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD87205234DD48F007A4D0E /* SessionServiceTask.swift */; };
+		EAD87207234DD48F007A4D0E /* SessionServiceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD87205234DD48F007A4D0E /* SessionServiceTask.swift */; };
+		EAD87208234DD48F007A4D0E /* SessionServiceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD87205234DD48F007A4D0E /* SessionServiceTask.swift */; };
+		EAD87209234DD48F007A4D0E /* SessionServiceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD87205234DD48F007A4D0E /* SessionServiceTask.swift */; };
 		FCE4A288F494E7BFCC3FC0BE /* Pods_RxSwiftAPI_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0EFB041F998ABC9B2F66085 /* Pods_RxSwiftAPI_iOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -336,11 +340,11 @@
 		EA3B4E512163A2D300BC730D /* UnitTests OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "UnitTests OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA54E3C520C535CF0096D989 /* RestServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestServiceError.swift; sourceTree = "<group>"; };
 		EA66932C22CDD9C300031AD9 /* redeploy.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = redeploy.sh; path = Scripts/redeploy.sh; sourceTree = "<group>"; };
+		EA67E8BD2350B3FC009D2D9C /* ApiServiceTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiServiceTask.swift; sourceTree = "<group>"; };
 		EA695B8720209D1D004662B1 /* ResourcePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcePath.swift; sourceTree = "<group>"; };
 		EA695B8A2020B48A004662B1 /* DefaultCoderProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCoderProvider.swift; sourceTree = "<group>"; };
 		EA695B9120211B04004662B1 /* FailableDecodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailableDecodableTests.swift; sourceTree = "<group>"; };
 		EA8A7EFC1FB18ACB00088163 /* ApiHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiHeader.swift; sourceTree = "<group>"; };
-		EA8A7EFD1FB18ACB00088163 /* ApiRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiRequest.swift; sourceTree = "<group>"; };
 		EA8A7EFF1FB18ACB00088163 /* ApiError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
 		EA8A7F001FB18ACB00088163 /* ApiResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiResponse.swift; sourceTree = "<group>"; };
 		EA8A7F031FB18ACB00088163 /* ApiMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiMethod.swift; sourceTree = "<group>"; };
@@ -410,6 +414,7 @@
 		EA9AA41A2322427E00738A57 /* DataExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtensions.swift; sourceTree = "<group>"; };
 		EA9AD41720507F2200C2D401 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		EA9C72B11F31A720005DC978 /* ApiMethodTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiMethodTests.swift; sourceTree = "<group>"; };
+		EA9D659D23550A6200700D09 /* RestResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestResponse.swift; sourceTree = "<group>"; };
 		EAA0E18E1E5D9A7400A7AA3A /* RxSwiftAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwiftAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAA0E19B1E5D9B0700A7AA3A /* RxSwiftAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwiftAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAA0E1A81E5D9B6B00A7AA3A /* RxSwiftAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwiftAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -417,9 +422,9 @@
 		EAA0E2A91E5DC4AA00A7AA3A /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		EAB1479620C70DF5009E1358 /* ApiServiceConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiServiceConfiguration.swift; sourceTree = "<group>"; };
 		EAB1479B20C7146C009E1358 /* ApiServiceConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiServiceConfigurationTests.swift; sourceTree = "<group>"; };
-		EABDA7B420513E950019DE47 /* HttpCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpCall.swift; sourceTree = "<group>"; };
 		EABDA7B920515B210019DE47 /* HttpCallTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpCallTests.swift; sourceTree = "<group>"; };
 		EAC18312201B6E5500767037 /* CoderProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoderProvider.swift; sourceTree = "<group>"; };
+		EAD87205234DD48F007A4D0E /* SessionServiceTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionServiceTask.swift; sourceTree = "<group>"; };
 		FBAA4505EBDB06395103B642 /* Pods-SwiftAPI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftAPI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftAPI/Pods-SwiftAPI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -620,7 +625,7 @@
 			isa = PBXGroup;
 			children = (
 				EA8A7EFC1FB18ACB00088163 /* ApiHeader.swift */,
-				EA8A7EFD1FB18ACB00088163 /* ApiRequest.swift */,
+				EA67E8BD2350B3FC009D2D9C /* ApiServiceTask.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -735,6 +740,7 @@
 		EA8A7F241FB18ACB00088163 /* Response */ = {
 			isa = PBXGroup;
 			children = (
+				EA9D659D23550A6200700D09 /* RestResponse.swift */,
 				EA3B4DFF2163520500BC730D /* RestResponseHeader.swift */,
 				EA3B4DFA21634FC700BC730D /* RestResponseDetails.swift */,
 				EA8A7F261FB18ACB00088163 /* RestResponseCompletion.swift */,
@@ -992,8 +998,8 @@
 		EABDA7B320513E740019DE47 /* Session */ = {
 			isa = PBXGroup;
 			children = (
-				EABDA7B420513E950019DE47 /* HttpCall.swift */,
 				EA9AD41720507F2200C2D401 /* SessionService.swift */,
+				EAD87205234DD48F007A4D0E /* SessionServiceTask.swift */,
 			);
 			path = Session;
 			sourceTree = "<group>";
@@ -1702,9 +1708,9 @@
 				EA8A7F3F1FB18ACB00088163 /* ApiError.swift in Sources */,
 				EA8A7F431FB18ACB00088163 /* ApiResponse.swift in Sources */,
 				EA8A7F571FB18ACB00088163 /* ClientErrorStatusCodeType.swift in Sources */,
-				EABDA7B720513E950019DE47 /* HttpCall.swift in Sources */,
 				EA8A7F871FB18ACB00088163 /* HttpHeader.swift in Sources */,
 				EA8A7F5F1FB18ACB00088163 /* RedirectionStatusCodeType.swift in Sources */,
+				EA9D65A023550A6200700D09 /* RestResponse.swift in Sources */,
 				EA8A7F971FB18ACB00088163 /* HttpResponse.swift in Sources */,
 				EA8A7FA71FB18ACB00088163 /* RequestService.swift in Sources */,
 				EA9F374D20219179008DEFF3 /* ResourcePath.swift in Sources */,
@@ -1716,6 +1722,7 @@
 				EA8A7FAB1FB18ACB00088163 /* RequestServiceConfiguration.swift in Sources */,
 				EA9F375020219180008DEFF3 /* FailableDecodable.swift in Sources */,
 				EA9AD41A20507F2200C2D401 /* SessionService.swift in Sources */,
+				EA67E8C02350B3FC009D2D9C /* ApiServiceTask.swift in Sources */,
 				EA8A7F4B1FB18ACB00088163 /* ApiMethod.swift in Sources */,
 				EA8A7F731FB18ACB00088163 /* UnknownStatusCodeType.swift in Sources */,
 				EA8A7F531FB18ACB00088163 /* ApiService.swift in Sources */,
@@ -1727,7 +1734,7 @@
 				EA8A7F8F1FB18ACB00088163 /* HttpUploadRequest.swift in Sources */,
 				EA8A7F6F1FB18ACB00088163 /* SuccessStatusCodeType.swift in Sources */,
 				EAC18315201B6E5500767037 /* CoderProvider.swift in Sources */,
-				EA8A7F3B1FB18ACB00088163 /* ApiRequest.swift in Sources */,
+				EAD87208234DD48F007A4D0E /* SessionServiceTask.swift in Sources */,
 				EA8A7F771FB18ACB00088163 /* DefaultFileManager.swift in Sources */,
 				EA8A7F671FB18ACB00088163 /* StatusCode.swift in Sources */,
 				EA9AA41D2322427E00738A57 /* DataExtensions.swift in Sources */,
@@ -1750,11 +1757,14 @@
 				EA8A7F7A1FB18ACB00088163 /* FileManager.swift in Sources */,
 				EA8A7F961FB18ACB00088163 /* HttpResponse.swift in Sources */,
 				EA8A7F8A1FB18ACB00088163 /* HttpRequest.swift in Sources */,
+				EA9D659F23550A6200700D09 /* RestResponse.swift in Sources */,
 				EA8A7F5E1FB18ACB00088163 /* RedirectionStatusCodeType.swift in Sources */,
 				EA8A7F5A1FB18ACB00088163 /* InfoStatusCodeType.swift in Sources */,
 				EAC18314201B6E5500767037 /* CoderProvider.swift in Sources */,
 				EA8A7FCA1FB18ACB00088163 /* RestService.swift in Sources */,
 				EA8A7F721FB18ACB00088163 /* UnknownStatusCodeType.swift in Sources */,
+				EAD87207234DD48F007A4D0E /* SessionServiceTask.swift in Sources */,
+				EA67E8BF2350B3FC009D2D9C /* ApiServiceTask.swift in Sources */,
 				EA8A7FC61FB18ACB00088163 /* RestService+BackgroundEvents.swift in Sources */,
 				EAB1479820C70DF5009E1358 /* ApiServiceConfiguration.swift in Sources */,
 				EA9F374F20219180008DEFF3 /* FailableDecodable.swift in Sources */,
@@ -1764,7 +1774,6 @@
 				EA8A7FA21FB18ACB00088163 /* RequestService+BackgroundEvents.swift in Sources */,
 				EA8A7F3E1FB18ACB00088163 /* ApiError.swift in Sources */,
 				EA8A7F6A1FB18ACB00088163 /* StatusCodeType.swift in Sources */,
-				EA8A7F3A1FB18ACB00088163 /* ApiRequest.swift in Sources */,
 				EA8A7FA61FB18ACB00088163 /* RequestService.swift in Sources */,
 				EA9AD41920507F2200C2D401 /* SessionService.swift in Sources */,
 				EA8A7F8E1FB18ACB00088163 /* HttpUploadRequest.swift in Sources */,
@@ -1776,7 +1785,6 @@
 				EA8A7FAA1FB18ACB00088163 /* RequestServiceConfiguration.swift in Sources */,
 				EA8A7F361FB18ACB00088163 /* ApiHeader.swift in Sources */,
 				EA8A7F521FB18ACB00088163 /* ApiService.swift in Sources */,
-				EABDA7B620513E950019DE47 /* HttpCall.swift in Sources */,
 				EA8A7F4E1FB18ACB00088163 /* ApiService+BackgroundEvents.swift in Sources */,
 				EA695B8C2020B48A004662B1 /* DefaultCoderProvider.swift in Sources */,
 				EA8A7F621FB18ACB00088163 /* ServerErrorStatusCodeType.swift in Sources */,
@@ -1800,11 +1808,14 @@
 				EA8A7F7C1FB18ACB00088163 /* FileManager.swift in Sources */,
 				EA8A7F981FB18ACB00088163 /* HttpResponse.swift in Sources */,
 				EA8A7F8C1FB18ACB00088163 /* HttpRequest.swift in Sources */,
+				EA9D65A123550A6200700D09 /* RestResponse.swift in Sources */,
 				EA8A7F601FB18ACB00088163 /* RedirectionStatusCodeType.swift in Sources */,
 				EA8A7F5C1FB18ACB00088163 /* InfoStatusCodeType.swift in Sources */,
 				EAC18316201B6E5500767037 /* CoderProvider.swift in Sources */,
 				EA8A7FCC1FB18ACB00088163 /* RestService.swift in Sources */,
 				EA8A7F741FB18ACB00088163 /* UnknownStatusCodeType.swift in Sources */,
+				EAD87209234DD48F007A4D0E /* SessionServiceTask.swift in Sources */,
+				EA67E8C12350B3FC009D2D9C /* ApiServiceTask.swift in Sources */,
 				EA8A7FC81FB18ACB00088163 /* RestService+BackgroundEvents.swift in Sources */,
 				EAB1479A20C70DF5009E1358 /* ApiServiceConfiguration.swift in Sources */,
 				EA9F375120219181008DEFF3 /* FailableDecodable.swift in Sources */,
@@ -1814,7 +1825,6 @@
 				EA8A7FA41FB18ACB00088163 /* RequestService+BackgroundEvents.swift in Sources */,
 				EA8A7F401FB18ACB00088163 /* ApiError.swift in Sources */,
 				EA8A7F6C1FB18ACB00088163 /* StatusCodeType.swift in Sources */,
-				EA8A7F3C1FB18ACB00088163 /* ApiRequest.swift in Sources */,
 				EA8A7FA81FB18ACB00088163 /* RequestService.swift in Sources */,
 				EA9AD41B20507F2200C2D401 /* SessionService.swift in Sources */,
 				EA8A7F901FB18ACB00088163 /* HttpUploadRequest.swift in Sources */,
@@ -1826,7 +1836,6 @@
 				EA8A7FAC1FB18ACB00088163 /* RequestServiceConfiguration.swift in Sources */,
 				EA8A7F381FB18ACB00088163 /* ApiHeader.swift in Sources */,
 				EA8A7F541FB18ACB00088163 /* ApiService.swift in Sources */,
-				EABDA7B820513E950019DE47 /* HttpCall.swift in Sources */,
 				EA8A7F501FB18ACB00088163 /* ApiService+BackgroundEvents.swift in Sources */,
 				EA695B8E2020B48A004662B1 /* DefaultCoderProvider.swift in Sources */,
 				EA8A7F641FB18ACB00088163 /* ServerErrorStatusCodeType.swift in Sources */,
@@ -1847,14 +1856,16 @@
 				EA8A7F4D1FB18ACB00088163 /* ApiService+BackgroundEvents.swift in Sources */,
 				EA54E3C620C535CF0096D989 /* RestServiceError.swift in Sources */,
 				EA8FF24B22CC88FE0047BA07 /* RxURLSession.swift in Sources */,
-				EA8A7F391FB18ACB00088163 /* ApiRequest.swift in Sources */,
 				EA8A7FB11FB18ACB00088163 /* RestResponseCompletion.swift in Sources */,
 				EA8A7F551FB18ACB00088163 /* ClientErrorStatusCodeType.swift in Sources */,
 				EA695B8B2020B48A004662B1 /* DefaultCoderProvider.swift in Sources */,
+				EA9D659E23550A6200700D09 /* RestResponse.swift in Sources */,
 				EA8A7F511FB18ACB00088163 /* ApiService.swift in Sources */,
 				EA8A7F851FB18ACB00088163 /* HttpHeader.swift in Sources */,
 				EAC18313201B6E5500767037 /* CoderProvider.swift in Sources */,
 				EA8A7F751FB18ACB00088163 /* DefaultFileManager.swift in Sources */,
+				EAD87206234DD48F007A4D0E /* SessionServiceTask.swift in Sources */,
+				EA67E8BE2350B3FC009D2D9C /* ApiServiceTask.swift in Sources */,
 				EA8A7F5D1FB18ACB00088163 /* RedirectionStatusCodeType.swift in Sources */,
 				EAB1479720C70DF5009E1358 /* ApiServiceConfiguration.swift in Sources */,
 				EA8A7FC91FB18ACB00088163 /* RestService.swift in Sources */,
@@ -1875,7 +1886,6 @@
 				EA8A7F491FB18ACB00088163 /* ApiMethod.swift in Sources */,
 				EA8A7F651FB18ACB00088163 /* StatusCode.swift in Sources */,
 				EA8A7F351FB18ACB00088163 /* ApiHeader.swift in Sources */,
-				EABDA7B520513E950019DE47 /* HttpCall.swift in Sources */,
 				EA8A7FC51FB18ACB00088163 /* RestService+BackgroundEvents.swift in Sources */,
 				EA695B8820209D1D004662B1 /* ResourcePath.swift in Sources */,
 				EA8A7F8D1FB18ACB00088163 /* HttpUploadRequest.swift in Sources */,
@@ -1967,7 +1977,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2024,7 +2034,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -2041,7 +2051,7 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = B4QB84STNF;
 				INFOPLIST_FILE = Tests/Functional/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "marq.FunctionalTests-OSX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2057,7 +2067,7 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = B4QB84STNF;
 				INFOPLIST_FILE = Tests/Functional/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "marq.FunctionalTests-OSX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2073,7 +2083,7 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = B4QB84STNF;
 				INFOPLIST_FILE = Tests/Unit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "marq.UnitTests-OSX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2088,7 +2098,7 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = B4QB84STNF;
 				INFOPLIST_FILE = Tests/Unit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "marq.UnitTests-OSX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2103,7 +2113,7 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = B4QB84STNF;
 				INFOPLIST_FILE = Tests/Unit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "marq.UnitTests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2117,7 +2127,7 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = B4QB84STNF;
 				INFOPLIST_FILE = Tests/Unit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "marq.UnitTests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2131,7 +2141,7 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = B4QB84STNF;
 				INFOPLIST_FILE = Tests/Functional/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "marq.FunctionalTests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2145,7 +2155,7 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = B4QB84STNF;
 				INFOPLIST_FILE = Tests/Functional/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "marq.FunctionalTests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2312,7 +2322,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "Sources/SupportingFiles/Info-iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "marq.RxSwiftAPI-iOS";
 				PRODUCT_NAME = RxSwiftAPI;
@@ -2334,7 +2344,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "Sources/SupportingFiles/Info-iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "marq.RxSwiftAPI-iOS";
 				PRODUCT_NAME = RxSwiftAPI;
