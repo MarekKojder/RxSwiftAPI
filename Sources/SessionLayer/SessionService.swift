@@ -15,29 +15,26 @@ extension SessionService {
     }
 }
 
-final class SessionService {
+final class SessionService: QueueRelated {
 
     typealias ProgressHandler = (_ progress: Progress) -> ()
     typealias CompletionHandler = (_ response: HttpResponse?, _ error: Error?) -> ()
 
     private(set) var status = Status.valid
-    let configuration: RequestService.Configuration
 
     private let urlSession: RxURLSession
-    private let sessionQueue: DispatchQueue
+    private let configuration: RequestService.Configuration
+    private let sessionQueue = serialQueue("sessionQueue")
     private let serialScheduler: SerialDispatchQueueScheduler
-    private let concurrentScheduler: ConcurrentDispatchQueueScheduler
+    private let concurrentScheduler = ConcurrentDispatchQueueScheduler(queue: concurrentQueue("concurrentScheduler"))
     private let disposeBag = DisposeBag()
     private var activeTasks = [Task]()
 
     init(configuration: RequestService.Configuration) {
         self.configuration = configuration
         urlSession = RxURLSession(configuration: configuration.urlSessionConfiguration)
-        let timestamp = Date().timeIntervalSince1970
-        sessionQueue = DispatchQueue(label: "RxSwiftAPI.SessionService.sessionQueue.\(timestamp)")
-        serialScheduler = SerialDispatchQueueScheduler(queue: sessionQueue, internalSerialQueueName: "RxSwiftAPI.SessionService.serialScheduler.\(timestamp)")
-        concurrentScheduler = ConcurrentDispatchQueueScheduler(queue: DispatchQueue(label: "RxSwiftAPI.SessionService.concurrentScheduler.\(timestamp)", qos: .utility))
-
+        serialScheduler = SerialDispatchQueueScheduler(queue: sessionQueue, internalSerialQueueName: Self.queue("serialScheduler"))
+        
         DispatchQueue.main.async {
             self.setupURLSessionDelegate()
             self.setupURLSessionTaskDelegate()
@@ -129,12 +126,16 @@ extension SessionService {
 
 extension SessionService: Hashable {
 
-    public func hash(into hasher: inout Hasher) {
+    func hash(into hasher: inout Hasher) {
         hasher.combine(urlSession.configuration)
     }
 
-    public static func ==(lhs: SessionService, rhs: SessionService) -> Bool {
+    static func ==(lhs: SessionService, rhs: SessionService) -> Bool {
         return lhs.urlSession.configuration == rhs.urlSession.configuration
+    }
+
+    static func ==(lhs: SessionService, rhs: RequestService.Configuration) -> Bool {
+        return lhs.configuration == rhs
     }
 }
 
@@ -160,21 +161,7 @@ private extension SessionService {
             }
             let task = Task(task: urlSessionTask, completion: completion)
             self.activeTasks.append(task)
-            DispatchQueue.global(qos: .utility).async {
-                task.resume()
-            }
             return task
-        }
-    }
-
-    func forEvery(_ request: URLRequest, updateTask: @escaping (Task) -> Void) {
-        DispatchQueue.global(qos: .utility).async {
-            self.activeTasks.forEach { task in
-                guard task.request == request else {
-                    return
-                }
-                updateTask(task)
-            }
         }
     }
 }
@@ -207,10 +194,16 @@ private extension SessionService {
                     self.status = .invalid
                 }
                 let error = error ?? SessionService.error("Session invalidated", code: -5)
-                self.activeTasks.forEach { $0.performCompletion(error: error) }
-                do { //TODO: Maybe after finishing all completions. Use DispatchGroup here.
-                    self.activeTasks.removeAll()
-                    self.status = .invalidated
+                let group = DispatchGroup()
+                self.activeTasks.forEach { task in
+                    group.enter()
+                    task.performCompletion(error: error) {
+                        group.leave()
+                    }
+                }
+                group.notify(queue: self.sessionQueue) { [weak self] in
+                    self?.activeTasks.removeAll()
+                    self?.status = .invalidated
                 }
             })
             .disposed(by: disposeBag)
