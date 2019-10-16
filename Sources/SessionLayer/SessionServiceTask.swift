@@ -22,7 +22,7 @@ extension SessionService {
         private let task: URLSessionTask
         private var response: HttpResponse?
         private var completionHandlers = [SessionService.CompletionHandler]()
-        private let statusQueue = DispatchQueue(label: "RxSwiftAPI.SessionService.Task.statusQueue", attributes: .concurrent)
+        private let statusQueue = concurrentQueue("statusQueue")
 
         private(set) var status: Status = .suspended
 

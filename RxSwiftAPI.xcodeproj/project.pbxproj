@@ -199,6 +199,10 @@
 		EA8FF24D22CC88FE0047BA07 /* RxURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8FF24A22CC88FE0047BA07 /* RxURLSession.swift */; };
 		EA8FF24E22CC88FE0047BA07 /* RxURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8FF24A22CC88FE0047BA07 /* RxURLSession.swift */; };
 		EA9125781E5ED3B1006A2801 /* DefaultFileManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9125761E5ED391006A2801 /* DefaultFileManagerTests.swift */; };
+		EA92789223565F0B003DBF1D /* QueueRelated.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92789123565F0B003DBF1D /* QueueRelated.swift */; };
+		EA92789323565F0B003DBF1D /* QueueRelated.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92789123565F0B003DBF1D /* QueueRelated.swift */; };
+		EA92789423565F0B003DBF1D /* QueueRelated.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92789123565F0B003DBF1D /* QueueRelated.swift */; };
+		EA92789523565F0B003DBF1D /* QueueRelated.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92789123565F0B003DBF1D /* QueueRelated.swift */; };
 		EA93FE341E5EC42A00A82381 /* RxSwiftAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAA0E1B51E5D9B8900A7AA3A /* RxSwiftAPI.framework */; };
 		EA93FE851E5EC64800A82381 /* RestServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE621E5EC4C700A82381 /* RestServiceTests.swift */; };
 		EA93FE861E5EC64C00A82381 /* InfoStatusCodeTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE451E5EC4C700A82381 /* InfoStatusCodeTypeTests.swift */; };
@@ -380,6 +384,7 @@
 		EA8A7F341FB18ACB00088163 /* SwiftAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftAPI.h; sourceTree = "<group>"; };
 		EA8FF24A22CC88FE0047BA07 /* RxURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxURLSession.swift; sourceTree = "<group>"; };
 		EA9125761E5ED391006A2801 /* DefaultFileManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFileManagerTests.swift; sourceTree = "<group>"; };
+		EA92789123565F0B003DBF1D /* QueueRelated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueRelated.swift; sourceTree = "<group>"; };
 		EA93FE2F1E5EC42A00A82381 /* UnitTests iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "UnitTests iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA93FE3D1E5EC4C700A82381 /* ApiHeaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiHeaderTests.swift; sourceTree = "<group>"; };
 		EA93FE3F1E5EC4C700A82381 /* ApiErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiErrorTests.swift; sourceTree = "<group>"; };
@@ -604,6 +609,7 @@
 				EA8A7F231FB18ACB00088163 /* RESTLayer */,
 				EA8A7EFA1FB18ACB00088163 /* APILayer */,
 				EA8A7F131FB18ACB00088163 /* HTTPLayer */,
+				EA92789623566A1F003DBF1D /* SessionLayer */,
 				EA8A7F0F1FB18ACB00088163 /* Dependencies */,
 				EA8A7F2F1FB18ACB00088163 /* SupportingFiles */,
 			);
@@ -668,6 +674,7 @@
 		EA8A7F0F1FB18ACB00088163 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				EA92789023565EB6003DBF1D /* Helpers */,
 				EA9AA4192322426500738A57 /* Extensions */,
 				EA695B892020B461004662B1 /* CoderProvider */,
 				EA8A7F101FB18ACB00088163 /* FileManager */,
@@ -718,10 +725,8 @@
 		EA8A7F1E1FB18ACB00088163 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				EA8FF24F22CCC2B20047BA07 /* RxURLSession */,
-				EABDA7B320513E740019DE47 /* Session */,
-				EA8A7F221FB18ACB00088163 /* RequestServiceConfiguration.swift */,
 				EA8A7F211FB18ACB00088163 /* RequestService.swift */,
+				EA8A7F221FB18ACB00088163 /* RequestServiceConfiguration.swift */,
 				EA8A7F201FB18ACB00088163 /* RequestService+BackgroundEvents.swift */,
 			);
 			path = Service;
@@ -793,6 +798,24 @@
 				EA9125761E5ED391006A2801 /* DefaultFileManagerTests.swift */,
 			);
 			path = FileManager;
+			sourceTree = "<group>";
+		};
+		EA92789023565EB6003DBF1D /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				EA92789123565F0B003DBF1D /* QueueRelated.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		EA92789623566A1F003DBF1D /* SessionLayer */ = {
+			isa = PBXGroup;
+			children = (
+				EA8FF24F22CCC2B20047BA07 /* RxURLSession */,
+				EA9AD41720507F2200C2D401 /* SessionService.swift */,
+				EAD87205234DD48F007A4D0E /* SessionServiceTask.swift */,
+			);
+			path = SessionLayer;
 			sourceTree = "<group>";
 		};
 		EA93FE3A1E5EC4C700A82381 /* Unit */ = {
@@ -993,15 +1016,6 @@
 				EA66932C22CDD9C300031AD9 /* redeploy.sh */,
 			);
 			name = Metadata;
-			sourceTree = "<group>";
-		};
-		EABDA7B320513E740019DE47 /* Session */ = {
-			isa = PBXGroup;
-			children = (
-				EA9AD41720507F2200C2D401 /* SessionService.swift */,
-				EAD87205234DD48F007A4D0E /* SessionServiceTask.swift */,
-			);
-			path = Session;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1710,6 +1724,7 @@
 				EA8A7F571FB18ACB00088163 /* ClientErrorStatusCodeType.swift in Sources */,
 				EA8A7F871FB18ACB00088163 /* HttpHeader.swift in Sources */,
 				EA8A7F5F1FB18ACB00088163 /* RedirectionStatusCodeType.swift in Sources */,
+				EA92789423565F0B003DBF1D /* QueueRelated.swift in Sources */,
 				EA9D65A023550A6200700D09 /* RestResponse.swift in Sources */,
 				EA8A7F971FB18ACB00088163 /* HttpResponse.swift in Sources */,
 				EA8A7FA71FB18ACB00088163 /* RequestService.swift in Sources */,
@@ -1776,6 +1791,7 @@
 				EA8A7F6A1FB18ACB00088163 /* StatusCodeType.swift in Sources */,
 				EA8A7FA61FB18ACB00088163 /* RequestService.swift in Sources */,
 				EA9AD41920507F2200C2D401 /* SessionService.swift in Sources */,
+				EA92789323565F0B003DBF1D /* QueueRelated.swift in Sources */,
 				EA8A7F8E1FB18ACB00088163 /* HttpUploadRequest.swift in Sources */,
 				EA9F374C20219179008DEFF3 /* ResourcePath.swift in Sources */,
 				EA8A7F661FB18ACB00088163 /* StatusCode.swift in Sources */,
@@ -1827,6 +1843,7 @@
 				EA8A7F6C1FB18ACB00088163 /* StatusCodeType.swift in Sources */,
 				EA8A7FA81FB18ACB00088163 /* RequestService.swift in Sources */,
 				EA9AD41B20507F2200C2D401 /* SessionService.swift in Sources */,
+				EA92789523565F0B003DBF1D /* QueueRelated.swift in Sources */,
 				EA8A7F901FB18ACB00088163 /* HttpUploadRequest.swift in Sources */,
 				EA9F374E2021917A008DEFF3 /* ResourcePath.swift in Sources */,
 				EA8A7F681FB18ACB00088163 /* StatusCode.swift in Sources */,
@@ -1878,6 +1895,7 @@
 				EA8A7F811FB18ACB00088163 /* HttpDownloadRequest.swift in Sources */,
 				EA8A7FA51FB18ACB00088163 /* RequestService.swift in Sources */,
 				EA9AD41820507F2200C2D401 /* SessionService.swift in Sources */,
+				EA92789223565F0B003DBF1D /* QueueRelated.swift in Sources */,
 				EA8A7F691FB18ACB00088163 /* StatusCodeType.swift in Sources */,
 				EA8A7FA11FB18ACB00088163 /* RequestService+BackgroundEvents.swift in Sources */,
 				EA8A7F9D1FB18ACB00088163 /* HttpMethod.swift in Sources */,

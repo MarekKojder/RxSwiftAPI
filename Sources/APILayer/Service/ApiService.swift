@@ -37,15 +37,15 @@ public extension ApiService {
 
      - Parameters:
        - url: URL of the receiver.
-       - aditionalHeaders: Array of all aditional HTTP header fields.
+       - headers: Array of all aditional HTTP header fields.
        - configuration: One of predefined *ApiService.Configuration* object containing request configuration.
        - completion: Closure called when request is finished.
 
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Returns: Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func getData(from url: URL, with aditionalHeaders: [ApiHeader]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
-        return try sendRequest(url: url, method: .get, body: nil, apiHeaders: aditionalHeaders, configuration: configuration, completion: completion)
+    func getData(from url: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
+        return try sendRequest(to: url, method: .get, headers: headers, configuration: configuration, completion: completion)
     }
 
     /**
@@ -54,15 +54,15 @@ public extension ApiService {
      - Parameters:
        - data: Data object which supposed to be send.
        - url: URL of the receiver.
-       - aditionalHeaders: Array of all aditional HTTP header fields.
+       - headers: Array of all aditional HTTP header fields.
        - configuration: One of predefined *ApiService.Configuration* object containing request configuration.
        - completion: Closure called when request is finished.
 
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Returns: Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func post(data: Data?, at url: URL, with aditionalHeaders: [ApiHeader]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
-        return try sendRequest(url: url, method: .post, body: data, apiHeaders: aditionalHeaders, configuration: configuration, completion: completion)
+    func post(data: Data?, at url: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
+        return try sendRequest(to: url, with: data, method: .post, headers: headers, configuration: configuration, completion: completion)
     }
 
     /**
@@ -71,15 +71,15 @@ public extension ApiService {
      - Parameters:
        - data: Data object which supposed to be send.
        - url: URL of the receiver.
-       - aditionalHeaders: Array of all aditional HTTP header fields.
+       - headers: Array of all aditional HTTP header fields.
        - configuration: One of predefined *ApiService.Configuration* object containing request configuration.
        - completion: Closure called when request is finished.
 
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Returns: Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func put(data: Data?, at url: URL, with aditionalHeaders: [ApiHeader]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
-        return try sendRequest(url: url, method: .put, body: data, apiHeaders: aditionalHeaders, configuration: configuration, completion: completion)
+    func put(data: Data?, at url: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
+        return try sendRequest(to: url, with: data, method: .put, headers: headers, configuration: configuration, completion: completion)
     }
 
     /**
@@ -88,15 +88,15 @@ public extension ApiService {
      - Parameters:
        - data: Data object which supposed to be send.
        - url: URL of the receiver.
-       - aditionalHeaders: Array of all aditional HTTP header fields.
+       - headers: Array of all aditional HTTP header fields.
        - configuration: One of predefined *ApiService.Configuration* object containing request configuration.
        - completion: Closure called when request is finished.
 
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Returns: Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func patch(data: Data?, at url: URL, with aditionalHeaders: [ApiHeader]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
-        return try sendRequest(url: url, method: .patch, body: data, apiHeaders: aditionalHeaders, configuration: configuration, completion: completion)
+    func patch(data: Data?, at url: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
+        return try sendRequest(to: url, with: data, method: .patch, headers: headers, configuration: configuration, completion: completion)
     }
 
     /**
@@ -105,15 +105,15 @@ public extension ApiService {
      - Parameters:
        - data: Data object which supposed to be send.
        - url: URL of the receiver.
-       - aditionalHeaders: Array of all aditional HTTP header fields.
+       - headers: Array of all aditional HTTP header fields.
        - configuration: One of predefined *ApiService.Configuration* object containing request configuration.
        - completion: Closure called when request is finished.
 
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Returns: Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func delete(data: Data? = nil, at url: URL, with aditionalHeaders: [ApiHeader]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
-        return try sendRequest(url: url, method: .delete, body: data, apiHeaders: aditionalHeaders, configuration: configuration, completion: completion)
+    func delete(data: Data? = nil, at url: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
+        return try sendRequest(to: url, with: data, method: .delete, headers: headers, configuration: configuration, completion: completion)
     }
 }
 
@@ -126,14 +126,14 @@ public extension ApiService {
      - Parameters:
        - localFileUrl: URL on disc of the resource to upload.
        - destinationUrl: URL of the receiver.
-       - aditionalHeaders: Array of all aditional HTTP header fields.
+       - headers: Array of all aditional HTTP header fields.
        - configuration: One of predefined *ApiService.Configuration* object containing request configuration.
        - completion: Closure called when request is finished.
 
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Returns: Task object which allows to follow progress and manage request.
      */
-    func postFile(from localFileUrl: URL, to destinationUrl: URL, with aditionalHeaders: [ApiHeader]? = nil, configuration: Configuration = .background, completion: CompletionHandler? = nil) throws -> Task {
-        return try uploadFile(at: localFileUrl, to: destinationUrl, method: .post, apiHeaders: aditionalHeaders, configuration: configuration, completion: completion)
+    func postFile(from localFileUrl: URL, to destinationUrl: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .background, completion: CompletionHandler? = nil) throws -> Task {
+        return try uploadFile(from: localFileUrl, to: destinationUrl, with: .post, headers: headers, configuration: configuration, completion: completion)
     }
 
     /**
@@ -142,14 +142,14 @@ public extension ApiService {
      - Parameters:
        - localFileUrl: URL on disc of the resource to upload.
        - destinationUrl: URL of the receiver.
-       - aditionalHeaders: Array of all aditional HTTP header fields.
+       - headers: Array of all aditional HTTP header fields.
        - configuration: One of predefined *ApiService.Configuration* object containing request configuration.
        - completion: Closure called when request is finished.
 
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Returns: Task object which allows to follow progress and manage request.
      */
-    func putFile(from localFileUrl: URL, to destinationUrl: URL, with aditionalHeaders: [ApiHeader]? = nil, configuration: Configuration = .background, completion: CompletionHandler? = nil) throws -> Task {
-        return try uploadFile(at: localFileUrl, to: destinationUrl, method: .put, apiHeaders: aditionalHeaders, configuration: configuration, completion: completion)
+    func putFile(from localFileUrl: URL, to destinationUrl: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .background, completion: CompletionHandler? = nil) throws -> Task {
+        return try uploadFile(from: localFileUrl, to: destinationUrl, with: .put, headers: headers, configuration: configuration, completion: completion)
     }
 
     /**
@@ -158,14 +158,14 @@ public extension ApiService {
      - Parameters:
        - localFileUrl: URL on disc of the resource to upload.
        - destinationUrl: URL of the receiver.
-       - aditionalHeaders: Array of all aditional HTTP header fields.
+       - headers: Array of all aditional HTTP header fields.
        - configuration: One of predefined *ApiService.Configuration* object containing request configuration.
        - completion: Closure called when request is finished.
 
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Returns: Task object which allows to follow progress and manage request.
      */
-    func patchFile(from localFileUrl: URL, to destinationUrl: URL, with aditionalHeaders: [ApiHeader]? = nil, configuration: Configuration = .background, completion: CompletionHandler? = nil) throws -> Task {
-        return try uploadFile(at: localFileUrl, to: destinationUrl, method: .patch, apiHeaders: aditionalHeaders, configuration: configuration, completion: completion)
+    func patchFile(from localFileUrl: URL, to destinationUrl: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .background, completion: CompletionHandler? = nil) throws -> Task {
+        return try uploadFile(from: localFileUrl, to: destinationUrl, with: .patch, headers: headers, configuration: configuration, completion: completion)
     }
 }
 
@@ -178,16 +178,16 @@ public extension ApiService {
      - Parameters:
        - remoteFileUrl: URL of remote file to download.
        - localUrl: URL on disc indicates where file should be saved.
-       - aditionalHeaders: Array of all aditional HTTP header fields.
+       - headers: Array of all aditional HTTP header fields.
        - configuration: One of predefined *ApiService.Configuration* object containing request configuration.
        - completion: Closure called when request is finished.
 
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Returns: Task object which allows to follow progress and manage request.
      
      - Important: While using default file manager, if any file exists at *localUrl* it will be overridden by downloaded file.
      */
-    func downloadFile(from remoteFileUrl: URL, to localUrl: URL, with aditionalHeaders: [ApiHeader]? = nil, configuration: Configuration = .background, completion: CompletionHandler? = nil) throws -> Task {
-        return try downloadFile(from: remoteFileUrl, to: localUrl, apiHeaders: aditionalHeaders, configuration: configuration, completion: completion)
+    func downloadFile(from remoteFileUrl: URL, to localUrl: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .background, completion: CompletionHandler? = nil) throws -> Task {
+        return try downloadFile(from: remoteFileUrl, to: localUrl, apiHeaders: headers, configuration: configuration, completion: completion)
     }
 }
 
@@ -201,16 +201,44 @@ public extension ApiService {
        - localFileUrl: URL on disc of the resource to upload.
        - destinationUrl: URL of the receiver.
        - method: HTTP method which should be used.
-       - aditionalHeaders: Array of all aditional HTTP header fields.
+       - headers: Array of all aditional HTTP header fields.
        - configuration: Custom or one of predefined *ApiService.Configuration* object.
        - completion: Closure called when request is finished.
 
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Returns: Task object which allows to follow progress and manage request.
      
      This method allows to customize every request configuration. It may be very powerfull if you know what you are doing.
      */
-    func uploadFile(from localFileUrl: URL, to destinationUrl: URL, with method: ApiMethod, aditionalHeaders: [ApiHeader]? = nil, configuration: Configuration = .background, completion: CompletionHandler? = nil) throws -> Task {
-        return try uploadFile(at: localFileUrl, to: destinationUrl, method: method, apiHeaders: aditionalHeaders, configuration: configuration, completion: completion)
+    func uploadFile(from localFileUrl: URL, to destinationUrl: URL, with method: ApiMethod, headers: [ApiHeader]? = nil, configuration: Configuration = .background, completion: CompletionHandler? = nil) throws -> Task {
+        let headers = httpHeaders(for: headers)
+        let uploadRequest = HttpUploadRequest(url: destinationUrl, method: method.httpMethod, resourceUrl: localFileUrl, headers: headers)
+
+        return Task(try requestService.sendHTTP(request: uploadRequest,
+                                                with: configuration.requestServiceConfiguration,
+                                                completion: requestCompletion(for: completion)))
+    }
+
+    /**
+    Sends data request with given parameters
+
+    - Parameters:
+     - url: URL of the receiver.
+     - body: Data object which supposed to be send.
+     - method: HTTP method which should be used.
+     - headers: Array of all aditional HTTP header fields.
+     - configuration: One of predefined *ApiService.Configuration* object containing request configuration.
+     - completion: Closure called when request is finished.
+
+    - Returns: Task object which allows to follow progress and manage request.
+    */
+
+    func sendRequest(to url: URL, with body: Data? = nil, method: ApiMethod, headers: [ApiHeader]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
+        let headers = httpHeaders(for: headers)
+        let httpRequest = HttpDataRequest(url: url, method: method.httpMethod, body: body, headers: headers)
+
+        return Task(try requestService.sendHTTP(request: httpRequest,
+                                                with: configuration.requestServiceConfiguration,
+                                                completion: requestCompletion(for: completion)))
     }
 }
 
@@ -228,51 +256,13 @@ private extension ApiService {
         }
     }
 
-    ///Sends data request with given parameters
-    func sendRequest(url: URL, method: ApiMethod, body: Data?, apiHeaders: [ApiHeader]?, configuration: Configuration, completion: CompletionHandler?) throws -> Task {
-        let headers = httpHeaders(for: apiHeaders)
-        let action = requestCompletion(for: completion)
-        let httpRequest = HttpDataRequest(url: url, method: method.httpMethod, body: body, headers: headers)
-
-        return Task(try requestService.sendHTTP(request: httpRequest,
-                                                with: configuration.requestServiceConfiguration,
-                                                completion: action))
-    }
-
-    ///Uploads file with given parameters
-    func uploadFile(at localFileUrl: URL, to destinationUrl: URL, method: ApiMethod, apiHeaders: [ApiHeader]?, configuration: Configuration, completion: CompletionHandler?) throws -> Task {
-        let headers = httpHeaders(for: apiHeaders)
-        let action = requestCompletion(for: completion)
-        let uploadRequest = HttpUploadRequest(url: destinationUrl, method: method.httpMethod, resourceUrl: localFileUrl, headers: headers)
-
-        return Task(try requestService.sendHTTP(request: uploadRequest,
-                                                with: configuration.requestServiceConfiguration,
-                                                completion: action))
-    }
-
     ///Downloads file with given parameters
     func downloadFile(from remoteFileUrl: URL, to localUrl: URL, apiHeaders: [ApiHeader]?, configuration: Configuration, completion: CompletionHandler?) throws -> Task {
         let headers = httpHeaders(for: apiHeaders)
-        let action = requestCompletion(for: completion)
         let downloadRequest = HttpDownloadRequest(url: remoteFileUrl, destinationUrl: localUrl, headers: headers)
 
         return Task(try requestService.sendHTTP(request: downloadRequest,
                                                 with: configuration.requestServiceConfiguration,
-                                                completion: action))
-    }
-}
-
-private extension ApiService {
-
-    func sendHTTP(request: HttpDataRequest, with configuration: Configuration, completion: @escaping RequestService.CompletionHandler) throws -> Task {
-        return Task(try requestService.sendHTTP(request: request, with: configuration.requestServiceConfiguration, completion: completion))
-    }
-
-    func sendHTTP(request: HttpUploadRequest, with configuration: Configuration, completion: @escaping RequestService.CompletionHandler) throws -> Task {
-        return Task(try requestService.sendHTTP(request: request, with: configuration.requestServiceConfiguration, completion: completion))
-    }
-
-    func sendHTTP(request: HttpDownloadRequest, with configuration: Configuration, completion: @escaping RequestService.CompletionHandler) throws -> Task {
-        return Task(try requestService.sendHTTP(request: request, with: configuration.requestServiceConfiguration, completion: completion))
+                                                completion: requestCompletion(for: completion)))
     }
 }
