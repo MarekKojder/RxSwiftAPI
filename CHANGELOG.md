@@ -3,6 +3,9 @@
 ## Upcoming
 - Refactor and migration to Rx of APILayer
 
+## [v2.1.2](https://github.com/MarekKojder/RxSwiftAPI/tree/2.1.2) (2019-11-12)
+- Got rid of `inBackground` parameter.
+
 ## [v2.1.1](https://github.com/MarekKojder/RxSwiftAPI/tree/2.1.1) (2019-10-16)
 - Moved managing of session services to serial queue.
 - Cosmetic changes.
