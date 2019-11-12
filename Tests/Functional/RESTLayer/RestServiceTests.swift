@@ -334,7 +334,7 @@ extension RestServiceTests {
             responseExpectation.fulfill()
         }
         do {
-            try _ = downloadRestService.getFile(at: path, saveAt: location, inBackground: false, completion: completion)
+            try _ = downloadRestService.getFile(at: path, saveAt: location, configuration: .foreground, completion: completion)
         } catch {
             XCTFail(error.localizedDescription)
         }
@@ -355,7 +355,7 @@ extension RestServiceTests {
             responseExpectation.fulfill()
         }
         do {
-            try _ = restService.getFile(at: path, saveAt: location, inBackground: false, completion: completion)
+            try _ = restService.getFile(at: path, saveAt: location, configuration: .foreground, completion: completion)
         } catch {
             XCTFail(error.localizedDescription)
         }
@@ -376,7 +376,7 @@ extension RestServiceTests {
             responseExpectation.fulfill()
         }
         do {
-            try _ = restService.postFile(from: location, at: path, inBackground: false, completion: completion)
+            try _ = restService.postFile(from: location, at: path, configuration: .foreground, completion: completion)
         } catch {
             XCTFail(error.localizedDescription)
         }
@@ -397,7 +397,7 @@ extension RestServiceTests {
             responseExpectation.fulfill()
         }
         do {
-            try _ = restService.putFile(from: location, at: path, inBackground: false, completion: completion)
+            try _ = restService.putFile(from: location, at: path, configuration: .foreground, completion: completion)
         } catch {
             XCTFail(error.localizedDescription)
         }
@@ -418,7 +418,7 @@ extension RestServiceTests {
             responseExpectation.fulfill()
         }
         do {
-            try _ = restService.patchFile(from: location, at: path, inBackground: false, completion: completion)
+            try _ = restService.patchFile(from: location, at: path, configuration: .foreground, completion: completion)
         } catch {
             XCTFail(error.localizedDescription)
         }
@@ -441,8 +441,8 @@ extension RestServiceTests {
             responseExpectation.fulfill()
         }
         do {
-            try _ = restService.putFile(from: location, at: path1, inBackground: false)
-            try _ = restService.patchFile(from: location, at: path2, inBackground: false, completion: completion)
+            try _ = restService.putFile(from: location, at: path1, configuration: .foreground)
+            try _ = restService.patchFile(from: location, at: path2, configuration: .foreground, completion: completion)
             try restService.get(type: ExampleData.self, from: path3)
         } catch {
             XCTFail(error.localizedDescription)
