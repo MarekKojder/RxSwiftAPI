@@ -168,9 +168,6 @@
 		EA8A7F9E1FB18ACB00088163 /* HttpMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F1F1FB18ACB00088163 /* HttpMethod.swift */; };
 		EA8A7F9F1FB18ACB00088163 /* HttpMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F1F1FB18ACB00088163 /* HttpMethod.swift */; };
 		EA8A7FA01FB18ACB00088163 /* HttpMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F1F1FB18ACB00088163 /* HttpMethod.swift */; };
-		EA8A7FA11FB18ACB00088163 /* RequestService+BackgroundEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F201FB18ACB00088163 /* RequestService+BackgroundEvents.swift */; };
-		EA8A7FA21FB18ACB00088163 /* RequestService+BackgroundEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F201FB18ACB00088163 /* RequestService+BackgroundEvents.swift */; };
-		EA8A7FA41FB18ACB00088163 /* RequestService+BackgroundEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F201FB18ACB00088163 /* RequestService+BackgroundEvents.swift */; };
 		EA8A7FA51FB18ACB00088163 /* RequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F211FB18ACB00088163 /* RequestService.swift */; };
 		EA8A7FA61FB18ACB00088163 /* RequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F211FB18ACB00088163 /* RequestService.swift */; };
 		EA8A7FA71FB18ACB00088163 /* RequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F211FB18ACB00088163 /* RequestService.swift */; };
@@ -371,7 +368,6 @@
 		EA8A7F191FB18ACB00088163 /* HttpUploadRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpUploadRequest.swift; sourceTree = "<group>"; };
 		EA8A7F1C1FB18ACB00088163 /* HttpResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpResponse.swift; sourceTree = "<group>"; };
 		EA8A7F1F1FB18ACB00088163 /* HttpMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpMethod.swift; sourceTree = "<group>"; };
-		EA8A7F201FB18ACB00088163 /* RequestService+BackgroundEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RequestService+BackgroundEvents.swift"; sourceTree = "<group>"; };
 		EA8A7F211FB18ACB00088163 /* RequestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestService.swift; sourceTree = "<group>"; };
 		EA8A7F221FB18ACB00088163 /* RequestServiceConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestServiceConfiguration.swift; sourceTree = "<group>"; };
 		EA8A7F261FB18ACB00088163 /* RestResponseCompletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestResponseCompletion.swift; sourceTree = "<group>"; };
@@ -727,7 +723,6 @@
 			children = (
 				EA8A7F211FB18ACB00088163 /* RequestService.swift */,
 				EA8A7F221FB18ACB00088163 /* RequestServiceConfiguration.swift */,
-				EA8A7F201FB18ACB00088163 /* RequestService+BackgroundEvents.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1786,7 +1781,6 @@
 				EA3B4E012163520500BC730D /* RestResponseHeader.swift in Sources */,
 				EA9AA41C2322427E00738A57 /* DataExtensions.swift in Sources */,
 				EA8A7F7E1FB18ACB00088163 /* HttpDataRequest.swift in Sources */,
-				EA8A7FA21FB18ACB00088163 /* RequestService+BackgroundEvents.swift in Sources */,
 				EA8A7F3E1FB18ACB00088163 /* ApiError.swift in Sources */,
 				EA8A7F6A1FB18ACB00088163 /* StatusCodeType.swift in Sources */,
 				EA8A7FA61FB18ACB00088163 /* RequestService.swift in Sources */,
@@ -1838,7 +1832,6 @@
 				EA3B4E032163520500BC730D /* RestResponseHeader.swift in Sources */,
 				EA9AA41E2322427E00738A57 /* DataExtensions.swift in Sources */,
 				EA8A7F801FB18ACB00088163 /* HttpDataRequest.swift in Sources */,
-				EA8A7FA41FB18ACB00088163 /* RequestService+BackgroundEvents.swift in Sources */,
 				EA8A7F401FB18ACB00088163 /* ApiError.swift in Sources */,
 				EA8A7F6C1FB18ACB00088163 /* StatusCodeType.swift in Sources */,
 				EA8A7FA81FB18ACB00088163 /* RequestService.swift in Sources */,
@@ -1897,7 +1890,6 @@
 				EA9AD41820507F2200C2D401 /* SessionService.swift in Sources */,
 				EA92789223565F0B003DBF1D /* QueueRelated.swift in Sources */,
 				EA8A7F691FB18ACB00088163 /* StatusCodeType.swift in Sources */,
-				EA8A7FA11FB18ACB00088163 /* RequestService+BackgroundEvents.swift in Sources */,
 				EA8A7F9D1FB18ACB00088163 /* HttpMethod.swift in Sources */,
 				EA8A7F7D1FB18ACB00088163 /* HttpDataRequest.swift in Sources */,
 				EA8A7F591FB18ACB00088163 /* InfoStatusCodeType.swift in Sources */,

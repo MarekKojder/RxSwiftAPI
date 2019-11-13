@@ -15,7 +15,7 @@ class RequestServiceConfigurationTests: XCTestCase {
         let sessionConfig = config.urlSessionConfiguration
 
         XCTAssertNil(sessionConfig.identifier)
-        XCTAssertNotEqual(config, RequestService.Configuration.background)
+        XCTAssertNotEqual(config, RequestService.Configuration.background("SomeTestId"))
         XCTAssertNotEqual(config, RequestService.Configuration.ephemeral)
     }
 
@@ -24,12 +24,12 @@ class RequestServiceConfigurationTests: XCTestCase {
         let sessionConfig = config.urlSessionConfiguration
 
         XCTAssertNil(sessionConfig.identifier)
-        XCTAssertNotEqual(config, RequestService.Configuration.background)
+        XCTAssertNotEqual(config, RequestService.Configuration.background("SomeTestId"))
         XCTAssertNotEqual(config, RequestService.Configuration.foreground)
     }
     
     func testBackgroundConfiguration() {
-        let config = RequestService.Configuration.background
+        let config = RequestService.Configuration.background("SomeTestId")
         let sessionConfig = config.urlSessionConfiguration
 
         XCTAssertNotNil(sessionConfig.identifier)
@@ -45,7 +45,7 @@ class RequestServiceConfigurationTests: XCTestCase {
         XCTAssertEqual(sessionConfiguration, sessionConfig)
         XCTAssertNotEqual(config, RequestService.Configuration.foreground)
         XCTAssertNotEqual(config, RequestService.Configuration.ephemeral)
-        XCTAssertNotEqual(config, RequestService.Configuration.background)
+        XCTAssertNotEqual(config, RequestService.Configuration.background("SomeTestId"))
     }
 
     func testAllowsCellularAccess() {

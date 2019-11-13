@@ -17,7 +17,7 @@ class ApiServiceConfigurationTests: XCTestCase {
 
         XCTAssertEqual(config1, config2)
         XCTAssertEqual(config2.requestServiceConfiguration, config3)
-        XCTAssertNotEqual(config1, ApiService.Configuration.background)
+        XCTAssertNotEqual(config1, ApiService.Configuration.background())
         XCTAssertNotEqual(config1, ApiService.Configuration.ephemeral)
     }
 
@@ -26,18 +26,20 @@ class ApiServiceConfigurationTests: XCTestCase {
     }
 
     func testBackgroundConfiguration() {
-        let config1 = ApiService.Configuration.background
-        let config2 = ApiService.Configuration.background
-        let config3 = RequestService.Configuration.background
+        let config1 = ApiService.Configuration.background()
+        let config2 = ApiService.Configuration.background()
+        let config3 = ApiService.Configuration.background("SomeTestId")
+        let config4 = RequestService.Configuration.background("SomeTestId")
 
         XCTAssertEqual(config1, config2)
-        XCTAssertEqual(config2.requestServiceConfiguration, config3)
+        XCTAssertNotEqual(config1, config3)
+        XCTAssertEqual(config3.requestServiceConfiguration, config4)
         XCTAssertNotEqual(config1, ApiService.Configuration.foreground)
         XCTAssertNotEqual(config1, ApiService.Configuration.ephemeral)
     }
 
     func testSettingBackgroundConfiguration() {
-        checkAndChangeParameters(for: .background)
+        checkAndChangeParameters(for: .background())
     }
 
     func testEphemeralConfiguration() {
@@ -51,7 +53,7 @@ class ApiServiceConfigurationTests: XCTestCase {
         XCTAssertEqual(config2.cookieAcceptPolicy, config3.cookieAcceptPolicy)
         XCTAssertEqual(config2.cachePolicy, config3.cachePolicy)
         XCTAssertNotEqual(config1, ApiService.Configuration.foreground)
-        XCTAssertNotEqual(config1, ApiService.Configuration.background)
+        XCTAssertNotEqual(config1, ApiService.Configuration.background())
     }
 
     func testCustomConfiguration() {
@@ -64,7 +66,7 @@ class ApiServiceConfigurationTests: XCTestCase {
         XCTAssertEqual(config2.requestServiceConfiguration, config3)
         XCTAssertNotEqual(config1, ApiService.Configuration.foreground)
         XCTAssertNotEqual(config1, ApiService.Configuration.ephemeral)
-        XCTAssertNotEqual(config1, ApiService.Configuration.background)
+        XCTAssertNotEqual(config1, ApiService.Configuration.background())
     }
 
     func testSettingCustomConfiguration() {

@@ -132,7 +132,7 @@ public extension ApiService {
 
      - Returns: Task object which allows to follow progress and manage request.
      */
-    func postFile(from localFileUrl: URL, to destinationUrl: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .background, completion: CompletionHandler? = nil) throws -> Task {
+    func postFile(from localFileUrl: URL, to destinationUrl: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
         return try uploadFile(from: localFileUrl, to: destinationUrl, with: .post, headers: headers, configuration: configuration, completion: completion)
     }
 
@@ -148,7 +148,7 @@ public extension ApiService {
 
      - Returns: Task object which allows to follow progress and manage request.
      */
-    func putFile(from localFileUrl: URL, to destinationUrl: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .background, completion: CompletionHandler? = nil) throws -> Task {
+    func putFile(from localFileUrl: URL, to destinationUrl: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
         return try uploadFile(from: localFileUrl, to: destinationUrl, with: .put, headers: headers, configuration: configuration, completion: completion)
     }
 
@@ -164,7 +164,7 @@ public extension ApiService {
 
      - Returns: Task object which allows to follow progress and manage request.
      */
-    func patchFile(from localFileUrl: URL, to destinationUrl: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .background, completion: CompletionHandler? = nil) throws -> Task {
+    func patchFile(from localFileUrl: URL, to destinationUrl: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
         return try uploadFile(from: localFileUrl, to: destinationUrl, with: .patch, headers: headers, configuration: configuration, completion: completion)
     }
 }
@@ -186,7 +186,7 @@ public extension ApiService {
      
      - Important: While using default file manager, if any file exists at *localUrl* it will be overridden by downloaded file.
      */
-    func downloadFile(from remoteFileUrl: URL, to localUrl: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .background, completion: CompletionHandler? = nil) throws -> Task {
+    func downloadFile(from remoteFileUrl: URL, to localUrl: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
         return try downloadFile(from: remoteFileUrl, to: localUrl, apiHeaders: headers, configuration: configuration, completion: completion)
     }
 }
@@ -209,7 +209,7 @@ public extension ApiService {
      
      This method allows to customize every request configuration. It may be very powerfull if you know what you are doing.
      */
-    func uploadFile(from localFileUrl: URL, to destinationUrl: URL, with method: ApiMethod, headers: [ApiHeader]? = nil, configuration: Configuration = .background, completion: CompletionHandler? = nil) throws -> Task {
+    func uploadFile(from localFileUrl: URL, to destinationUrl: URL, with method: ApiMethod, headers: [ApiHeader]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
         let headers = httpHeaders(for: headers)
         let uploadRequest = HttpUploadRequest(url: destinationUrl, method: method.httpMethod, resourceUrl: localFileUrl, headers: headers)
 

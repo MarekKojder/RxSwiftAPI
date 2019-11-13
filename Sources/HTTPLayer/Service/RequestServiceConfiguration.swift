@@ -13,7 +13,7 @@ extension RequestService {
     enum Configuration {
         case foreground
         case ephemeral
-        case background
+        case background(String)
         case custom(URLSessionConfiguration)
     }
 }
@@ -27,8 +27,7 @@ extension RequestService.Configuration {
             return .default
         case .ephemeral:
             return .ephemeral
-        case .background:
-            let id = "RxSwiftAPI.RequestService.Configuration.background"
+        case .background(let id):
             return .background(withIdentifier: id)
         case .custom(let config):
             return config
@@ -41,9 +40,10 @@ extension RequestService.Configuration: Equatable {
     public static func ==(lhs: RequestService.Configuration, rhs: RequestService.Configuration) -> Bool {
         switch (lhs, rhs) {
         case (.foreground, .foreground),
-             (.ephemeral, .ephemeral),
-             (.background, .background):
+             (.ephemeral, .ephemeral):
             return true
+        case (.background(let lhsId), .background(let rhsId)):
+            return lhsId == rhsId
         case (.custom(let lhsConfig), .custom(let rhsConfig)):
             return lhsConfig == rhsConfig
         default:

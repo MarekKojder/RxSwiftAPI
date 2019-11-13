@@ -260,7 +260,7 @@ public extension RestService {
      - Throws: RestService.Error if creating *URL* failed.
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
-    func getFile(at path: ResourcePath, saveAt destinationUrl: URL, configuration: ApiService.Configuration = .background, aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task {
+    func getFile(at path: ResourcePath, saveAt destinationUrl: URL, configuration: ApiService.Configuration = .background(), aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task {
         return try apiService.downloadFile(from: try requestUrl(for: path),
                                            to: destinationUrl,
                                            with: apiHeaders(adding: aditionalHeaders),
@@ -280,7 +280,7 @@ public extension RestService {
      - Throws: RestService.Error if creating *URL* failed.
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
-    func getFile<Parameters: Encodable>(at path: ResourcePath, parameters: Parameters?, saveAt destinationUrl: URL, configuration: ApiService.Configuration = .background, aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task {
+    func getFile<Parameters: Encodable>(at path: ResourcePath, parameters: Parameters?, saveAt destinationUrl: URL, configuration: ApiService.Configuration = .background(), aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task {
         return try apiService.downloadFile(from: try requestUrl(for: path, with: parameters),
                                            to: destinationUrl,
                                            with: apiHeaders(adding: aditionalHeaders),
@@ -299,7 +299,7 @@ public extension RestService {
      - Throws: RestService.Error if creating *URL* failed.
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
-    func postFile(from url: URL, at path: ResourcePath, configuration: ApiService.Configuration = .background, aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task? {
+    func postFile(from url: URL, at path: ResourcePath, configuration: ApiService.Configuration = .background(), aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task? {
         return try apiService.postFile(from: url,
                                        to: try requestUrl(for: path),
                                        with: apiHeaders(adding: aditionalHeaders),
@@ -318,7 +318,7 @@ public extension RestService {
      - Throws: RestService.Error if creating *URL* failed.
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
-    func putFile(from url: URL, at path: ResourcePath, configuration: ApiService.Configuration = .background, aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task? {
+    func putFile(from url: URL, at path: ResourcePath, configuration: ApiService.Configuration = .background(), aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task? {
         return try apiService.putFile(from: url,
                                       to: try requestUrl(for: path),
                                       with: apiHeaders(adding: aditionalHeaders),
@@ -337,7 +337,7 @@ public extension RestService {
      - Throws: RestService.Error if creating *URL* failed.
      - Returns: ApiRequest object which allows to follow progress and manage request.
      */
-    func patchFile(from url: URL, at path: ResourcePath, configuration: ApiService.Configuration = .background, aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task? {
+    func patchFile(from url: URL, at path: ResourcePath, configuration: ApiService.Configuration = .background(), aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task? {
         return try apiService.patchFile(from: url,
                                         to: try requestUrl(for: path),
                                         with: apiHeaders(adding: aditionalHeaders),

@@ -17,8 +17,22 @@ final class RequestService: NSObject, QueueRelated {
     private var sessions = [SessionService]()
     private let sessionsQueue = serialQueue("sessionQueue")
 
+    //MARK: Initialization
+    ///Initializes service with given file manager.
+    init(fileManager: FileManager) {
+        self.fileManager = fileManager
+    }
+
+    deinit {
+        invalidateAndCancel()
+    }
+}
+
+//MARK: - Managing sessions
+private extension RequestService {
+
     ///Returns URLSession for given configuration. If session does not exist, it creates one.
-    private func activeSession(for configuration: Configuration) -> SessionService {
+    func activeSession(for configuration: Configuration) -> SessionService {
         sessionsQueue.sync() { [weak self] in
             if let session = self?.sessions.last(where: { $0 == configuration && $0.status == .valid }) {
                 return session
@@ -28,20 +42,6 @@ final class RequestService: NSObject, QueueRelated {
             self?.sessions.removeAll(where: { $0.status == .invalidated })
             return service
         }
-    }
-
-    //MARK: - Handling background sessions
-    ///Keeps completion handler for background sessions.
-    lazy var backgroundSessionCompletionHandler = [String : () -> Void]()
-
-    //MARK: Initialization
-    ///Initializes service with given file manager.
-    init(fileManager: FileManager) {
-        self.fileManager = fileManager
-    }
-
-    deinit {
-        invalidateAndCancel()
     }
 }
 
@@ -62,6 +62,7 @@ extension RequestService {
 
      HttpDataRequest may run only with foreground configuration.
      */
+    @discardableResult
     func sendHTTP(request: HttpDataRequest, with configuration: Configuration, completion: @escaping CompletionHandler) throws -> SessionService.Task {
         let session = activeSession(for: configuration)
         let task = try session.data(request: request.urlRequest, completion: completion)
@@ -83,6 +84,7 @@ extension RequestService {
 
      - Throws: Error when Task could not be created.
      */
+    @discardableResult
     func sendHTTP(request: HttpUploadRequest, with configuration: Configuration, completion: @escaping CompletionHandler) throws -> SessionService.Task {
         let session = activeSession(for: configuration)
         let task = try session.upload(request: request.urlRequest, file: request.resourceUrl, completion: completion)
@@ -104,6 +106,7 @@ extension RequestService {
 
      - Throws: Error when Task could not be created.
      */
+    @discardableResult
     func sendHTTP(request: HttpDownloadRequest, with configuration: Configuration, completion: @escaping CompletionHandler) throws -> SessionService.Task {
         let session = activeSession(for: configuration)
         let task = try session.download(request: request.urlRequest, completion: completion)
@@ -122,5 +125,30 @@ extension RequestService {
     func invalidateAndCancel() {
         sessions.forEach { $0.invalidateAndCancel() }
         sessions.removeAll()
+    }
+}
+
+//MARK: - Handling background sessions
+extension RequestService {
+
+    /**
+     Handle events for background session with identifier.
+
+     - Parameters:
+       - identifier: The identifier of the URL session requiring attention.
+       - completion: The completion handler to call when you finish processing the events.
+
+     This method have to be used in `application(UIApplication, handleEventsForBackgroundURLSession: String, completionHandler: () -> Void)` method of AppDelegate.
+     */
+    func handleEventsForBackgroundSession(with identifier: String, completion: @escaping () -> Void) {
+        sessionsQueue.sync() { [weak self] in
+            if let index = self?.sessions.lastIndex(where: { $0.identifier == identifier && $0.status == .valid }) {
+                self?.sessions[index].handleBackgroundEvents(with: completion)
+            } else {
+                let service = SessionService(configuration: .background(identifier))
+                service.handleBackgroundEvents(with: completion)
+                self?.sessions.append(service)
+            }
+        }
     }
 }

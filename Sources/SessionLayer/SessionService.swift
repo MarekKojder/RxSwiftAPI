@@ -29,6 +29,7 @@ final class SessionService: QueueRelated {
     private let concurrentScheduler = ConcurrentDispatchQueueScheduler(queue: concurrentQueue("concurrentScheduler"))
     private let disposeBag = DisposeBag()
     private var activeTasks = [Task]()
+    private var backgroundSessionCompletionHandler: (() -> Void)?
 
     init(configuration: RequestService.Configuration) {
         self.configuration = configuration
@@ -49,6 +50,11 @@ final class SessionService: QueueRelated {
 }
 
 extension SessionService {
+
+    //The background session identifier of the configuration.
+    var identifier: String? {
+        return configuration.urlSessionConfiguration.identifier
+    }
 
     /**
      Sends given URLRequest.
@@ -121,6 +127,16 @@ extension SessionService {
             self?.status = .invalid
             self?.urlSession.invalidateAndCancel()
         }
+    }
+
+    /**
+     Handle events for background session.
+
+     - Parameters:
+       - completion: The completion handler to call when you finish processing the events.
+     */
+    func handleBackgroundEvents(with completion: @escaping () -> Void) {
+        backgroundSessionCompletionHandler = completion
     }
 }
 
@@ -204,6 +220,21 @@ private extension SessionService {
                 group.notify(queue: self.sessionQueue) { [weak self] in
                     self?.activeTasks.removeAll()
                     self?.status = .invalidated
+                }
+            })
+            .disposed(by: disposeBag)
+
+        urlSession.rx.didFinishEventsForBackgroundSession
+            .asObservable()
+            .subscribeOn(concurrentScheduler)
+            .observeOn(serialScheduler)
+            .subscribe(onNext: { [weak self] in
+                DispatchQueue.main.async {
+                    guard let completion = self?.backgroundSessionCompletionHandler else {
+                        return
+                    }
+                    self?.backgroundSessionCompletionHandler = nil
+                    completion()
                 }
             })
             .disposed(by: disposeBag)
