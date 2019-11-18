@@ -29,9 +29,12 @@ final class SessionService: QueueRelated {
     private let concurrentScheduler = ConcurrentDispatchQueueScheduler(queue: concurrentQueue("concurrentScheduler"))
     private let disposeBag = DisposeBag()
     private var activeTasks = [Task]()
+    private var backgroundSessionCompletionHandler: (() -> Void)?
+    private weak var fileManager: FileManager?
 
-    init(configuration: RequestService.Configuration) {
+    init(configuration: RequestService.Configuration, fileManager: FileManager) {
         self.configuration = configuration
+        self.fileManager = fileManager
         urlSession = RxURLSession(configuration: configuration.urlSessionConfiguration)
         serialScheduler = SerialDispatchQueueScheduler(queue: sessionQueue, internalSerialQueueName: Self.queue("serialScheduler"))
         
@@ -50,6 +53,11 @@ final class SessionService: QueueRelated {
 
 extension SessionService {
 
+    //The background session identifier of the configuration.
+    var identifier: String? {
+        return configuration.urlSessionConfiguration.identifier
+    }
+
     /**
      Sends given URLRequest.
 
@@ -63,7 +71,7 @@ extension SessionService {
      */
     func data(request: URLRequest, completion: @escaping CompletionHandler) throws -> Task {
         return try safely(add: completion) { [weak self] in
-            return self?.urlSession.dataTask(with: request)
+            return (self?.urlSession.dataTask(with: request), nil)
         }
     }
 
@@ -80,7 +88,7 @@ extension SessionService {
      */
     func upload(request: URLRequest, file: URL, completion: @escaping CompletionHandler) throws -> Task {
            return try safely(add: completion) { [weak self] in
-            return self?.urlSession.uploadTask(with: request, fromFile: file)
+            return (self?.urlSession.uploadTask(with: request, fromFile: file), nil)
         }
     }
 
@@ -95,9 +103,9 @@ extension SessionService {
 
      - Throws: Error when Task could not be created.
      */
-    func download(request: URLRequest, completion: @escaping CompletionHandler) throws -> Task {
+    func download(request: URLRequest, fileDestination: URL, completion: @escaping CompletionHandler) throws -> Task  {
            return try safely(add: completion) { [weak self] in
-            return self?.urlSession.downloadTask(with: request)
+            return (self?.urlSession.downloadTask(with: request), fileDestination)
         }
     }
 
@@ -121,6 +129,16 @@ extension SessionService {
             self?.status = .invalid
             self?.urlSession.invalidateAndCancel()
         }
+    }
+
+    /**
+     Handle events for background session.
+
+     - Parameters:
+       - completion: The completion handler to call when you finish processing the events.
+     */
+    func handleBackgroundEvents(with completion: @escaping () -> Void) {
+        backgroundSessionCompletionHandler = completion
     }
 }
 
@@ -148,7 +166,7 @@ private extension SessionService {
         return NSError(domain: sessionDomain, code: code, userInfo: [NSLocalizedDescriptionKey : description])
     }
 
-    func safely(add completion: @escaping CompletionHandler, and createTask: @escaping () -> URLSessionTask?) throws -> Task {
+    func safely(add completion: @escaping CompletionHandler, and createTask: @escaping () -> (session: URLSessionTask?, fileDestination: URL?)) throws -> Task {
         try sessionQueue.sync { [weak self] in
             guard let `self` = self else {
                 throw SessionService.error("Lost reference to SessionService.", code: -1)
@@ -156,10 +174,11 @@ private extension SessionService {
             guard self.status == .valid else {
                 throw  SessionService.error("Attempted to create URLSessionTask in a session that has been invalidated.", code: -2)
             }
-            guard let urlSessionTask = createTask() else {
+            let created = createTask()
+            guard let urlSessionTask = created.session else {
                 throw SessionService.error("URLSessionTask could not be created.", code: -3)
             }
-            let task = Task(task: urlSessionTask, completion: completion)
+            let task = Task(task: urlSessionTask, fileDestination: created.fileDestination, completion: completion)
             self.activeTasks.append(task)
             return task
         }
@@ -204,6 +223,21 @@ private extension SessionService {
                 group.notify(queue: self.sessionQueue) { [weak self] in
                     self?.activeTasks.removeAll()
                     self?.status = .invalidated
+                }
+            })
+            .disposed(by: disposeBag)
+
+        urlSession.rx.didFinishEventsForBackgroundSession
+            .asObservable()
+            .subscribeOn(concurrentScheduler)
+            .observeOn(serialScheduler)
+            .subscribe(onNext: { [weak self] in
+                DispatchQueue.main.async {
+                    guard let completion = self?.backgroundSessionCompletionHandler else {
+                        return
+                    }
+                    self?.backgroundSessionCompletionHandler = nil
+                    completion()
                 }
             })
             .disposed(by: disposeBag)
@@ -274,12 +308,20 @@ private extension SessionService {
         urlSession.rx.didFinishDownloading
             .asObservable()
             .subscribeOn(concurrentScheduler)
-            .observeOn(serialScheduler)
+            //We should observeOn the same queue which delegate calls, because temporary file will be lost
             .subscribe(onNext: { [weak self] (task: URLSessionDownloadTask, location: URL) in
                 guard let activeTask = self?.activeTasks.last(where: { $0 == task }) else {
                     return
                 }
-                activeTask.update(with: location)
+                if let destination = activeTask.fileDestinationUrl, let fileManager = self?.fileManager {
+                    if let error = fileManager.copyFile(from: location, to: destination) {
+                        activeTask.update(with: error)
+                    } else {
+                        activeTask.update(with: destination)
+                    }
+                } else {
+                    activeTask.update(with: SessionService.error("Could nod copy file from temporary location.", code: -7))
+                }
             })
             .disposed(by: disposeBag)
 

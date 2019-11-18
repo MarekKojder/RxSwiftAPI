@@ -54,6 +54,12 @@ extension Reactive where Base: RxURLSession {
         }
     }
 
+    public var didFinishEventsForBackgroundSession: Observable<Void> {
+        return delegate.methodInvoked(#selector(RxURLSessionDelegate.urlSessionDidFinishEvents(forBackgroundURLSession:))).map { _ in
+            return
+        }
+    }
+
     //MARK: URLSessionTaskDelegate
     public var didSendBodyData: Observable<(task: URLSessionTask, bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64)> {
         return delegate.methodInvoked(#selector(RxURLSessionDelegate.urlSession(_:task:didSendBodyData:totalBytesSent:totalBytesExpectedToSend:))).map { parameters in
