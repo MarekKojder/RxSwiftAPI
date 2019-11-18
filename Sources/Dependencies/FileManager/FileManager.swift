@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol FileManager {
+public protocol FileManager: class {
 
     /**
      Copies the file at the specified URL to a new location synchronously.

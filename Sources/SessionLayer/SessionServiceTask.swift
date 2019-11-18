@@ -21,18 +21,21 @@ extension SessionService {
 
         private let task: URLSessionTask
         private var response: HttpResponse?
+        private var processError: Error?
         private var completionHandlers = [SessionService.CompletionHandler]()
         private let statusQueue = concurrentQueue("statusQueue")
 
         private(set) var status: Status = .suspended
+        let fileDestinationUrl: URL?
 
         ///A representation of the overall task progress.
         var progress: Progress {
             return task.progress
         }
 
-        init(task: URLSessionTask, completion: @escaping SessionService.CompletionHandler) {
+        init(task: URLSessionTask, fileDestination: URL?, completion: @escaping SessionService.CompletionHandler) {
             self.task = task
+            self.fileDestinationUrl = fileDestination
             self.append(completion)
         }
 
@@ -117,6 +120,10 @@ extension SessionService.Task {
         }
     }
 
+    func update(with error: Error) {
+        processError = error
+    }
+
     func performProgress(completed: Int64, total: Int64) { }
 
     func performCompletion(error: Error? = nil, completion: (() -> Void)? = nil) {
@@ -125,7 +132,12 @@ extension SessionService.Task {
                 return
             }
             self.status = .finishing
-            let completionError = (error == nil && self.response == nil) ? self.noResponseError : error
+            let completionError: Error?
+            if self.response == nil {
+                completionError = self.processError ?? error ?? self.noResponseError
+            } else {
+                completionError = self.processError ?? error
+            }
             DispatchQueue.global(qos: .utility).async {
                 self.completionHandlers.forEach { $0(self.response, completionError) }
                 self.completionHandlers.removeAll()

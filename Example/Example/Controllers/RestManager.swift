@@ -104,7 +104,7 @@ struct RestManager {
     func getResource(_ completion: @escaping RestManagerCompletionHandler) {
         do {
             let path = Path.Get(someValue: "someParameterValue")
-            try restService.get(type: ResponseData.self, from: path, with: authHeader, completion: completionHandler(for: completion))
+            try restService.get(type: ResponseData.self, from: path, aditionalHeaders: authHeader, completion: completionHandler(for: completion))
         } catch {
             completion(nil, error.localizedDescription)
         }
@@ -154,7 +154,10 @@ struct RestManager {
         let location = downloadedFileURL(large: large)
         do {
             let completion = completionHandler(for: location, with: completion)
-            return try restService.getFile(at: path, saveAt: location, inBackground: inBackground, completion: completion).progress
+            return try restService.getFile(at: path,
+                                           saveAt: location,
+                                           configuration: inBackground ? .background() : .foreground,
+                                           completion: completion).progress
         } catch {
             completion(nil, error.localizedDescription)
             return nil
@@ -167,7 +170,10 @@ struct RestManager {
         let location = fileToUpload(large: large)
         do {
             let completion = completionHandler(for: location, with: completion)
-            return try restService.postFile(from: location, at: Path.post, inBackground: inBackground, completion: completion).progress
+            return try restService.postFile(from: location,
+                                            at: Path.post,
+                                            configuration: inBackground ? .background() : .foreground,
+                                            completion: completion)?.progress
         } catch {
             completion(nil, error.localizedDescription)
             return nil
@@ -179,7 +185,10 @@ struct RestManager {
         let location = fileToUpload(large: large)
         do {
             let completion = completionHandler(for: location, with: completion)
-            return try restService.putFile(from: location, at: Path.put, inBackground: inBackground, completion: completion).progress
+            return try restService.putFile(from: location,
+                                           at: Path.put,
+                                           configuration: inBackground ? .background() : .foreground,
+                                           completion: completion)?.progress
         } catch {
             completion(nil, error.localizedDescription)
             return nil
@@ -191,7 +200,10 @@ struct RestManager {
         let location = fileToUpload(large: large)
         do {
             let completion = completionHandler(for: location, with: completion)
-            return try restService.patchFile(from: location, at: Path.patch, inBackground: inBackground, completion: completion).progress
+            return try restService.patchFile(from: location,
+                                             at: Path.patch,
+                                             configuration: inBackground ? .background() : .foreground,
+                                             completion: completion)?.progress
         } catch {
             completion(nil, error.localizedDescription)
             return nil
@@ -243,8 +255,8 @@ fileprivate extension RestManager {
     }
 
     ///Completion handler for data requests.
-    func completionHandler(for completion: @escaping RestManagerCompletionHandler) -> RestResponseCompletionHandler<ResponseData> {
-        return { (data: ResponseData?, details: RestResponseDetails) in
+    func completionHandler(for completion: @escaping RestManagerCompletionHandler) -> RestResponse.CompletionHandler<ResponseData> {
+        return { (data: ResponseData?, details: RestResponse.Details) in
             guard let data = data else {
                 let readableError: String
                 if let error = details.error {
@@ -260,8 +272,8 @@ fileprivate extension RestManager {
     }
 
     ///Completion handler for file requests.
-    func completionHandler(for fileUrl: URL, with completion: @escaping RestManagerFileCompletionHandler) -> RestSimpleResponseCompletionHandler {
-        return { (success: Bool, details: RestResponseDetails) in
+    func completionHandler(for fileUrl: URL, with completion: @escaping RestManagerFileCompletionHandler) -> RestResponse.SimpleCompletionHandler {
+        return { (success: Bool, details: RestResponse.Details) in
             guard success == true else {
                 let readableError: String
                 if let error = details.error {

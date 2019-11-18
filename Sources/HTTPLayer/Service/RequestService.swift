@@ -37,7 +37,7 @@ private extension RequestService {
             if let session = self?.sessions.last(where: { $0 == configuration && $0.status == .valid }) {
                 return session
             }
-            let service = SessionService(configuration: configuration)
+            let service = SessionService(configuration: configuration, fileManager: fileManager)
             self?.sessions.append(service)
             self?.sessions.removeAll(where: { $0.status == .invalidated })
             return service
@@ -109,7 +109,9 @@ extension RequestService {
     @discardableResult
     func sendHTTP(request: HttpDownloadRequest, with configuration: Configuration, completion: @escaping CompletionHandler) throws -> SessionService.Task {
         let session = activeSession(for: configuration)
-        let task = try session.download(request: request.urlRequest, completion: completion)
+        let task = try session.download(request: request.urlRequest,
+                                        fileDestination: request.destinationUrl,
+                                        completion: completion)
         DispatchQueue.global(qos: .utility).async {
             task.resume()
         }
@@ -145,7 +147,7 @@ extension RequestService {
             if let index = self?.sessions.lastIndex(where: { $0.identifier == identifier && $0.status == .valid }) {
                 self?.sessions[index].handleBackgroundEvents(with: completion)
             } else {
-                let service = SessionService(configuration: .background(identifier))
+                let service = SessionService(configuration: .background(identifier), fileManager: fileManager)
                 service.handleBackgroundEvents(with: completion)
                 self?.sessions.append(service)
             }
