@@ -41,8 +41,8 @@ class UploadViewController: UIViewController {
 
         progress.removeObserver(self, forKeyPath: "fractionCompleted")
         
-        apiManager.cancelAllRequests()
-        restManager.cancelAllRequests()
+        apiManager.terminateAllRequests()
+        restManager.terminateAllRequests()
     }
 
     //MARK: Actions

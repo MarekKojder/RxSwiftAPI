@@ -17,8 +17,8 @@ struct ApiManager {
     fileprivate let apiService = ApiService()
 
     ///Cancels all currently running requests.
-    func cancelAllRequests() {
-        apiService.cancelAllRequests()
+    func terminateAllRequests() {
+        apiService.terminateAllRequests()
     }
 
     ///Method to run in *AppDelegate* to manage background tasks

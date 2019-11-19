@@ -227,6 +227,7 @@ private extension SessionService {
             })
             .disposed(by: disposeBag)
 
+        #if !os(OSX)
         urlSession.rx.didFinishEventsForBackgroundSession
             .asObservable()
             .subscribeOn(concurrentScheduler)
@@ -241,6 +242,8 @@ private extension SessionService {
                 }
             })
             .disposed(by: disposeBag)
+        #endif
+
     }
 
     func setupURLSessionTaskDelegate() {

@@ -14,6 +14,9 @@
 		69330AB8B5A3A1AB74A66527 /* Pods_RxSwiftAPI_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266F121854BD97517909402C /* Pods_RxSwiftAPI_watchOS.framework */; };
 		AA76606DB41E24B6DF95C512 /* Pods_UnitTests_OSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D73C6B42458205A37846403 /* Pods_UnitTests_OSX.framework */; };
 		CBE77B6E51C260E0D8415609 /* Pods_UnitTests_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32619A3B804A1A4A9E8CD8CC /* Pods_UnitTests_iOS.framework */; };
+		EA0409402383E7BE00046508 /* RxUrlSession+BackgroundEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA04093F2383E7BE00046508 /* RxUrlSession+BackgroundEvents.swift */; };
+		EA0409412383E7BE00046508 /* RxUrlSession+BackgroundEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA04093F2383E7BE00046508 /* RxUrlSession+BackgroundEvents.swift */; };
+		EA0409432383E7BE00046508 /* RxUrlSession+BackgroundEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA04093F2383E7BE00046508 /* RxUrlSession+BackgroundEvents.swift */; };
 		EA083ADD22BD70060041213C /* testImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EA083ADA22BD70060041213C /* testImage.jpg */; };
 		EA083ADE22BD70060041213C /* testImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EA083ADA22BD70060041213C /* testImage.jpg */; };
 		EA083ADF22BD7D540041213C /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA083ACF22BD68170041213C /* TestData.swift */; };
@@ -329,6 +332,7 @@
 		E51D4D3A1E3544D202F3369A /* Pods-UnitTests OSX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests OSX.release.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests OSX/Pods-UnitTests OSX.release.xcconfig"; sourceTree = "<group>"; };
 		E9207A7E565C847855757E0D /* Pods-FunctionalTests iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FunctionalTests iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-FunctionalTests iOS/Pods-FunctionalTests iOS.release.xcconfig"; sourceTree = "<group>"; };
 		EA01F3FE1F0E511E001EC5B6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Unit/Info.plist; sourceTree = SOURCE_ROOT; };
+		EA04093F2383E7BE00046508 /* RxUrlSession+BackgroundEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxUrlSession+BackgroundEvents.swift"; sourceTree = "<group>"; };
 		EA083ACF22BD68170041213C /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		EA083AD422BD6B960041213C /* IOSTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSTestData.swift; sourceTree = "<group>"; };
 		EA083AD822BD6BA80041213C /* OSXTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSXTestData.swift; sourceTree = "<group>"; };
@@ -774,6 +778,7 @@
 			isa = PBXGroup;
 			children = (
 				EA8FF24A22CC88FE0047BA07 /* RxURLSession.swift */,
+				EA04093F2383E7BE00046508 /* RxUrlSession+BackgroundEvents.swift */,
 				EA980AE422C5FA030060A8A9 /* RxURLSessionDelegateProxy.swift */,
 			);
 			path = RxURLSession;
@@ -1794,6 +1799,7 @@
 				EA8A7F9E1FB18ACB00088163 /* HttpMethod.swift in Sources */,
 				EA8A7FAA1FB18ACB00088163 /* RequestServiceConfiguration.swift in Sources */,
 				EA8A7F361FB18ACB00088163 /* ApiHeader.swift in Sources */,
+				EA0409412383E7BE00046508 /* RxUrlSession+BackgroundEvents.swift in Sources */,
 				EA8A7F521FB18ACB00088163 /* ApiService.swift in Sources */,
 				EA8A7F4E1FB18ACB00088163 /* ApiService+BackgroundEvents.swift in Sources */,
 				EA695B8C2020B48A004662B1 /* DefaultCoderProvider.swift in Sources */,
@@ -1845,6 +1851,7 @@
 				EA8A7FA01FB18ACB00088163 /* HttpMethod.swift in Sources */,
 				EA8A7FAC1FB18ACB00088163 /* RequestServiceConfiguration.swift in Sources */,
 				EA8A7F381FB18ACB00088163 /* ApiHeader.swift in Sources */,
+				EA0409432383E7BE00046508 /* RxUrlSession+BackgroundEvents.swift in Sources */,
 				EA8A7F541FB18ACB00088163 /* ApiService.swift in Sources */,
 				EA8A7F501FB18ACB00088163 /* ApiService+BackgroundEvents.swift in Sources */,
 				EA695B8E2020B48A004662B1 /* DefaultCoderProvider.swift in Sources */,
@@ -1896,6 +1903,7 @@
 				EA8A7F491FB18ACB00088163 /* ApiMethod.swift in Sources */,
 				EA8A7F651FB18ACB00088163 /* StatusCode.swift in Sources */,
 				EA8A7F351FB18ACB00088163 /* ApiHeader.swift in Sources */,
+				EA0409402383E7BE00046508 /* RxUrlSession+BackgroundEvents.swift in Sources */,
 				EA8A7FC51FB18ACB00088163 /* RestService+BackgroundEvents.swift in Sources */,
 				EA695B8820209D1D004662B1 /* ResourcePath.swift in Sources */,
 				EA8A7F8D1FB18ACB00088163 /* HttpUploadRequest.swift in Sources */,

@@ -27,6 +27,11 @@ final public class ApiService {
     public func cancelAllRequests() {
         requestService.cancelAllRequests()
     }
+
+    ///Invalidates all sessions and cancells all tasks.
+    public func terminateAllRequests() {
+        requestService.invalidateAndCancel()
+    }
 }
 
 ///Manage simple HTTP requests

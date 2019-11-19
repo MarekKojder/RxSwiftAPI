@@ -47,22 +47,27 @@ extension Reactive where Base: RxURLSession {
         return delegateProxy
     }
 
+    private func invoked(_ selector: Selector) -> Observable<[Any]> {
+        return delegate.methodInvoked(selector)
+    }
+
     //MARK: URLSessionDelegate
     public var didBecomeInvalidWithError: Observable<Error?> {
-        return delegate.methodInvoked(#selector(RxURLSessionDelegate.urlSession(_:didBecomeInvalidWithError:))).map { parameters in
+        return invoked(#selector(RxURLSessionDelegate.urlSession(_:didBecomeInvalidWithError:))).map { parameters in
             return (parameters[1] as? Error)
         }
     }
 
+    @available(macOS, unavailable)
     public var didFinishEventsForBackgroundSession: Observable<Void> {
-        return delegate.methodInvoked(#selector(RxURLSessionDelegate.urlSessionDidFinishEvents(forBackgroundURLSession:))).map { _ in
+        return invoked(#selector(RxURLSessionDelegate.urlSessionDidFinishEvents(forBackgroundURLSession:))).map { _ in
             return
         }
     }
 
     //MARK: URLSessionTaskDelegate
     public var didSendBodyData: Observable<(task: URLSessionTask, bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64)> {
-        return delegate.methodInvoked(#selector(RxURLSessionDelegate.urlSession(_:task:didSendBodyData:totalBytesSent:totalBytesExpectedToSend:))).map { parameters in
+        return invoked(#selector(RxURLSessionDelegate.urlSession(_:task:didSendBodyData:totalBytesSent:totalBytesExpectedToSend:))).map { parameters in
             return (parameters[1] as! URLSessionTask,
                     parameters[2] as! Int64,
                     parameters[3] as! Int64,
@@ -71,7 +76,7 @@ extension Reactive where Base: RxURLSession {
     }
 
     public var didCompleteWithError: Observable<(task: URLSessionTask, error: Error?)> {
-        return delegate.methodInvoked(#selector(RxURLSessionDelegate.urlSession(_:task:didCompleteWithError:))).map { parameters in
+        return invoked(#selector(RxURLSessionDelegate.urlSession(_:task:didCompleteWithError:))).map { parameters in
             return (parameters[1] as! URLSessionTask,
                     parameters[2] as? Error)
         }
@@ -81,7 +86,7 @@ extension Reactive where Base: RxURLSession {
     private typealias DataTaskResponseHandler = @convention(block) (URLSession.ResponseDisposition) -> Void
 
     public var didReceiveResponse: Observable<(task: URLSessionDataTask, response: URLResponse, completion: (URLSession.ResponseDisposition) -> Void)> {
-        return delegate.methodInvoked(#selector(RxURLSessionDelegate.urlSession(_:dataTask:didReceive:completionHandler:))).map { parameters in
+        return invoked(#selector(RxURLSessionDelegate.urlSession(_:dataTask:didReceive:completionHandler:))).map { parameters in
             return (parameters[1] as! URLSessionDataTask,
                     parameters[2] as! URLResponse,
                     unsafeBitCast(parameters[3] as AnyObject, to: DataTaskResponseHandler.self))
@@ -89,7 +94,7 @@ extension Reactive where Base: RxURLSession {
     }
 
     public var didReceiveData: Observable<(task: URLSessionDataTask, response: Data)> {
-        return delegate.methodInvoked(#selector(RxURLSessionDelegate.urlSession(_:dataTask:didReceive:))).map { parameters in
+        return invoked(#selector(RxURLSessionDelegate.urlSession(_:dataTask:didReceive:))).map { parameters in
             return (parameters[1] as! URLSessionDataTask,
                     parameters[2] as! Data)
         }
@@ -101,7 +106,7 @@ extension Reactive where Base: RxURLSession {
     }
 
     public var didWriteData: Observable<(task: URLSessionDownloadTask, bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64)> {
-        return delegate.methodInvoked(#selector(RxURLSessionDelegate.urlSession(_:downloadTask:didWriteData:totalBytesWritten:totalBytesExpectedToWrite:))).map { parameters in
+        return invoked(#selector(RxURLSessionDelegate.urlSession(_:downloadTask:didWriteData:totalBytesWritten:totalBytesExpectedToWrite:))).map { parameters in
             return (parameters[1] as! URLSessionDownloadTask,
                     parameters[2] as! Int64,
                     parameters[3] as! Int64,

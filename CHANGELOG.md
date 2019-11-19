@@ -3,7 +3,7 @@
 ## Upcoming
 - Refactor and migration to Rx of APILayer
 
-## [v2.1.3](https://github.com/MarekKojder/RxSwiftAPI/tree/2.1.3) (2019-11-18)
+## [v2.1.3](https://github.com/MarekKojder/RxSwiftAPI/tree/2.1.3) (2019-11-19)
 - Fixed downloading files with background configuration.
 - Enabled custom identifier of background configuration.
 

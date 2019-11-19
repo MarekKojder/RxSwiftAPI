@@ -353,6 +353,11 @@ public extension RestService {
     func cancelAllRequests() {
         apiService.cancelAllRequests()
     }
+
+    ///Invalidates all sessions and cancells all tasks.
+    func terminateAllRequests() {
+        apiService.terminateAllRequests()
+    }
 }
 
 //MARK: - Parameter factories

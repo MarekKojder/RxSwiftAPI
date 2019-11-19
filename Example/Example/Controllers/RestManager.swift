@@ -90,8 +90,8 @@ struct RestManager {
     }
 
     ///Cancels all currently running requests.
-    func cancelAllRequests() {
-        restService.cancelAllRequests()
+    func terminateAllRequests() {
+        restService.terminateAllRequests()
     }
 
     ///Method to run in *AppDelegate* to manage background tasks

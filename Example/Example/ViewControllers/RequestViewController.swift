@@ -29,8 +29,8 @@ class RequestViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        apiManager.cancelAllRequests()
-        restManager.cancelAllRequests()
+        apiManager.terminateAllRequests()
+        restManager.terminateAllRequests()
     }
 
     //MARK: Actions

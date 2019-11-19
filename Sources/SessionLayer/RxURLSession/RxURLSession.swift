@@ -112,10 +112,6 @@ extension RxURLSession: URLSessionDelegate {
     public func urlSession(_ session: URLSession, didBecomeInvalidWithError error: Error?) {
         delegate?.urlSession?(session, didBecomeInvalidWithError: error)
     }
-
-    public func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-        delegate?.urlSessionDidFinishEvents?(forBackgroundURLSession: session)
-    }
 }
 
 //MARK: URLSessionTaskDelegate Protocol
