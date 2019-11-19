@@ -34,7 +34,7 @@ final public class ApiService {
     }
 }
 
-///Manage simple HTTP requests
+//MARK: Manage simple HTTP requests
 public extension ApiService {
 
     /**
@@ -122,7 +122,7 @@ public extension ApiService {
     }
 }
 
-///Manage uploading files
+//MARK: Manage uploading files
 public extension ApiService {
 
     /**
@@ -174,7 +174,7 @@ public extension ApiService {
     }
 }
 
-///Manage downloading files
+//MARK: Manage downloading files
 public extension ApiService {
 
     /**
@@ -196,7 +196,7 @@ public extension ApiService {
     }
 }
 
-///Methods allowing extend service capabilities
+//MARK: Methods allowing extend service capabilities
 public extension ApiService {
 
     /**
@@ -247,6 +247,28 @@ public extension ApiService {
     }
 }
 
+//MARK: Handling background sessions
+#if !os(OSX)
+public extension ApiService {
+
+    /**
+     Handle events for background session with identifier.
+
+     - Parameters:
+       - identifier: The identifier of the URL session requiring attention.
+       - completion: The completion handler to call when you finish processing the events.
+
+     - Note: Background tasks works only on real devices, not on simulator.
+
+     This method have to be used in `application(UIApplication, handleEventsForBackgroundURLSession: String, completionHandler: () -> Void)` method of AppDelegate.
+     */
+    func handleEventsForBackgroundSession(with identifier: String, completion: @escaping () -> Void) {
+        requestService.handleEventsForBackgroundSession(with: identifier, completion: completion)
+    }
+}
+#endif
+
+//MARK: Private helpers
 private extension ApiService {
 
     ///Converts array of *ApiHeader* to array of *HttpHeader*

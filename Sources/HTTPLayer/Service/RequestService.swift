@@ -131,6 +131,7 @@ extension RequestService {
 }
 
 //MARK: - Handling background sessions
+#if !os(OSX)
 extension RequestService {
 
     /**
@@ -142,7 +143,6 @@ extension RequestService {
 
      This method have to be used in `application(UIApplication, handleEventsForBackgroundURLSession: String, completionHandler: () -> Void)` method of AppDelegate.
      */
-    @available(OSX, unavailable)
     func handleEventsForBackgroundSession(with identifier: String, completion: @escaping () -> Void) {
         sessionsQueue.sync() { [weak self] in
             if let index = self?.sessions.lastIndex(where: { $0.identifier == identifier && $0.status == .valid }) {
@@ -155,3 +155,4 @@ extension RequestService {
         }
     }
 }
+#endif
