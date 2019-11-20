@@ -10,12 +10,12 @@ import XCTest
 
 class ApiServiceTests: XCTestCase {
 
-    private var apiService: ApiService!
+    private var apiService: Api.Service!
 
     override func setUp() {
         super.setUp()
 
-        apiService = ApiService(fileManager: DefaultFileManager())
+        apiService = Api.Service(fileManager: DefaultFileManager())
     }
 
     override func tearDown() {
@@ -29,7 +29,7 @@ class ApiServiceTests: XCTestCase {
     }
 
     //Log test result
-    private func log(_ response: ApiResponse?, with error: Error?) {
+    private func log(_ response: Api.Response?, with error: Error?) {
         let message: String
         if let response = response, let responseUrl = response.url {
             message = "Request to URL \(responseUrl) finished with status code \(response.statusCode.rawValue)."

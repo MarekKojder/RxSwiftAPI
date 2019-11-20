@@ -48,12 +48,12 @@ enum TestData {
 
     enum Headers {
 
-        static var example: [ApiHeader] {
-            return [ApiHeader(name: "User-Agent", value: "RxSwiftAPI")]
+        static var example: [Api.Header] {
+            return [Api.Header(name: "User-Agent", value: "RxSwiftAPI")]
         }
 
-        static var auth: [ApiHeader] {
-            return [ApiHeader.Authorization.basic(login: "admin", password: "admin1")!]
+        static var auth: [Api.Header] {
+            return [Api.Header.Authorization.basic(login: "admin", password: "admin1")!]
         }
     }
 }

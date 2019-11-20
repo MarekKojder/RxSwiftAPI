@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension ApiService {
+public extension Api.Service {
 
     typealias CachePolicy = NSURLRequest.CachePolicy
     typealias CookieAcceptPolicy = HTTPCookie.AcceptPolicy
@@ -22,7 +22,7 @@ public extension ApiService {
     }
 }
 
-extension ApiService.Configuration {
+extension Api.Service.Configuration {
 
     ///Default background session configuration ID.
     public static let defaultBackgroundId = "RxSwiftAPI.ApiService.Configuration.background"
@@ -42,9 +42,9 @@ extension ApiService.Configuration {
     }
 }
 
-extension ApiService.Configuration: Equatable {
+extension Api.Service.Configuration: Equatable {
 
-    public static func ==(lhs: ApiService.Configuration, rhs: ApiService.Configuration) -> Bool {
+    public static func ==(lhs: Api.Service.Configuration, rhs: Api.Service.Configuration) -> Bool {
         switch (lhs, rhs) {
         case (.foreground, .foreground),
              (.ephemeral, .ephemeral):
@@ -59,7 +59,7 @@ extension ApiService.Configuration: Equatable {
     }
 }
 
-public extension ApiService.Configuration {
+public extension Api.Service.Configuration {
 
     ///A Boolean value that determines whether connections should be made over a cellular network. The default value is true.
     var allowsCellularAccess: Bool {
@@ -82,7 +82,7 @@ public extension ApiService.Configuration {
     }
 
     ///A predefined constant that determines when to return a response from the cache. The default value is *.useProtocolCachePolicy*.
-    var cachePolicy: ApiService.CachePolicy {
+    var cachePolicy: Api.Service.CachePolicy {
         return requestServiceConfiguration.cachePolicy
     }
 
@@ -92,12 +92,12 @@ public extension ApiService.Configuration {
     }
 
     ///A policy constant that determines when cookies should be accepted. The default value is *.onlyFromMainDocumentDomain*.
-    var cookieAcceptPolicy: ApiService.CookieAcceptPolicy {
+    var cookieAcceptPolicy: Api.Service.CookieAcceptPolicy {
         return requestServiceConfiguration.cookieAcceptPolicy
     }
 
     ///The cookie store for storing cookies within this session. For *foreground* and *background* sessions, the default value is the shared cookie storage object.
-    var cookieStorage: ApiService.CookieStorage? {
+    var cookieStorage: Api.Service.CookieStorage? {
         return requestServiceConfiguration.cookieStorage
     }
 }

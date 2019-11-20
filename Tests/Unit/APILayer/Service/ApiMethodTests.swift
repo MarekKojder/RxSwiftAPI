@@ -11,10 +11,10 @@ import XCTest
 class ApiMethodTests: XCTestCase {
     
     func testConvertingToHttpMethod() {
-        XCTAssertEqual(ApiMethod.get.httpMethod, Http.Method.get)
-        XCTAssertEqual(ApiMethod.post.httpMethod, Http.Method.post)
-        XCTAssertEqual(ApiMethod.put.httpMethod, Http.Method.put)
-        XCTAssertEqual(ApiMethod.patch.httpMethod, Http.Method.patch)
-        XCTAssertEqual(ApiMethod.delete.httpMethod, Http.Method.delete)
+        XCTAssertEqual(Api.Method.get.httpMethod, Http.Method.get)
+        XCTAssertEqual(Api.Method.post.httpMethod, Http.Method.post)
+        XCTAssertEqual(Api.Method.put.httpMethod, Http.Method.put)
+        XCTAssertEqual(Api.Method.patch.httpMethod, Http.Method.patch)
+        XCTAssertEqual(Api.Method.delete.httpMethod, Http.Method.delete)
     }
 }

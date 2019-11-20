@@ -30,7 +30,7 @@ public extension RestResponse {
              responseHeaderFields = []
          }
 
-         init(_ response: ApiResponse) {
+        init(_ response: Api.Response) {
              error = nil
              statusCode = response.statusCode
              rawBody = response.body

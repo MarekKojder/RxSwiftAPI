@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension ApiService.Task {
+public extension Api.Service.Task {
 
     /**
      Task Status
@@ -23,7 +23,7 @@ public extension ApiService.Task {
     }
 }
 
-public extension ApiService {
+public extension Api.Service {
 
     ///Class which allows to manage request and follow its progress.
     final class Task {
@@ -53,7 +53,7 @@ public extension ApiService {
     }
 }
 
-public extension ApiService.Task {
+public extension Api.Service.Task {
 
     ///Resumes the task, if it is suspended.
     func resume() {
@@ -71,13 +71,15 @@ public extension ApiService.Task {
     }
 }
 
-extension ApiService.Task: Equatable {
-    public static func == (lhs: ApiService.Task, rhs: ApiService.Task) -> Bool {
+extension Api.Service.Task: Equatable {
+
+    public static func == (lhs: Api.Service.Task, rhs: Api.Service.Task) -> Bool {
         return lhs.task == rhs.task
     }
 }
 
-extension ApiService.Task: Hashable {
+extension Api.Service.Task: Hashable {
+    
     public func hash(into hasher: inout Hasher) {
         hasher.combine(task)
     }

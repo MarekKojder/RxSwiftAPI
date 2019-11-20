@@ -11,7 +11,7 @@ import XCTest
 class ApiResponseTests: XCTestCase {
     
     func testNilConstructor() {
-        let response = ApiResponse(nil)
+        let response = Api.Response(nil)
 
         XCTAssertNil(response)
     }
@@ -19,7 +19,7 @@ class ApiResponseTests: XCTestCase {
     func testEmptyConstructor() {
         let data = Data(count: 10)
         let httpResponse = Http.Response(body: data)
-        let response = ApiResponse(httpResponse)
+        let response = Api.Response(httpResponse)
 
         XCTAssertNotNil(response)
         XCTAssertNil(response?.url)
@@ -35,7 +35,7 @@ class ApiResponseTests: XCTestCase {
     func testPrettyPrinter() {
         let data = "{ \"number\": 10}".data(using: .utf8)!
         let httpResponse = Http.Response(body: data)
-        let response = ApiResponse(httpResponse)
+        let response = Api.Response(httpResponse)
 
         XCTAssertEqual(response?.body, data)
     }
@@ -43,7 +43,7 @@ class ApiResponseTests: XCTestCase {
     func testPrettyPrinterFailure1() {
         let url = URL(string:"https://www.google.com")!
         let httpResponse = Http.Response(resourceUrl: url)
-        let response = ApiResponse(httpResponse)
+        let response = Api.Response(httpResponse)
 
         XCTAssertNil(response?.body)
     }
@@ -51,7 +51,7 @@ class ApiResponseTests: XCTestCase {
     func testPrettyPrinterFailure2() {
         let data = Data(count: 10)
         let httpResponse = Http.Response(body: data)
-        let response = ApiResponse(httpResponse)
+        let response = Api.Response(httpResponse)
 
         XCTAssertEqual(response?.body, data)
     }

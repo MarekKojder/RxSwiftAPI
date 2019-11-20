@@ -8,34 +8,36 @@
 import RxSwift
 import RxCocoa
 
+extension Api {
 
-final public class ApiService {
+    final public class Service {
 
-    public typealias CompletionHandler = (_ response: ApiResponse?, _ error: Error?) -> ()
+        public typealias CompletionHandler = (_ response: Api.Response?, _ error: Swift.Error?) -> ()
 
-    ///Service managing requests
-    let requestService: Http.Service
+        ///Service managing requests
+        let requestService: Http.Service
 
-    /**
-     - Parameter fileManager: Object of class implementing *FileManager* protocol.
-     */
-    public init(fileManager: FileManager = DefaultFileManager()) {
-        self.requestService = Http.Service(fileManager: fileManager)
-    }
+        /**
+         - Parameter fileManager: Object of class implementing *FileManager* protocol.
+         */
+        public init(fileManager: FileManager = DefaultFileManager()) {
+            self.requestService = Http.Service(fileManager: fileManager)
+        }
 
-    ///Cancels all currently running requests.
-    public func cancelAllRequests() {
-        requestService.cancelAllRequests()
-    }
+        ///Cancels all currently running requests.
+        public func cancelAllRequests() {
+            requestService.cancelAllRequests()
+        }
 
-    ///Invalidates all sessions and cancells all tasks.
-    public func terminateAllRequests() {
-        requestService.invalidateAndCancel()
+        ///Invalidates all sessions and cancells all tasks.
+        public func terminateAllRequests() {
+            requestService.invalidateAndCancel()
+        }
     }
 }
 
 //MARK: Manage simple HTTP requests
-public extension ApiService {
+public extension Api.Service {
 
     /**
      Sends HTTP GET request with given parameters.
@@ -49,7 +51,7 @@ public extension ApiService {
      - Returns: Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func getData(from url: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
+    func getData(from url: URL, with headers: [Api.Header]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
         return try sendRequest(to: url, method: .get, headers: headers, configuration: configuration, completion: completion)
     }
 
@@ -66,7 +68,7 @@ public extension ApiService {
      - Returns: Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func post(data: Data?, at url: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
+    func post(data: Data?, at url: URL, with headers: [Api.Header]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
         return try sendRequest(to: url, with: data, method: .post, headers: headers, configuration: configuration, completion: completion)
     }
 
@@ -83,7 +85,7 @@ public extension ApiService {
      - Returns: Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func put(data: Data?, at url: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
+    func put(data: Data?, at url: URL, with headers: [Api.Header]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
         return try sendRequest(to: url, with: data, method: .put, headers: headers, configuration: configuration, completion: completion)
     }
 
@@ -100,7 +102,7 @@ public extension ApiService {
      - Returns: Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func patch(data: Data?, at url: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
+    func patch(data: Data?, at url: URL, with headers: [Api.Header]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
         return try sendRequest(to: url, with: data, method: .patch, headers: headers, configuration: configuration, completion: completion)
     }
 
@@ -117,13 +119,13 @@ public extension ApiService {
      - Returns: Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func delete(data: Data? = nil, at url: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
+    func delete(data: Data? = nil, at url: URL, with headers: [Api.Header]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
         return try sendRequest(to: url, with: data, method: .delete, headers: headers, configuration: configuration, completion: completion)
     }
 }
 
 //MARK: Manage uploading files
-public extension ApiService {
+public extension Api.Service {
 
     /**
      Uploads file using HTTP POST request.
@@ -137,7 +139,7 @@ public extension ApiService {
 
      - Returns: Task object which allows to follow progress and manage request.
      */
-    func postFile(from localFileUrl: URL, to destinationUrl: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
+    func postFile(from localFileUrl: URL, to destinationUrl: URL, with headers: [Api.Header]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
         return try uploadFile(from: localFileUrl, to: destinationUrl, with: .post, headers: headers, configuration: configuration, completion: completion)
     }
 
@@ -153,7 +155,7 @@ public extension ApiService {
 
      - Returns: Task object which allows to follow progress and manage request.
      */
-    func putFile(from localFileUrl: URL, to destinationUrl: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
+    func putFile(from localFileUrl: URL, to destinationUrl: URL, with headers: [Api.Header]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
         return try uploadFile(from: localFileUrl, to: destinationUrl, with: .put, headers: headers, configuration: configuration, completion: completion)
     }
 
@@ -169,13 +171,13 @@ public extension ApiService {
 
      - Returns: Task object which allows to follow progress and manage request.
      */
-    func patchFile(from localFileUrl: URL, to destinationUrl: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
+    func patchFile(from localFileUrl: URL, to destinationUrl: URL, with headers: [Api.Header]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
         return try uploadFile(from: localFileUrl, to: destinationUrl, with: .patch, headers: headers, configuration: configuration, completion: completion)
     }
 }
 
 //MARK: Manage downloading files
-public extension ApiService {
+public extension Api.Service {
 
     /**
      Downloads file using HTTP GET request.
@@ -191,13 +193,13 @@ public extension ApiService {
      
      - Important: While using default file manager, if any file exists at *localUrl* it will be overridden by downloaded file.
      */
-    func downloadFile(from remoteFileUrl: URL, to localUrl: URL, with headers: [ApiHeader]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
+    func downloadFile(from remoteFileUrl: URL, to localUrl: URL, with headers: [Api.Header]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
         return try downloadFile(from: remoteFileUrl, to: localUrl, apiHeaders: headers, configuration: configuration, completion: completion)
     }
 }
 
 //MARK: Methods allowing extend service capabilities
-public extension ApiService {
+public extension Api.Service {
 
     /**
      Uploads file using HTTP request.
@@ -214,7 +216,7 @@ public extension ApiService {
      
      This method allows to customize every request configuration. It may be very powerfull if you know what you are doing.
      */
-    func uploadFile(from localFileUrl: URL, to destinationUrl: URL, with method: ApiMethod, headers: [ApiHeader]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
+    func uploadFile(from localFileUrl: URL, to destinationUrl: URL, with method: Api.Method, headers: [Api.Header]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
         let headers = httpHeaders(for: headers)
         let uploadRequest = Http.UploadRequest(url: destinationUrl, method: method.httpMethod, resourceUrl: localFileUrl, headers: headers)
 
@@ -237,7 +239,7 @@ public extension ApiService {
     - Returns: Task object which allows to follow progress and manage request.
     */
 
-    func sendRequest(to url: URL, with body: Data? = nil, method: ApiMethod, headers: [ApiHeader]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
+    func sendRequest(to url: URL, with body: Data? = nil, method: Api.Method, headers: [Api.Header]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
         let headers = httpHeaders(for: headers)
         let httpRequest = Http.DataRequest(url: url, method: method.httpMethod, body: body, headers: headers)
 
@@ -249,7 +251,7 @@ public extension ApiService {
 
 //MARK: Handling background sessions
 #if !os(OSX)
-public extension ApiService {
+public extension Api.Service {
 
     /**
      Handle events for background session with identifier.
@@ -269,22 +271,22 @@ public extension ApiService {
 #endif
 
 //MARK: Private helpers
-private extension ApiService {
+private extension Api.Service {
 
     ///Converts array of *ApiHeader* to array of *HttpHeader*
-    func httpHeaders(for apiHeaders: [ApiHeader]?) -> [Http.Header]? {
+    func httpHeaders(for apiHeaders: [Api.Header]?) -> [Http.Header]? {
         return apiHeaders?.map { $0.httpHeader }
     }
 
     ///Creates success and failure action for single completion handler.
     func requestCompletion(for completion: CompletionHandler?) -> Http.Service.CompletionHandler {
-        return { (response: Http.Response?, error: Error?) in
-            completion?(ApiResponse(response), error)
+        return { (response: Http.Response?, error: Swift.Error?) in
+            completion?(Api.Response(response), error)
         }
     }
 
     ///Downloads file with given parameters
-    func downloadFile(from remoteFileUrl: URL, to localUrl: URL, apiHeaders: [ApiHeader]?, configuration: Configuration, completion: CompletionHandler?) throws -> Task {
+    func downloadFile(from remoteFileUrl: URL, to localUrl: URL, apiHeaders: [Api.Header]?, configuration: Configuration, completion: CompletionHandler?) throws -> Task {
         let headers = httpHeaders(for: apiHeaders)
         let downloadRequest = Http.DownloadRequest(url: remoteFileUrl, destinationUrl: localUrl, headers: headers)
 

@@ -7,61 +7,64 @@
 
 import Foundation
 
-public struct ApiResponse {
+extension Api {
 
-    ///The URL for the response.
-    public let url: URL?
+    public struct Response {
 
-    ///The status code of the receiver.
-    public let statusCode: StatusCode
+        ///The URL for the response.
+        public let url: URL?
 
-    ///The expected length of the response’s content.
-    public let expectedContentLength: Int64
+        ///The status code of the receiver.
+        public let statusCode: StatusCode
 
-    ///The MIME type of the response.
-    public let mimeType: String?
+        ///The expected length of the response’s content.
+        public let expectedContentLength: Int64
 
-    ///The name of the text encoding provided by the response’s originating source.
-    public let textEncodingName: String?
+        ///The MIME type of the response.
+        public let mimeType: String?
 
-    ///A dictionary containing all the HTTP header fields of the receiver.
-    public let allHeaderFields: [String : String]?
+        ///The name of the text encoding provided by the response’s originating source.
+        public let textEncodingName: String?
 
-    ///Data object for collecting multipart response body.
-    public let body: Data?
+        ///A dictionary containing all the HTTP header fields of the receiver.
+        public let allHeaderFields: [String : String]?
 
-    ///File URL on disc of downloaded resource.
-    public let resourceUrl: URL?
+        ///Data object for collecting multipart response body.
+        public let body: Data?
 
-    /**
-     Creates object by initating values with given HttpResponse object values.
+        ///File URL on disc of downloaded resource.
+        public let resourceUrl: URL?
 
-     - Parameter httpResponse: HttpResponse object returned by RequestService.
-     */
-    init?(_ httpResponse: Http.Response?) {
-        guard let response = httpResponse else {
-            return nil
+        /**
+         Creates object by initating values with given HttpResponse object values.
+
+         - Parameter httpResponse: HttpResponse object returned by RequestService.
+         */
+        init?(_ httpResponse: Http.Response?) {
+            guard let response = httpResponse else {
+                return nil
+            }
+            self.url = response.url
+            if let code = response.statusCode {
+                self.statusCode = StatusCode(code)
+            } else {
+                self.statusCode = StatusCode.internalError
+            }
+            self.expectedContentLength = response.expectedContentLength
+            self.mimeType = response.mimeType
+            self.textEncodingName = response.textEncodingName
+            self.allHeaderFields = response.allHeaderFields
+            self.body = response.body
+            self.resourceUrl = response.resourceUrl
         }
-        self.url = response.url
-        if let code = response.statusCode {
-            self.statusCode = StatusCode(code)
-        } else {
-            self.statusCode = StatusCode.internalError
-        }
-        self.expectedContentLength = response.expectedContentLength
-        self.mimeType = response.mimeType
-        self.textEncodingName = response.textEncodingName
-        self.allHeaderFields = response.allHeaderFields
-        self.body = response.body
-        self.resourceUrl = response.resourceUrl
-    }
 
-    ///Prints to console pretty formatted JSON docoded from body.
-    public func printPrettyBody() {
-        guard let body = body else {
-            print("Body is nil.")
-            return
+        ///Prints to console pretty formatted JSON docoded from body.
+        public func printPrettyBody() {
+            guard let body = body else {
+                print("Body is nil.")
+                return
+            }
+            body.print()
         }
-        body.print()
     }
 }

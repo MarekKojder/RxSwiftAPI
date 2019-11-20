@@ -11,7 +11,7 @@ import XCTest
 class ApiErrorTests: XCTestCase {
     
     func testNoResponse() {
-        let error = ApiError.noResponse
+        let error = Api.Error.noResponse
 
         XCTAssertFalse(error.localizedDescription.isEmpty)
         XCTAssertNotNil(error.localizedDescription.lowercased().range(of: "response"))
@@ -19,12 +19,12 @@ class ApiErrorTests: XCTestCase {
 
     func testStatusCodeError() {
         let statusCode = StatusCode(400)
-        let error1 = ApiError.error(for: StatusCode(100))
-        let error2 = ApiError.error(for: StatusCode(200))
-        let error3 = ApiError.error(for: StatusCode(300))
-        let error4 = ApiError.error(for: statusCode)
-        let error5 = ApiError.error(for: StatusCode(500))
-        let error6 = ApiError.error(for: StatusCode(600))
+        let error1 = Api.Error.error(for: StatusCode(100))
+        let error2 = Api.Error.error(for: StatusCode(200))
+        let error3 = Api.Error.error(for: StatusCode(300))
+        let error4 = Api.Error.error(for: statusCode)
+        let error5 = Api.Error.error(for: StatusCode(500))
+        let error6 = Api.Error.error(for: StatusCode(600))
 
         XCTAssertNotNil(error1)
         XCTAssertNil(error2)

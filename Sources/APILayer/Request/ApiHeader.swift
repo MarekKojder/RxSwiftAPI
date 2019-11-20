@@ -7,44 +7,29 @@
 
 import Foundation
 
-public struct ApiHeader {
+extension Api {
 
-    ///Header field name.
-    public let name: String
+    public struct Header {
 
-    ///Header field value.
-    public let value: String
+        ///Header field name.
+        public let name: String
 
-    /**
-     - Parameters:
-       - name: String containing header field name.
-       - value: String containing header field value.
-     */
-    public init(name: String, value: String) {
-        self.name = name
-        self.value = value
-    }
+        ///Header field value.
+        public let value: String
 
-    /**
-     Creates Basic Auth header.
-
-     - Parameters:
-       - login: String which should be used as login while authorizaton.
-       - password: String which should be used as password while authorizaton.
-
-     - Returns: Ready to use Basic Auth header, or nil when credentials encoding went wrong.
-     */
-    @available(*, unavailable, message: "Use Authorization.basic(login:password:) enum instad.")
-    public init?(login: String, password: String) {
-        guard let credentials = "\(login):\(password)".data(using: .utf8)?.base64EncodedString(options: .init(rawValue: 0)) else {
-            return nil
+        /**
+         - Parameters:
+           - name: String containing header field name.
+           - value: String containing header field value.
+         */
+        public init(name: String, value: String) {
+            self.name = name
+            self.value = value
         }
-        self.name = "Authorization"
-        self.value = "Basic \(credentials)"
     }
 }
 
-extension ApiHeader {
+extension Api.Header {
 
     public enum Authorization {
 
@@ -58,8 +43,8 @@ extension ApiHeader {
 
          - Returns: Ready to use Authorization header with given value.
          */
-        public static func with(_ value: String) -> ApiHeader {
-            return ApiHeader(name: name, value: value)
+        public static func with(_ value: String) -> Api.Header {
+            return Api.Header(name: name, value: value)
         }
 
         /**
@@ -71,11 +56,11 @@ extension ApiHeader {
 
          - Returns: Ready to use Basic Auth header, or nil when credentials encoding went wrong.
          */
-        public static func basic(login: String, password: String) -> ApiHeader? {
+        public static func basic(login: String, password: String) -> Api.Header? {
             guard let credentials = "\(login):\(password)".data(using: .utf8)?.base64EncodedString(options: .init(rawValue: 0)) else {
                 return nil
             }
-            return ApiHeader(name: name, value: "Basic \(credentials)")
+            return Api.Header(name: name, value: "Basic \(credentials)")
         }
     }
 
@@ -84,18 +69,18 @@ extension ApiHeader {
         private static let name = "Content-Type"
 
         ///*Content-Type: text/plain* api header.
-        public static var plainText: ApiHeader {
-            return ApiHeader(name: name, value: "text/plain")
+        public static var plainText: Api.Header {
+            return Api.Header(name: name, value: "text/plain")
         }
 
         ///*Content-Type: application/json* api header.
-        public static var json: ApiHeader {
-            return ApiHeader(name: name, value: "application/json")
+        public static var json: Api.Header {
+            return Api.Header(name: name, value: "application/json")
         }
 
         ///*Content-Type: application/x-www-form-urlencoded* api header.
-        public static var urlEncoded: ApiHeader {
-            return ApiHeader(name: name, value: "application/x-www-form-urlencoded")
+        public static var urlEncoded: Api.Header {
+            return Api.Header(name: name, value: "application/x-www-form-urlencoded")
         }
 
         /**
@@ -104,26 +89,26 @@ extension ApiHeader {
 
          - Returns: *Content-Type: multipart/form-data* header with given boundary.
          */
-        public static func multipart(with boundary: String) -> ApiHeader {
-            return ApiHeader(name: name, value: "multipart/form-data; boundary=\(boundary)")
+        public static func multipart(with boundary: String) -> Api.Header {
+            return Api.Header(name: name, value: "multipart/form-data; boundary=\(boundary)")
         }
     }
 }
 
-extension ApiHeader: Hashable {
+extension Api.Header: Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(name)
         hasher.combine(value)
     }
 
-    public static func ==(lhs: ApiHeader, rhs: ApiHeader) -> Bool {
+    public static func ==(lhs: Api.Header, rhs: Api.Header) -> Bool {
         return lhs.name == rhs.name &&
             lhs.value == rhs.value
     }
 }
 
-extension ApiHeader {
+extension Api.Header {
 
     ///Returns *HttpHeader* version of *ApiHeader*
     var httpHeader: Http.Header {
