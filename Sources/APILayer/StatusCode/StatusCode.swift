@@ -18,12 +18,12 @@ import Foundation
  - unknown: stores every  other status codes, it should be used for internal library errors.
  */
 public enum StatusCode {
-    case info(InfoStatusCodeType)
-    case success(SuccessStatusCodeType)
-    case redirection(RedirectionStatusCodeType)
-    case clientError(ClientErrorStatusCodeType)
-    case serverError(ServerErrorStatusCodeType)
-    case unknown(UnknownStatusCodeType)
+    case info(Info)
+    case success(Success)
+    case redirection(Redirection)
+    case clientError(ClientError)
+    case serverError(ServerError)
+    case unknown(Unknown)
 }
 
 extension StatusCode {
@@ -70,18 +70,18 @@ extension StatusCode {
      - Parameter value: HTTP status code value.
      */
     init(_ value: Int) {
-        if let code = InfoStatusCodeType(value) {
+        if let code = Info(value) {
             self = .info(code)
-        } else if let code = SuccessStatusCodeType(value) {
+        } else if let code = Success(value) {
             self = .success(code)
-        } else if let code = RedirectionStatusCodeType(value) {
+        } else if let code = Redirection(value) {
             self = .redirection(code)
-        } else if let code = ClientErrorStatusCodeType(value) {
+        } else if let code = ClientError(value) {
             self = .clientError(code)
-        } else if let code = ServerErrorStatusCodeType(value) {
+        } else if let code = ServerError(value) {
             self = .serverError(code)
         } else {
-            self = .unknown(UnknownStatusCodeType(value))
+            self = .unknown(Unknown(value))
         }
     }
 }
@@ -92,7 +92,7 @@ extension StatusCode {
 
     ///Returns StatusCode for library internal error.
     static var internalError: StatusCode {
-        return .unknown(UnknownStatusCodeType(internalErrorCode))
+        return .unknown(Unknown(internalErrorCode))
     }
 
     ///Allows to check if StatusCode is status of library internal error.

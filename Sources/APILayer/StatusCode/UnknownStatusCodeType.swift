@@ -7,22 +7,25 @@
 
 import Foundation
 
-public struct UnknownStatusCodeType: StatusCodeType {
+public extension StatusCode {
 
-    let value: Int
+    struct Unknown: StatusCodeType {
 
-    var description: String {
-        return "Application unknown error"
-    }
+        let value: Int
 
-    init(_ value: Int) {
-        self.value = value
+        var description: String {
+            return "Application unknown error"
+        }
+
+        init(_ value: Int) {
+            self.value = value
+        }
     }
 }
 
-extension UnknownStatusCodeType: Equatable {
+extension StatusCode.Unknown: Equatable {
 
-    public static func ==(lhs: UnknownStatusCodeType, rhs: UnknownStatusCodeType) -> Bool {
+    public static func ==(lhs: StatusCode.Unknown, rhs: StatusCode.Unknown) -> Bool {
         return lhs.value == rhs.value
     }
 }

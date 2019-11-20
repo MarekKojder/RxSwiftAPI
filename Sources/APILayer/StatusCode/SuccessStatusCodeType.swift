@@ -7,48 +7,51 @@
 
 import Foundation
 
-public struct SuccessStatusCodeType: StatusCodeType {
+public extension StatusCode {
 
-    let value: Int
+    struct Success: StatusCodeType {
 
-    var description: String {
-        switch value {
-        case 200:
-            return "OK"
-        case 201:
-            return "Created"
-        case 202:
-            return "Accepted"
-        case 203:
-            return "Non-Authoritative Information"
-        case 204:
-            return "No Content"
-        case 205:
-            return "Reset Content"
-        case 206:
-            return "Partial Content"
-        case 207:
-            return "Multi-Status"
-        case 208:
-            return "Already Reported"
-        case 226:
-            return "IM Used"
-        default:
-            return "Unknown status code"
+        let value: Int
+
+        var description: String {
+            switch value {
+            case 200:
+                return "OK"
+            case 201:
+                return "Created"
+            case 202:
+                return "Accepted"
+            case 203:
+                return "Non-Authoritative Information"
+            case 204:
+                return "No Content"
+            case 205:
+                return "Reset Content"
+            case 206:
+                return "Partial Content"
+            case 207:
+                return "Multi-Status"
+            case 208:
+                return "Already Reported"
+            case 226:
+                return "IM Used"
+            default:
+                return "Unknown status code"
+            }
         }
-    }
-    
-    init?(_ value: Int) {
-        guard value >= 200, value <= 299 else {
-            return nil
+
+        internal init?(_ value: Int) {
+            guard value >= 200, value <= 299 else {
+                return nil
+            }
+            self.value = value
         }
-        self.value = value
     }
 }
 
-extension SuccessStatusCodeType: Equatable {
+extension StatusCode.Success: Equatable {
 
-    public static func ==(lhs: SuccessStatusCodeType, rhs: SuccessStatusCodeType) -> Bool {
+    public static func ==(lhs: StatusCode.Success, rhs: StatusCode.Success) -> Bool {
         return lhs.value == rhs.value
     }
 }

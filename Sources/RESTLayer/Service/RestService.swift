@@ -21,7 +21,7 @@ public class RestService {
     private let coder: CoderProvider
 
     ///Service for managing request with REST server.
-    let apiService: ApiService
+    private let apiService: ApiService
 
     /**
      - Parameters:
@@ -51,8 +51,8 @@ public extension RestService {
        - aditionalHeaders: Additional header fields which should be sent with request.
        - configuration: One of predefined *ApiService.Configuration* containing request configuration.
        - completion: Closure called when request is finished.
-     - Throws: RestService.Error if creating *URL* failed.
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Throws: RestService.Error if creating *URL* have failed.
+     - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
     func get<Response: Decodable>(type: Response.Type, from path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, configuration: ApiService.Configuration = .foreground, completion: RestResponse.CompletionHandler<Response>? = nil) throws -> ApiService.Task {
@@ -71,8 +71,8 @@ public extension RestService {
        - aditionalHeaders: Additional header fields which should be sent with request.
        - configuration: One of predefined *ApiService.Configuration* containing request configuration.
        - completion: Closure called when request is finished.
-       - Throws: RestService.Error if creating *URL* failed.
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Throws: RestService.Error if creating *URL* have failed.
+     - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
     func get<Parameters: Encodable, Response: Decodable>(type: Response.Type, from path: ResourcePath, parameters: Parameters, aditionalHeaders: [ApiHeader]? = nil, configuration: ApiService.Configuration = .foreground, completion: RestResponse.CompletionHandler<Response>? = nil) throws -> ApiService.Task {
@@ -91,8 +91,8 @@ public extension RestService {
        - configuration: One of predefined *ApiService.Configuration* containing request configuration.
        - responseType: Type conforming *Decodable* protocol which should be returned in completion block.
        - completion: Closure called when request is finished.
-     - Throws: RestService.Error if creating *URL* failed or JSONEncoder error if encoding given value failed.
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Throws: RestService.Error if creating *URL* have failed or JSONEncoder error if encoding given value failed.
+     - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
     func post<Request: Encodable, Response: Decodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, configuration: ApiService.Configuration = .foreground, responseType: Response.Type? = nil, completion: RestResponse.CompletionHandler<Response>? = nil) throws -> ApiService.Task {
@@ -111,8 +111,8 @@ public extension RestService {
        - aditionalHeaders: Additional header fields which should be sent with request.
        - configuration: One of predefined *ApiService.Configuration* containing request configuration.
        - completion: Closure called when request is finished.
-     - Throws: RestService.Error if creating *URL* failed or JSONEncoder error if encoding given value failed.
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Throws: RestService.Error if creating *URL* have failed or JSONEncoder error if encoding given value failed.
+     - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
     func post<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, configuration: ApiService.Configuration = .foreground, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task {
@@ -132,8 +132,8 @@ public extension RestService {
        - configuration: One of predefined *ApiService.Configuration* containing request configuration.
        - responseType: Type conforming *Decodable* protocol which should be returned in completion block.
        - completion: Closure called when request is finished.
-     - Throws: RestService.Error if creating *URL* failed or JSONEncoder error if encoding given value failed.
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Throws: RestService.Error if creating *URL* have failed or JSONEncoder error if encoding given value failed.
+     - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
     func put<Request: Encodable, Response: Decodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, configuration: ApiService.Configuration = .foreground, responseType: Response.Type? = nil, completion: RestResponse.CompletionHandler<Response>? = nil) throws -> ApiService.Task {
@@ -152,8 +152,8 @@ public extension RestService {
        - aditionalHeaders: Additional header fields which should be sent with request.
        - configuration: One of predefined *ApiService.Configuration* containing request configuration.
        - completion: Closure called when request is finished.
-     - Throws: RestService.Error if creating *URL* failed or JSONEncoder error if encoding given value failed.
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Throws: RestService.Error if creating *URL* have failed or JSONEncoder error if encoding given value failed.
+     - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
     func put<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, configuration: ApiService.Configuration = .foreground, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task {
@@ -172,8 +172,8 @@ public extension RestService {
        - configuration: One of predefined *ApiService.Configuration* containing request configuration.
        - responseType: Type conforming *Decodable* protocol which should be returned in completion block.
        - completion: Closure called when request is finished.
-     - Throws: RestService.Error if creating *URL* failed or JSONEncoder error if encoding given value failed.
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Throws: RestService.Error if creating *URL* have failed or JSONEncoder error if encoding given value failed.
+     - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
     func patch<Request: Encodable, Response: Decodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, configuration: ApiService.Configuration = .foreground, responseType: Response.Type? = nil, completion: RestResponse.CompletionHandler<Response>? = nil) throws -> ApiService.Task {
@@ -192,8 +192,8 @@ public extension RestService {
        - aditionalHeaders: Additional header fields which should be sent with request.
        - configuration: One of predefined *ApiService.Configuration* containing request configuration.
        - completion: Closure called when request is finished.
-     - Throws: RestService.Error if creating *URL* failed or JSONEncoder error if encoding given value failed.
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Throws: RestService.Error if creating *URL* have failed or JSONEncoder error if encoding given value failed.
+     - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
     func patch<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, configuration: ApiService.Configuration = .foreground, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task {
@@ -213,8 +213,8 @@ public extension RestService {
        - configuration: One of predefined *ApiService.Configuration* containing request configuration.
        - responseType: Type conforming *Decodable* protocol which should be returned in completion block.
        - completion: Closure called when request is finished.
-     - Throws: RestService.Error if creating *URL* failed or JSONEncoder error if encoding given value failed.
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Throws: RestService.Error if creating *URL* have failed or JSONEncoder error if encoding given value failed.
+     - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
     func delete<Request: Encodable, Response: Decodable>(_ value: Request? = nil, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, configuration: ApiService.Configuration = .foreground, responseType: Response.Type? = nil, completion: RestResponse.CompletionHandler<Response>? = nil) throws -> ApiService.Task {
@@ -233,8 +233,8 @@ public extension RestService {
        - aditionalHeaders: Additional header fields which should be sent with request.
        - configuration: One of predefined *ApiService.Configuration* containing request configuration.
        - completion: Closure called when request is finished.
-     - Throws: RestService.Error if creating *URL* failed or JSONEncoder error if encoding given value failed.
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Throws: RestService.Error if creating *URL* have failed or JSONEncoder error if encoding given value failed.
+     - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
     func delete<Request: Encodable>(_ value: Request? = nil, at path: ResourcePath, aditionalHeaders: [ApiHeader]? = nil, configuration: ApiService.Configuration = .foreground, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task {
@@ -257,8 +257,8 @@ public extension RestService {
        - configuration: One of predefined *ApiService.Configuration* containing request configuration.
        - aditionalHeaders: Additional header fields which should be sent with request.
        - completion: Closure called when request is finished.
-     - Throws: RestService.Error if creating *URL* failed.
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Throws: RestService.Error if creating *URL* have failed.
+     - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     func getFile(at path: ResourcePath, saveAt destinationUrl: URL, configuration: ApiService.Configuration = .background(), aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task {
         return try apiService.downloadFile(from: try requestUrl(for: path),
@@ -277,8 +277,8 @@ public extension RestService {
        - configuration: One of predefined *ApiService.Configuration* containing request configuration.
        - aditionalHeaders: Additional header fields which should be sent with request.
        - completion: Closure called when request is finished.
-     - Throws: RestService.Error if creating *URL* failed.
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Throws: RestService.Error if creating *URL* have failed.
+     - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     func getFile<Parameters: Encodable>(at path: ResourcePath, parameters: Parameters?, saveAt destinationUrl: URL, configuration: ApiService.Configuration = .background(), aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task {
         return try apiService.downloadFile(from: try requestUrl(for: path, with: parameters),
@@ -296,8 +296,8 @@ public extension RestService {
        - configuration: One of predefined *ApiService.Configuration* containing request configuration.
        - aditionalHeaders: Additional header fields which should be sent with request.
        - completion: Closure called when request is finished.
-     - Throws: RestService.Error if creating *URL* failed.
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Throws: RestService.Error if creating *URL* have failed.
+     - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     func postFile(from url: URL, at path: ResourcePath, configuration: ApiService.Configuration = .background(), aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task? {
         return try apiService.postFile(from: url,
@@ -315,8 +315,8 @@ public extension RestService {
        - configuration: One of predefined *ApiService.Configuration* containing request configuration.
        - aditionalHeaders: Additional header fields which should be sent with request.
        - completion: Closure called when request is finished.
-     - Throws: RestService.Error if creating *URL* failed.
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Throws: RestService.Error if creating *URL* have failed.
+     - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     func putFile(from url: URL, at path: ResourcePath, configuration: ApiService.Configuration = .background(), aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task? {
         return try apiService.putFile(from: url,
@@ -334,8 +334,8 @@ public extension RestService {
        - configuration: One of predefined *ApiService.Configuration* containing request configuration.
        - aditionalHeaders: Additional header fields which should be sent with request.
        - completion: Closure called when request is finished.
-     - Throws: RestService.Error if creating *URL* failed.
-     - Returns: ApiRequest object which allows to follow progress and manage request.
+     - Throws: RestService.Error if creating *URL* have failed.
+     - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     func patchFile(from url: URL, at path: ResourcePath, configuration: ApiService.Configuration = .background(), aditionalHeaders: [ApiHeader]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> ApiService.Task? {
         return try apiService.patchFile(from: url,
@@ -484,6 +484,7 @@ private extension RestService {
 
 private extension RestService {
 
+    ///Posts given `value` using `apiService`.
     func post<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [ApiHeader]?, configuration: ApiService.Configuration, completion: ApiService.CompletionHandler?) throws -> ApiService.Task {
         return try apiService.post(data: try requestData(for: value),
                                    at: try requestUrl(for: path),
@@ -517,7 +518,5 @@ private extension RestService {
                                      with: apiHeaders(adding: aditionalHeaders),
                                      configuration: configuration,
                                      completion: completion)
-
-
     }
 }

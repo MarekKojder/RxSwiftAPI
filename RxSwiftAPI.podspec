@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "RxSwiftAPI"
-  s.version      = "2.1.3"
+  s.version      = "2.1.4"
   s.summary      = "Simple reactive networking library based on URLSession with REST API support."
   s.description  = "RxSwiftAPI is simple networking library based on SwiftAPI, but improved ad uses RxSwift to allow using it in reactive applications."
   s.homepage     = "https://github.com/MarekKojder/RxSwiftAPI"

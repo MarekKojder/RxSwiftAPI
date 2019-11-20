@@ -7,44 +7,47 @@
 
 import Foundation
 
-public struct RedirectionStatusCodeType: StatusCodeType {
+public extension StatusCode {
 
-    let value: Int
+    struct Redirection: StatusCodeType {
 
-    var description: String {
-        switch value {
-        case 300:
-            return "Multiple Choices"
-        case 301:
-            return "Moved Permanently"
-        case 302:
-            return "Found"
-        case 303:
-            return "See Other"
-        case 304:
-            return "Not Modified"
-        case 305:
-            return "Use Proxy"
-        case 307:
-            return "Temporary Redirect"
-        case 308:
-            return "Permanent Redirect"
-        default:
-            return "Unknown status code"
+        let value: Int
+
+        var description: String {
+            switch value {
+            case 300:
+                return "Multiple Choices"
+            case 301:
+                return "Moved Permanently"
+            case 302:
+                return "Found"
+            case 303:
+                return "See Other"
+            case 304:
+                return "Not Modified"
+            case 305:
+                return "Use Proxy"
+            case 307:
+                return "Temporary Redirect"
+            case 308:
+                return "Permanent Redirect"
+            default:
+                return "Unknown status code"
+            }
         }
-    }
 
-    init?(_ value: Int) {
-        guard value >= 300, value <= 399 else {
-            return nil
+        internal init?(_ value: Int) {
+            guard value >= 300, value <= 399 else {
+                return nil
+            }
+            self.value = value
         }
-        self.value = value
     }
 }
 
-extension RedirectionStatusCodeType: Equatable {
+extension StatusCode.Redirection: Equatable {
 
-    public static func ==(lhs: RedirectionStatusCodeType, rhs: RedirectionStatusCodeType) -> Bool {
+    public static func ==(lhs:  StatusCode.Redirection, rhs:  StatusCode.Redirection) -> Bool {
         return lhs.value == rhs.value
     }
 }

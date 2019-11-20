@@ -1,7 +1,11 @@
 # Change Log
 
 ## Upcoming
-- Refactor and migration to Rx of APILayer
+- Namespace refactor
+- Creation of RxLayer
+
+## [v2.1.4](https://github.com/MarekKojder/RxSwiftAPI/tree/2.1.4) (2090-11-20)
+- Updated documentation.
 
 ## [v2.1.3](https://github.com/MarekKojder/RxSwiftAPI/tree/2.1.3) (2019-11-19)
 - Fixed downloading files with background configuration.

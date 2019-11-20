@@ -7,4 +7,5 @@
 
 import Foundation
 
+///Just namespace for other types related to response from `RestService`
 public enum RestResponse {}
