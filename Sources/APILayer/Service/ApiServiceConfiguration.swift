@@ -28,7 +28,7 @@ extension ApiService.Configuration {
     public static let defaultBackgroundId = "RxSwiftAPI.ApiService.Configuration.background"
 
     ///*URLSessionConfiguration* object for current session.
-    var requestServiceConfiguration: RequestService.Configuration {
+    var requestServiceConfiguration: Http.Service.Configuration {
         switch self {
         case .foreground:
             return .foreground

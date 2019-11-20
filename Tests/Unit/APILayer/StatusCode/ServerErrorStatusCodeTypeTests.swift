@@ -11,52 +11,52 @@ import XCTest
 class ServerErrorStatusCodeTypeTests: XCTestCase {
 
     func testConstructor() {
-        let code = ServerErrorStatusCodeType(555)
+        let code = StatusCode.ServerError(555)
 
         XCTAssertEqual(code?.value, 555)
     }
 
     func testConstructorForLowestCode() {
-        let code = ServerErrorStatusCodeType(500)
+        let code = StatusCode.ServerError(500)
 
         XCTAssertNotNil(code)
     }
 
     func testConstructorForHighestCode() {
-        let code = ServerErrorStatusCodeType(599)
+        let code = StatusCode.ServerError(599)
 
         XCTAssertNotNil(code)
     }
 
     func testConstructorForToLowCode() {
-        let code = ServerErrorStatusCodeType(499)
+        let code = StatusCode.ServerError(499)
 
         XCTAssertNil(code)
     }
 
     func testConstructorForToHighCode() {
-        let code = ServerErrorStatusCodeType(600)
+        let code = StatusCode.ServerError(600)
 
         XCTAssertNil(code)
     }
 
     func testEqualityOfEqualCodes() {
-        let code1 = ServerErrorStatusCodeType(502)
-        let code2 = ServerErrorStatusCodeType(502)
+        let code1 = StatusCode.ServerError(502)
+        let code2 = StatusCode.ServerError(502)
 
         XCTAssertTrue(code1 == code2)
     }
 
     func testEqualityOfNotEqualCodes() {
-        let code1 = ServerErrorStatusCodeType(501)
-        let code2 = ServerErrorStatusCodeType(502)
+        let code1 = StatusCode.ServerError(501)
+        let code2 = StatusCode.ServerError(502)
 
         XCTAssertFalse(code1 == code2)
     }
 
     func testDescription() {
         for i in 500..<599 {
-            let code = ServerErrorStatusCodeType(i)
+            let code = StatusCode.ServerError(i)
             XCTAssertNotNil(code?.description)
         }
     }

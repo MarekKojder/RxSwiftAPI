@@ -38,7 +38,7 @@ public struct ApiResponse {
 
      - Parameter httpResponse: HttpResponse object returned by RequestService.
      */
-    init?(_ httpResponse: HttpResponse?) {
+    init?(_ httpResponse: Http.Response?) {
         guard let response = httpResponse else {
             return nil
         }

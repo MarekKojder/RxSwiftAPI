@@ -11,52 +11,52 @@ import XCTest
 class RedirectionStatusCodeTypeTests: XCTestCase {
 
     func testConstructor() {
-        let code = RedirectionStatusCodeType(333)
+        let code = StatusCode.Redirection(333)
 
         XCTAssertEqual(code?.value, 333)
     }
 
     func testConstructorForLowestCode() {
-        let code = RedirectionStatusCodeType(300)
+        let code = StatusCode.Redirection(300)
 
         XCTAssertNotNil(code)
     }
 
     func testConstructorForHighestCode() {
-        let code = RedirectionStatusCodeType(399)
+        let code = StatusCode.Redirection(399)
 
         XCTAssertNotNil(code)
     }
 
     func testConstructorForToLowCode() {
-        let code = RedirectionStatusCodeType(299)
+        let code = StatusCode.Redirection(299)
 
         XCTAssertNil(code)
     }
 
     func testConstructorForToHighCode() {
-        let code = RedirectionStatusCodeType(400)
+        let code = StatusCode.Redirection(400)
 
         XCTAssertNil(code)
     }
 
     func testEqualityOfEqualCodes() {
-        let code1 = RedirectionStatusCodeType(302)
-        let code2 = RedirectionStatusCodeType(302)
+        let code1 = StatusCode.Redirection(302)
+        let code2 = StatusCode.Redirection(302)
 
         XCTAssertTrue(code1 == code2)
     }
 
     func testEqualityOfNotEqualCodes() {
-        let code1 = RedirectionStatusCodeType(301)
-        let code2 = RedirectionStatusCodeType(302)
+        let code1 = StatusCode.Redirection(301)
+        let code2 = StatusCode.Redirection(302)
 
         XCTAssertFalse(code1 == code2)
     }
 
     func testDescription() {
         for i in 300..<399 {
-            let code = RedirectionStatusCodeType(i)
+            let code = StatusCode.Redirection(i)
             XCTAssertNotNil(code?.description)
         }
     }

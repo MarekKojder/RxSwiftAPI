@@ -27,7 +27,7 @@ public enum ApiMethod {
 extension ApiMethod {
 
     ///Returns HttpMethod corresponding to current ApiMethod
-    var httpMethod: HttpMethod {
+    var httpMethod: Http.Method {
         switch self {
         case .get:
             return .get

@@ -18,12 +18,12 @@ extension SessionService {
 final class SessionService: QueueRelated {
 
     typealias ProgressHandler = (_ progress: Progress) -> ()
-    typealias CompletionHandler = (_ response: HttpResponse?, _ error: Error?) -> ()
+    typealias CompletionHandler = (_ response: Http.Response?, _ error: Error?) -> ()
 
     private(set) var status = Status.valid
 
     private let urlSession: RxURLSession
-    private let configuration: RequestService.Configuration
+    private let configuration: Http.Service.Configuration
     private let sessionQueue = serialQueue("sessionQueue")
     private let serialScheduler: SerialDispatchQueueScheduler
     private let concurrentScheduler = ConcurrentDispatchQueueScheduler(queue: concurrentQueue("concurrentScheduler"))
@@ -32,7 +32,7 @@ final class SessionService: QueueRelated {
     private var backgroundSessionCompletionHandler: (() -> Void)?
     private weak var fileManager: FileManager?
 
-    init(configuration: RequestService.Configuration, fileManager: FileManager) {
+    init(configuration: Http.Service.Configuration, fileManager: FileManager) {
         self.configuration = configuration
         self.fileManager = fileManager
         urlSession = RxURLSession(configuration: configuration.urlSessionConfiguration)
@@ -152,7 +152,7 @@ extension SessionService: Hashable {
         return lhs.urlSession.configuration == rhs.urlSession.configuration
     }
 
-    static func ==(lhs: SessionService, rhs: RequestService.Configuration) -> Bool {
+    static func ==(lhs: SessionService, rhs: Http.Service.Configuration) -> Bool {
         return lhs.configuration == rhs
     }
 }

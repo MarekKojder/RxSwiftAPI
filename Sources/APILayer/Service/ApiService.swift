@@ -14,13 +14,13 @@ final public class ApiService {
     public typealias CompletionHandler = (_ response: ApiResponse?, _ error: Error?) -> ()
 
     ///Service managing requests
-    let requestService: RequestService
+    let requestService: Http.Service
 
     /**
      - Parameter fileManager: Object of class implementing *FileManager* protocol.
      */
     public init(fileManager: FileManager = DefaultFileManager()) {
-        self.requestService = RequestService(fileManager: fileManager)
+        self.requestService = Http.Service(fileManager: fileManager)
     }
 
     ///Cancels all currently running requests.
@@ -216,11 +216,11 @@ public extension ApiService {
      */
     func uploadFile(from localFileUrl: URL, to destinationUrl: URL, with method: ApiMethod, headers: [ApiHeader]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
         let headers = httpHeaders(for: headers)
-        let uploadRequest = HttpUploadRequest(url: destinationUrl, method: method.httpMethod, resourceUrl: localFileUrl, headers: headers)
+        let uploadRequest = Http.UploadRequest(url: destinationUrl, method: method.httpMethod, resourceUrl: localFileUrl, headers: headers)
 
-        return Task(try requestService.sendHTTP(request: uploadRequest,
-                                                with: configuration.requestServiceConfiguration,
-                                                completion: requestCompletion(for: completion)))
+        return Task(try requestService.send(request: uploadRequest,
+                                            with: configuration.requestServiceConfiguration,
+                                            completion: requestCompletion(for: completion)))
     }
 
     /**
@@ -239,11 +239,11 @@ public extension ApiService {
 
     func sendRequest(to url: URL, with body: Data? = nil, method: ApiMethod, headers: [ApiHeader]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
         let headers = httpHeaders(for: headers)
-        let httpRequest = HttpDataRequest(url: url, method: method.httpMethod, body: body, headers: headers)
+        let httpRequest = Http.DataRequest(url: url, method: method.httpMethod, body: body, headers: headers)
 
-        return Task(try requestService.sendHTTP(request: httpRequest,
-                                                with: configuration.requestServiceConfiguration,
-                                                completion: requestCompletion(for: completion)))
+        return Task(try requestService.send(request: httpRequest,
+                                            with: configuration.requestServiceConfiguration,
+                                            completion: requestCompletion(for: completion)))
     }
 }
 
@@ -272,13 +272,13 @@ public extension ApiService {
 private extension ApiService {
 
     ///Converts array of *ApiHeader* to array of *HttpHeader*
-    func httpHeaders(for apiHeaders: [ApiHeader]?) -> [HttpHeader]? {
+    func httpHeaders(for apiHeaders: [ApiHeader]?) -> [Http.Header]? {
         return apiHeaders?.map { $0.httpHeader }
     }
 
     ///Creates success and failure action for single completion handler.
-    func requestCompletion(for completion: CompletionHandler?) -> RequestService.CompletionHandler {
-        return { (response: HttpResponse?, error: Error?) in
+    func requestCompletion(for completion: CompletionHandler?) -> Http.Service.CompletionHandler {
+        return { (response: Http.Response?, error: Error?) in
             completion?(ApiResponse(response), error)
         }
     }
@@ -286,10 +286,10 @@ private extension ApiService {
     ///Downloads file with given parameters
     func downloadFile(from remoteFileUrl: URL, to localUrl: URL, apiHeaders: [ApiHeader]?, configuration: Configuration, completion: CompletionHandler?) throws -> Task {
         let headers = httpHeaders(for: apiHeaders)
-        let downloadRequest = HttpDownloadRequest(url: remoteFileUrl, destinationUrl: localUrl, headers: headers)
+        let downloadRequest = Http.DownloadRequest(url: remoteFileUrl, destinationUrl: localUrl, headers: headers)
 
-        return Task(try requestService.sendHTTP(request: downloadRequest,
-                                                with: configuration.requestServiceConfiguration,
-                                                completion: requestCompletion(for: completion)))
+        return Task(try requestService.send(request: downloadRequest,
+                                            with: configuration.requestServiceConfiguration,
+                                            completion: requestCompletion(for: completion)))
     }
 }

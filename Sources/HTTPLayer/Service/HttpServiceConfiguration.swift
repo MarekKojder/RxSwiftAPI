@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension RequestService {
+extension Http.Service {
 
     ///Available session configurations using while sending requests.
     enum Configuration {
@@ -18,7 +18,7 @@ extension RequestService {
     }
 }
 
-extension RequestService.Configuration {
+extension Http.Service.Configuration {
 
     ///*URLSessionConfiguration* object for current session.
     var urlSessionConfiguration: URLSessionConfiguration {
@@ -35,9 +35,9 @@ extension RequestService.Configuration {
     }
 }
 
-extension RequestService.Configuration: Equatable {
+extension Http.Service.Configuration: Equatable {
 
-    public static func ==(lhs: RequestService.Configuration, rhs: RequestService.Configuration) -> Bool {
+    public static func ==(lhs: Http.Service.Configuration, rhs: Http.Service.Configuration) -> Bool {
         switch (lhs, rhs) {
         case (.foreground, .foreground),
              (.ephemeral, .ephemeral):
@@ -52,7 +52,7 @@ extension RequestService.Configuration: Equatable {
     }
 }
 
-extension RequestService.Configuration {
+extension Http.Service.Configuration {
 
     ///A Boolean value that determines whether connections should be made over a cellular network. The default value is true.
     var allowsCellularAccess: Bool {

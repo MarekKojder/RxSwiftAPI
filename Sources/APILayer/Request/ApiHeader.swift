@@ -126,7 +126,7 @@ extension ApiHeader: Hashable {
 extension ApiHeader {
 
     ///Returns *HttpHeader* version of *ApiHeader*
-    var httpHeader: HttpHeader {
-        return HttpHeader(name: name, value: value)
+    var httpHeader: Http.Header {
+        return Http.Header(name: name, value: value)
     }
 }

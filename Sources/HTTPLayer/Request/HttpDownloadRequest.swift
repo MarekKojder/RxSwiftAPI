@@ -7,36 +7,39 @@
 
 import Foundation
 
-class HttpDownloadRequest: HttpRequest {
+extension Http {
 
-    /**
-     Destination URL for downloading resource.
+    final class DownloadRequest: Request {
 
-     - Important: If any file exists at *destinationUrl* it will be overridden by downloaded file.
-     */
-    let destinationUrl: URL
+        /**
+         Destination URL for downloading resource.
 
-    ///Method not allowed to use in current class.
-    @available(*, unavailable)
-    private override init(url: URL, method: HttpMethod, headers: [HttpHeader]? = nil) {
-        self.destinationUrl = URL(fileURLWithPath: "")
-        super.init(url: url, method: method)
-    }
+         - Important: If any file exists at *destinationUrl* it will be overridden by downloaded file.
+         */
+        let destinationUrl: URL
 
-    /**
-     Creates and initializes a HttpDownloadRequest with the given parameters.
+        ///Method not allowed to use in current class.
+        @available(*, unavailable)
+        private override init(url: URL, method: Method, headers: [Header]? = nil) {
+            self.destinationUrl = URL(fileURLWithPath: "")
+            super.init(url: url, method: method)
+        }
 
-     - Parameters:
-       - url: URL of the receiver.
-       - destinationUrl: destination URL for downloading resource.
-       - onSuccess: action which needs to be performed when response was received from server.
-       - onFailure: action which needs to be performed, when request has failed.
-       - useProgress: flag indicates if Progress object should be created.
+        /**
+         Creates and initializes a HttpDownloadRequest with the given parameters.
 
-     - Returns: An initialized a HttpDownloadRequest object.
-     */
-    init(url: URL, destinationUrl: URL, headers: [HttpHeader]? = nil) {
-        self.destinationUrl = destinationUrl
-        super.init(url: url, method: .get, headers: headers)
+         - Parameters:
+           - url: URL of the receiver.
+           - destinationUrl: destination URL for downloading resource.
+           - onSuccess: action which needs to be performed when response was received from server.
+           - onFailure: action which needs to be performed, when request has failed.
+           - useProgress: flag indicates if Progress object should be created.
+
+         - Returns: An initialized a HttpDownloadRequest object.
+         */
+        init(url: URL, destinationUrl: URL, headers: [Header]? = nil) {
+            self.destinationUrl = destinationUrl
+            super.init(url: url, method: .get, headers: headers)
+        }
     }
 }

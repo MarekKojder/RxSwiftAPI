@@ -7,26 +7,29 @@
 
 import Foundation
 
-class HttpUploadRequest: HttpRequest {
+extension Http {
 
-    ///The URL of the resource to upload.
-    let resourceUrl: URL
+    final class UploadRequest: Request {
 
-    /**
-     Creates and initializes a HttpUploadRequest with the given parameters.
+        ///The URL of the resource to upload.
+        let resourceUrl: URL
 
-     - Parameters:
-       - url: URL of the receiver.
-       - method: HTTP request method of the receiver.
-       - resourceUrl: URL of the resource to upload.
-       - onSuccess: action which needs to be performed when response was received from server.
-       - onFailure: action which needs to be performed, when request has failed.
-       - useProgress: flag indicates if Progress object should be created.
+        /**
+         Creates and initializes a HttpUploadRequest with the given parameters.
 
-     - Returns: An initialized a HttpUploadRequest object.
-     */
-    init(url: URL, method: HttpMethod, resourceUrl: URL, headers: [HttpHeader]? = nil) {
-        self.resourceUrl = resourceUrl
-        super.init(url: url, method: method, headers: headers)
+         - Parameters:
+           - url: URL of the receiver.
+           - method: HTTP request method of the receiver.
+           - resourceUrl: URL of the resource to upload.
+           - onSuccess: action which needs to be performed when response was received from server.
+           - onFailure: action which needs to be performed, when request has failed.
+           - useProgress: flag indicates if Progress object should be created.
+
+         - Returns: An initialized a HttpUploadRequest object.
+         */
+        init(url: URL, method: Method, resourceUrl: URL, headers: [Header]? = nil) {
+            self.resourceUrl = resourceUrl
+            super.init(url: url, method: method, headers: headers)
+        }
     }
 }

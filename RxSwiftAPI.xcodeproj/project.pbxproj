@@ -165,14 +165,14 @@
 		EA8A7F9E1FB18ACB00088163 /* HttpMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F1F1FB18ACB00088163 /* HttpMethod.swift */; };
 		EA8A7F9F1FB18ACB00088163 /* HttpMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F1F1FB18ACB00088163 /* HttpMethod.swift */; };
 		EA8A7FA01FB18ACB00088163 /* HttpMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F1F1FB18ACB00088163 /* HttpMethod.swift */; };
-		EA8A7FA51FB18ACB00088163 /* RequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F211FB18ACB00088163 /* RequestService.swift */; };
-		EA8A7FA61FB18ACB00088163 /* RequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F211FB18ACB00088163 /* RequestService.swift */; };
-		EA8A7FA71FB18ACB00088163 /* RequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F211FB18ACB00088163 /* RequestService.swift */; };
-		EA8A7FA81FB18ACB00088163 /* RequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F211FB18ACB00088163 /* RequestService.swift */; };
-		EA8A7FA91FB18ACB00088163 /* RequestServiceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F221FB18ACB00088163 /* RequestServiceConfiguration.swift */; };
-		EA8A7FAA1FB18ACB00088163 /* RequestServiceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F221FB18ACB00088163 /* RequestServiceConfiguration.swift */; };
-		EA8A7FAB1FB18ACB00088163 /* RequestServiceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F221FB18ACB00088163 /* RequestServiceConfiguration.swift */; };
-		EA8A7FAC1FB18ACB00088163 /* RequestServiceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F221FB18ACB00088163 /* RequestServiceConfiguration.swift */; };
+		EA8A7FA51FB18ACB00088163 /* HttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F211FB18ACB00088163 /* HttpService.swift */; };
+		EA8A7FA61FB18ACB00088163 /* HttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F211FB18ACB00088163 /* HttpService.swift */; };
+		EA8A7FA71FB18ACB00088163 /* HttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F211FB18ACB00088163 /* HttpService.swift */; };
+		EA8A7FA81FB18ACB00088163 /* HttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F211FB18ACB00088163 /* HttpService.swift */; };
+		EA8A7FA91FB18ACB00088163 /* HttpServiceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F221FB18ACB00088163 /* HttpServiceConfiguration.swift */; };
+		EA8A7FAA1FB18ACB00088163 /* HttpServiceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F221FB18ACB00088163 /* HttpServiceConfiguration.swift */; };
+		EA8A7FAB1FB18ACB00088163 /* HttpServiceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F221FB18ACB00088163 /* HttpServiceConfiguration.swift */; };
+		EA8A7FAC1FB18ACB00088163 /* HttpServiceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F221FB18ACB00088163 /* HttpServiceConfiguration.swift */; };
 		EA8A7FB11FB18ACB00088163 /* RestResponseCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F261FB18ACB00088163 /* RestResponseCompletion.swift */; };
 		EA8A7FB21FB18ACB00088163 /* RestResponseCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F261FB18ACB00088163 /* RestResponseCompletion.swift */; };
 		EA8A7FB31FB18ACB00088163 /* RestResponseCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A7F261FB18ACB00088163 /* RestResponseCompletion.swift */; };
@@ -258,6 +258,10 @@
 		EAD87207234DD48F007A4D0E /* SessionServiceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD87205234DD48F007A4D0E /* SessionServiceTask.swift */; };
 		EAD87208234DD48F007A4D0E /* SessionServiceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD87205234DD48F007A4D0E /* SessionServiceTask.swift */; };
 		EAD87209234DD48F007A4D0E /* SessionServiceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD87205234DD48F007A4D0E /* SessionServiceTask.swift */; };
+		EAF67ED823853F65002EAEAC /* Http.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF67ED723853F65002EAEAC /* Http.swift */; };
+		EAF67ED923853F65002EAEAC /* Http.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF67ED723853F65002EAEAC /* Http.swift */; };
+		EAF67EDA23853F65002EAEAC /* Http.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF67ED723853F65002EAEAC /* Http.swift */; };
+		EAF67EDB23853F65002EAEAC /* Http.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF67ED723853F65002EAEAC /* Http.swift */; };
 		FCE4A288F494E7BFCC3FC0BE /* Pods_RxSwiftAPI_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0EFB041F998ABC9B2F66085 /* Pods_RxSwiftAPI_iOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -361,8 +365,8 @@
 		EA8A7F191FB18ACB00088163 /* HttpUploadRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpUploadRequest.swift; sourceTree = "<group>"; };
 		EA8A7F1C1FB18ACB00088163 /* HttpResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpResponse.swift; sourceTree = "<group>"; };
 		EA8A7F1F1FB18ACB00088163 /* HttpMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpMethod.swift; sourceTree = "<group>"; };
-		EA8A7F211FB18ACB00088163 /* RequestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestService.swift; sourceTree = "<group>"; };
-		EA8A7F221FB18ACB00088163 /* RequestServiceConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestServiceConfiguration.swift; sourceTree = "<group>"; };
+		EA8A7F211FB18ACB00088163 /* HttpService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpService.swift; sourceTree = "<group>"; };
+		EA8A7F221FB18ACB00088163 /* HttpServiceConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpServiceConfiguration.swift; sourceTree = "<group>"; };
 		EA8A7F261FB18ACB00088163 /* RestResponseCompletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestResponseCompletion.swift; sourceTree = "<group>"; };
 		EA8A7F2E1FB18ACB00088163 /* RestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestService.swift; sourceTree = "<group>"; };
 		EA8A7F301FB18ACB00088163 /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
@@ -418,6 +422,7 @@
 		EABDA7B920515B210019DE47 /* HttpCallTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpCallTests.swift; sourceTree = "<group>"; };
 		EAC18312201B6E5500767037 /* CoderProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoderProvider.swift; sourceTree = "<group>"; };
 		EAD87205234DD48F007A4D0E /* SessionServiceTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionServiceTask.swift; sourceTree = "<group>"; };
+		EAF67ED723853F65002EAEAC /* Http.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Http.swift; sourceTree = "<group>"; };
 		FBAA4505EBDB06395103B642 /* Pods-SwiftAPI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftAPI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftAPI/Pods-SwiftAPI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -681,6 +686,7 @@
 		EA8A7F131FB18ACB00088163 /* HTTPLayer */ = {
 			isa = PBXGroup;
 			children = (
+				EAF67ED623853E1F002EAEAC /* Namespace */,
 				EA8A7F141FB18ACB00088163 /* Request */,
 				EA8A7F1A1FB18ACB00088163 /* Response */,
 				EA8A7F1E1FB18ACB00088163 /* Service */,
@@ -712,8 +718,8 @@
 		EA8A7F1E1FB18ACB00088163 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				EA8A7F211FB18ACB00088163 /* RequestService.swift */,
-				EA8A7F221FB18ACB00088163 /* RequestServiceConfiguration.swift */,
+				EA8A7F211FB18ACB00088163 /* HttpService.swift */,
+				EA8A7F221FB18ACB00088163 /* HttpServiceConfiguration.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1001,6 +1007,14 @@
 				EA66932C22CDD9C300031AD9 /* redeploy.sh */,
 			);
 			name = Metadata;
+			sourceTree = "<group>";
+		};
+		EAF67ED623853E1F002EAEAC /* Namespace */ = {
+			isa = PBXGroup;
+			children = (
+				EAF67ED723853F65002EAEAC /* Http.swift */,
+			);
+			path = Namespace;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1712,14 +1726,14 @@
 				EA92789423565F0B003DBF1D /* QueueRelated.swift in Sources */,
 				EA9D65A023550A6200700D09 /* RestResponse.swift in Sources */,
 				EA8A7F971FB18ACB00088163 /* HttpResponse.swift in Sources */,
-				EA8A7FA71FB18ACB00088163 /* RequestService.swift in Sources */,
+				EA8A7FA71FB18ACB00088163 /* HttpService.swift in Sources */,
 				EA9F374D20219179008DEFF3 /* ResourcePath.swift in Sources */,
 				EA3B4DFD21634FC700BC730D /* RestResponseDetails.swift in Sources */,
 				EA8A7F9F1FB18ACB00088163 /* HttpMethod.swift in Sources */,
 				EA3B4E022163520500BC730D /* RestResponseHeader.swift in Sources */,
 				EA8A7F631FB18ACB00088163 /* ServerErrorStatusCodeType.swift in Sources */,
 				EA8A7F371FB18ACB00088163 /* ApiHeader.swift in Sources */,
-				EA8A7FAB1FB18ACB00088163 /* RequestServiceConfiguration.swift in Sources */,
+				EA8A7FAB1FB18ACB00088163 /* HttpServiceConfiguration.swift in Sources */,
 				EA9F375020219180008DEFF3 /* FailableDecodable.swift in Sources */,
 				EA9AD41A20507F2200C2D401 /* SessionService.swift in Sources */,
 				EA67E8C02350B3FC009D2D9C /* ApiServiceTask.swift in Sources */,
@@ -1734,6 +1748,7 @@
 				EA8A7F8F1FB18ACB00088163 /* HttpUploadRequest.swift in Sources */,
 				EA8A7F6F1FB18ACB00088163 /* SuccessStatusCodeType.swift in Sources */,
 				EAC18315201B6E5500767037 /* CoderProvider.swift in Sources */,
+				EAF67EDA23853F65002EAEAC /* Http.swift in Sources */,
 				EAD87208234DD48F007A4D0E /* SessionServiceTask.swift in Sources */,
 				EA8A7F771FB18ACB00088163 /* DefaultFileManager.swift in Sources */,
 				EA8A7F671FB18ACB00088163 /* StatusCode.swift in Sources */,
@@ -1772,7 +1787,7 @@
 				EA8A7F7E1FB18ACB00088163 /* HttpDataRequest.swift in Sources */,
 				EA8A7F3E1FB18ACB00088163 /* ApiError.swift in Sources */,
 				EA8A7F6A1FB18ACB00088163 /* StatusCodeType.swift in Sources */,
-				EA8A7FA61FB18ACB00088163 /* RequestService.swift in Sources */,
+				EA8A7FA61FB18ACB00088163 /* HttpService.swift in Sources */,
 				EA9AD41920507F2200C2D401 /* SessionService.swift in Sources */,
 				EA92789323565F0B003DBF1D /* QueueRelated.swift in Sources */,
 				EA8A7F8E1FB18ACB00088163 /* HttpUploadRequest.swift in Sources */,
@@ -1781,8 +1796,9 @@
 				EA8A7F6E1FB18ACB00088163 /* SuccessStatusCodeType.swift in Sources */,
 				EA8A7F861FB18ACB00088163 /* HttpHeader.swift in Sources */,
 				EA8A7F9E1FB18ACB00088163 /* HttpMethod.swift in Sources */,
-				EA8A7FAA1FB18ACB00088163 /* RequestServiceConfiguration.swift in Sources */,
+				EA8A7FAA1FB18ACB00088163 /* HttpServiceConfiguration.swift in Sources */,
 				EA8A7F361FB18ACB00088163 /* ApiHeader.swift in Sources */,
+				EAF67ED923853F65002EAEAC /* Http.swift in Sources */,
 				EA8A7F521FB18ACB00088163 /* ApiService.swift in Sources */,
 				EA695B8C2020B48A004662B1 /* DefaultCoderProvider.swift in Sources */,
 				EA8A7F621FB18ACB00088163 /* ServerErrorStatusCodeType.swift in Sources */,
@@ -1821,7 +1837,7 @@
 				EA8A7F801FB18ACB00088163 /* HttpDataRequest.swift in Sources */,
 				EA8A7F401FB18ACB00088163 /* ApiError.swift in Sources */,
 				EA8A7F6C1FB18ACB00088163 /* StatusCodeType.swift in Sources */,
-				EA8A7FA81FB18ACB00088163 /* RequestService.swift in Sources */,
+				EA8A7FA81FB18ACB00088163 /* HttpService.swift in Sources */,
 				EA9AD41B20507F2200C2D401 /* SessionService.swift in Sources */,
 				EA92789523565F0B003DBF1D /* QueueRelated.swift in Sources */,
 				EA8A7F901FB18ACB00088163 /* HttpUploadRequest.swift in Sources */,
@@ -1830,8 +1846,9 @@
 				EA8A7F701FB18ACB00088163 /* SuccessStatusCodeType.swift in Sources */,
 				EA8A7F881FB18ACB00088163 /* HttpHeader.swift in Sources */,
 				EA8A7FA01FB18ACB00088163 /* HttpMethod.swift in Sources */,
-				EA8A7FAC1FB18ACB00088163 /* RequestServiceConfiguration.swift in Sources */,
+				EA8A7FAC1FB18ACB00088163 /* HttpServiceConfiguration.swift in Sources */,
 				EA8A7F381FB18ACB00088163 /* ApiHeader.swift in Sources */,
+				EAF67EDB23853F65002EAEAC /* Http.swift in Sources */,
 				EA8A7F541FB18ACB00088163 /* ApiService.swift in Sources */,
 				EA695B8E2020B48A004662B1 /* DefaultCoderProvider.swift in Sources */,
 				EA8A7F641FB18ACB00088163 /* ServerErrorStatusCodeType.swift in Sources */,
@@ -1871,7 +1888,7 @@
 				EA8A7F411FB18ACB00088163 /* ApiResponse.swift in Sources */,
 				EA2A8F8F201B9FD8003721F0 /* FailableDecodable.swift in Sources */,
 				EA8A7F811FB18ACB00088163 /* HttpDownloadRequest.swift in Sources */,
-				EA8A7FA51FB18ACB00088163 /* RequestService.swift in Sources */,
+				EA8A7FA51FB18ACB00088163 /* HttpService.swift in Sources */,
 				EA9AD41820507F2200C2D401 /* SessionService.swift in Sources */,
 				EA92789223565F0B003DBF1D /* QueueRelated.swift in Sources */,
 				EA8A7F691FB18ACB00088163 /* StatusCodeType.swift in Sources */,
@@ -1881,11 +1898,12 @@
 				EA8A7F491FB18ACB00088163 /* ApiMethod.swift in Sources */,
 				EA8A7F651FB18ACB00088163 /* StatusCode.swift in Sources */,
 				EA8A7F351FB18ACB00088163 /* ApiHeader.swift in Sources */,
+				EAF67ED823853F65002EAEAC /* Http.swift in Sources */,
 				EA695B8820209D1D004662B1 /* ResourcePath.swift in Sources */,
 				EA8A7F8D1FB18ACB00088163 /* HttpUploadRequest.swift in Sources */,
 				EA8A7F951FB18ACB00088163 /* HttpResponse.swift in Sources */,
 				EA3B4DFB21634FC700BC730D /* RestResponseDetails.swift in Sources */,
-				EA8A7FA91FB18ACB00088163 /* RequestServiceConfiguration.swift in Sources */,
+				EA8A7FA91FB18ACB00088163 /* HttpServiceConfiguration.swift in Sources */,
 				EA8A7F891FB18ACB00088163 /* HttpRequest.swift in Sources */,
 				EA8A7F6D1FB18ACB00088163 /* SuccessStatusCodeType.swift in Sources */,
 				EA980AE522C5FA030060A8A9 /* RxURLSessionDelegateProxy.swift in Sources */,

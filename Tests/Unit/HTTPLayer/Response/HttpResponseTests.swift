@@ -24,7 +24,7 @@ class HttpResponseTests: XCTestCase {
 
     func testDataConstructor() {
         let body = exampleBody
-        let response = HttpResponse(body: body)
+        let response = Http.Response(body: body)
 
         XCTAssertEqual(response.body, body)
         XCTAssertNil(response.url)
@@ -38,7 +38,7 @@ class HttpResponseTests: XCTestCase {
 
     func testUrlConstructor() {
         let url = exampleUrl
-        let response = HttpResponse(resourceUrl: url)
+        let response = Http.Response(resourceUrl: url)
 
         XCTAssertEqual(response.resourceUrl, url)
         XCTAssertNil(response.url)
@@ -56,7 +56,7 @@ class HttpResponseTests: XCTestCase {
         let length = 888
         let encoding = "TestEncoding"
         let urlResponse = URLResponse(url: url, mimeType: mimeType, expectedContentLength: length, textEncodingName: encoding)
-        let response = HttpResponse(urlResponse: urlResponse)
+        let response = Http.Response(urlResponse: urlResponse)
 
         XCTAssertEqual(response.url, url)
         XCTAssertEqual(response.mimeType, mimeType)
@@ -74,7 +74,7 @@ class HttpResponseTests: XCTestCase {
         let length1 = 888
         let encoding1 = "TestEncoding"
         let urlResponse1 = URLResponse(url: url1, mimeType: mimeType1, expectedContentLength: length1, textEncodingName: encoding1)
-        let response = HttpResponse(urlResponse: urlResponse1)
+        let response = Http.Response(urlResponse: urlResponse1)
 
         let url2 = URL(fileURLWithPath: "")
         let mimeType2 = "AnotherTestMimeType"
@@ -100,7 +100,7 @@ class HttpResponseTests: XCTestCase {
         var comboBody = body1
         comboBody.append(body2)
 
-        let response = HttpResponse(body: body1)
+        let response = Http.Response(body: body1)
         response.appendBody(body2)
 
         XCTAssertNotEqual(response.body, body1)

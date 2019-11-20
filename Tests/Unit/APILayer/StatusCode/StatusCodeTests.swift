@@ -28,17 +28,17 @@ class StatusCodeTests: XCTestCase {
 
     func testDescription() {
         let code1 = StatusCode(100)
-        let type1 = InfoStatusCodeType(100)
+        let type1 = StatusCode.Info(100)
         let code2 = StatusCode(200)
-        let type2 = SuccessStatusCodeType(200)
+        let type2 = StatusCode.Success(200)
         let code3 = StatusCode(300)
-        let type3 = RedirectionStatusCodeType(300)
+        let type3 = StatusCode.Redirection(300)
         let code4 = StatusCode(400)
-        let type4 = ClientErrorStatusCodeType(400)
+        let type4 = StatusCode.ClientError(400)
         let code5 = StatusCode(500)
-        let type5 = ServerErrorStatusCodeType(500)
+        let type5 = StatusCode.ServerError(500)
         let code6 = StatusCode(600)
-        let type6 = UnknownStatusCodeType(600)
+        let type6 = StatusCode.Unknown(600)
 
         XCTAssertEqual(code1.description, type1?.description)
         XCTAssertEqual(code2.description, type2?.description)

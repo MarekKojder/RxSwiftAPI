@@ -11,52 +11,52 @@ import XCTest
 class ClientErrorStatusCodeTypeTests: XCTestCase {
 
     func testConstructor() {
-        let code = ClientErrorStatusCodeType(444)
+        let code = StatusCode.ClientError(444)
 
         XCTAssertEqual(code?.value, 444)
     }
 
     func testConstructorForLowestCode() {
-        let code = ClientErrorStatusCodeType(400)
+        let code = StatusCode.ClientError(400)
 
         XCTAssertNotNil(code)
     }
 
     func testConstructorForHighestCode() {
-        let code = ClientErrorStatusCodeType(499)
+        let code = StatusCode.ClientError(499)
 
         XCTAssertNotNil(code)
     }
 
     func testConstructorForToLowCode() {
-        let code = ClientErrorStatusCodeType(399)
+        let code = StatusCode.ClientError(399)
 
         XCTAssertNil(code)
     }
 
     func testConstructorForToHighCode() {
-        let code = ClientErrorStatusCodeType(500)
+        let code = StatusCode.ClientError(500)
 
         XCTAssertNil(code)
     }
 
     func testEqualityOfEqualCodes() {
-        let code1 = ClientErrorStatusCodeType(402)
-        let code2 = ClientErrorStatusCodeType(402)
+        let code1 = StatusCode.ClientError(402)
+        let code2 = StatusCode.ClientError(402)
 
         XCTAssertTrue(code1 == code2)
     }
 
     func testEqualityOfNotEqualCodes() {
-        let code1 = ClientErrorStatusCodeType(401)
-        let code2 = ClientErrorStatusCodeType(402)
+        let code1 = StatusCode.ClientError(401)
+        let code2 = StatusCode.ClientError(402)
 
         XCTAssertFalse(code1 == code2)
     }
 
     func testDescription() {
         for i in 400..<499 {
-            let code = ClientErrorStatusCodeType(i)
+            let code = StatusCode.ClientError(i)
             XCTAssertNotNil(code?.description)
         }
     }

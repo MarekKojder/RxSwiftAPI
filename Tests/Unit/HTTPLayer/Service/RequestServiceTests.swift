@@ -11,7 +11,7 @@ import XCTest
 class RequestServiceTests: XCTestCase {
 
     func testConstructor() {
-        let service = RequestService(fileManager: DefaultFileManager())
+        let service = Http.Service(fileManager: DefaultFileManager())
 
         XCTAssertNotNil(service)
     }

@@ -7,29 +7,32 @@
 
 import Foundation
 
-final class RequestService: NSObject, QueueRelated {
+extension Http {
+    
+    final class Service: NSObject, QueueRelated {
 
-    typealias CompletionHandler = SessionService.CompletionHandler
+        typealias CompletionHandler = SessionService.CompletionHandler
 
-    private let fileManager: FileManager
+        private let fileManager: FileManager
 
-    //MARK: - Handling multiple sessions
-    private var sessions = [SessionService]()
-    private let sessionsQueue = serialQueue("sessionQueue")
+        //MARK: - Handling multiple sessions
+        private var sessions = [SessionService]()
+        private let sessionsQueue = serialQueue("sessionQueue")
 
-    //MARK: Initialization
-    ///Initializes service with given file manager.
-    init(fileManager: FileManager) {
-        self.fileManager = fileManager
-    }
+        //MARK: Initialization
+        ///Initializes service with given file manager.
+        init(fileManager: FileManager) {
+            self.fileManager = fileManager
+        }
 
-    deinit {
-        invalidateAndCancel()
+        deinit {
+            invalidateAndCancel()
+        }
     }
 }
 
 //MARK: - Managing sessions
-private extension RequestService {
+private extension Http.Service {
 
     ///Returns URLSession for given configuration. If session does not exist, it creates one.
     func activeSession(for configuration: Configuration) -> SessionService {
@@ -46,7 +49,7 @@ private extension RequestService {
 }
 
 //MARK: - Managing requests
-extension RequestService {
+extension Http.Service {
 
     /**
      Sends given HTTP request.
@@ -63,7 +66,7 @@ extension RequestService {
      HttpDataRequest may run only with foreground configuration.
      */
     @discardableResult
-    func sendHTTP(request: HttpDataRequest, with configuration: Configuration, completion: @escaping CompletionHandler) throws -> SessionService.Task {
+    func send(request: Http.DataRequest, with configuration: Configuration, completion: @escaping CompletionHandler) throws -> SessionService.Task {
         let session = activeSession(for: configuration)
         let task = try session.data(request: request.urlRequest, completion: completion)
         DispatchQueue.global(qos: .utility).async {
@@ -85,7 +88,7 @@ extension RequestService {
      - Throws: Error when Task could not be created.
      */
     @discardableResult
-    func sendHTTP(request: HttpUploadRequest, with configuration: Configuration, completion: @escaping CompletionHandler) throws -> SessionService.Task {
+    func send(request: Http.UploadRequest, with configuration: Configuration, completion: @escaping CompletionHandler) throws -> SessionService.Task {
         let session = activeSession(for: configuration)
         let task = try session.upload(request: request.urlRequest, file: request.resourceUrl, completion: completion)
         DispatchQueue.global(qos: .utility).async {
@@ -107,7 +110,7 @@ extension RequestService {
      - Throws: Error when Task could not be created.
      */
     @discardableResult
-    func sendHTTP(request: HttpDownloadRequest, with configuration: Configuration, completion: @escaping CompletionHandler) throws -> SessionService.Task {
+    func send(request: Http.DownloadRequest, with configuration: Configuration, completion: @escaping CompletionHandler) throws -> SessionService.Task {
         let session = activeSession(for: configuration)
         let task = try session.download(request: request.urlRequest,
                                         fileDestination: request.destinationUrl,
@@ -132,7 +135,7 @@ extension RequestService {
 
 //MARK: - Handling background sessions
 #if !os(OSX)
-extension RequestService {
+extension Http.Service {
 
     /**
      Handle events for background session with identifier.

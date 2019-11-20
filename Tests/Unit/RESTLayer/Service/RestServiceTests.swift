@@ -17,6 +17,5 @@ class RestServiceTests: XCTestCase {
 
         XCTAssertEqual(service.baseUrl, url)
         XCTAssertEqual(service.apiPath, path)
-        XCTAssertNotNil(service.apiService)
     }
 }

@@ -11,27 +11,27 @@ import XCTest
 class UnknownStatusCodeTypeTests: XCTestCase {
 
     func testConstructor() {
-        let code = UnknownStatusCodeType(999)
+        let code = StatusCode.Unknown(999)
 
         XCTAssertEqual(code.value, 999)
     }
 
     func testEqualityOfEqualCodes() {
-        let code1 = UnknownStatusCodeType(0)
-        let code2 = UnknownStatusCodeType(0)
+        let code1 = StatusCode.Unknown(0)
+        let code2 = StatusCode.Unknown(0)
 
         XCTAssertTrue(code1 == code2)
     }
 
     func testEqualityOfNotEqualCodes() {
-        let code1 = UnknownStatusCodeType(-1)
-        let code2 = UnknownStatusCodeType(1)
+        let code1 = StatusCode.Unknown(-1)
+        let code2 = StatusCode.Unknown(1)
 
         XCTAssertFalse(code1 == code2)
     }
 
     func testDescription() {
-        let code = UnknownStatusCodeType(0)
+        let code = StatusCode.Unknown(0)
         XCTAssertNotNil(code.description)
     }
 }

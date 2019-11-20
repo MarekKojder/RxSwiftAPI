@@ -13,7 +13,7 @@ class ApiServiceConfigurationTests: XCTestCase {
     func testForegroundConfiguration() {
         let config1 = ApiService.Configuration.foreground
         let config2 = ApiService.Configuration.foreground
-        let config3 = RequestService.Configuration.foreground
+        let config3 = Http.Service.Configuration.foreground
 
         XCTAssertEqual(config1, config2)
         XCTAssertEqual(config2.requestServiceConfiguration, config3)
@@ -29,7 +29,7 @@ class ApiServiceConfigurationTests: XCTestCase {
         let config1 = ApiService.Configuration.background()
         let config2 = ApiService.Configuration.background()
         let config3 = ApiService.Configuration.background("SomeTestId")
-        let config4 = RequestService.Configuration.background("SomeTestId")
+        let config4 = Http.Service.Configuration.background("SomeTestId")
 
         XCTAssertEqual(config1, config2)
         XCTAssertNotEqual(config1, config3)
@@ -45,7 +45,7 @@ class ApiServiceConfigurationTests: XCTestCase {
     func testEphemeralConfiguration() {
         let config1 = ApiService.Configuration.ephemeral
         let config2 = ApiService.Configuration.ephemeral
-        let config3 = RequestService.Configuration.ephemeral
+        let config3 = Http.Service.Configuration.ephemeral
 
         XCTAssertEqual(config1, config2)
         XCTAssertEqual(config2.requestServiceConfiguration, config3)
@@ -60,7 +60,7 @@ class ApiServiceConfigurationTests: XCTestCase {
         let sessionConfiguration = URLSessionConfiguration()
         let config1 = ApiService.Configuration.custom(sessionConfiguration)
         let config2 = ApiService.Configuration.custom(sessionConfiguration)
-        let config3 = RequestService.Configuration.custom(sessionConfiguration)
+        let config3 = Http.Service.Configuration.custom(sessionConfiguration)
 
         XCTAssertEqual(config1, config2)
         XCTAssertEqual(config2.requestServiceConfiguration, config3)

@@ -20,7 +20,7 @@ extension SessionService {
     final class Task {
 
         private let task: URLSessionTask
-        private var response: HttpResponse?
+        private var response: Http.Response?
         private var processError: Error?
         private var completionHandlers = [SessionService.CompletionHandler]()
         private let statusQueue = concurrentQueue("statusQueue")
@@ -98,7 +98,7 @@ extension SessionService.Task {
 
     func update(with urlResponse: URLResponse) {
         if response == nil {
-            response = HttpResponse(urlResponse: urlResponse)
+            response = Http.Response(urlResponse: urlResponse)
         } else {
             response?.update(with: urlResponse)
         }
@@ -106,7 +106,7 @@ extension SessionService.Task {
 
     func update(with data: Data) {
         if response == nil {
-            response = HttpResponse(body: data)
+            response = Http.Response(body: data)
         } else {
             response?.appendBody(data)
         }
@@ -114,7 +114,7 @@ extension SessionService.Task {
 
     func update(with resourceUrl: URL) {
         if response == nil {
-            response = HttpResponse(resourceUrl: resourceUrl)
+            response = Http.Response(resourceUrl: resourceUrl)
         } else {
             response?.update(with: resourceUrl)
         }
