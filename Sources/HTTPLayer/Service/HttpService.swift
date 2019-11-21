@@ -121,15 +121,14 @@ extension Http.Service {
         return task
     }
 
-    ///Cancels all currently running HTTP requests.
+    ///Cancels all currently running HTTP requests. You can expect that completion header will be called.
     func cancelAllRequests() {
         sessions.forEach { $0.cancelAllRequests() }
     }
 
-    ///Cancels all currently running HTTP requests.
+    ///Invalidates all sessions and cancels all running HTTP requests. Completion header won't be called.
     func invalidateAndCancel() {
         sessions.forEach { $0.invalidateAndCancel() }
-        sessions.removeAll()
     }
 }
 

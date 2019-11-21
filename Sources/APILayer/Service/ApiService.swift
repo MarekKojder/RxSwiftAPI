@@ -24,12 +24,12 @@ extension Api {
             self.httpService = Http.Service(fileManager: fileManager)
         }
 
-        ///Cancels all currently running requests.
+        ///Cancels all currently running requests, and calls their completion with `cancelled` error.
         public func cancelAllRequests() {
             httpService.cancelAllRequests()
         }
 
-        ///Invalidates all sessions and cancells all tasks.
+        ///Invalidates all sessions, cancells related tasks and removes all relations. No completion will be called.
         public func terminateAllRequests() {
             httpService.invalidateAndCancel()
         }
@@ -139,6 +139,7 @@ public extension Api.Service {
 
      - Returns: Task object which allows to follow progress and manage request.
      */
+    @discardableResult
     func postFile(from localFileUrl: URL, to destinationUrl: URL, with headers: [Api.Header]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
         return try uploadFile(from: localFileUrl, to: destinationUrl, with: .post, headers: headers, configuration: configuration, completion: completion)
     }
@@ -155,6 +156,7 @@ public extension Api.Service {
 
      - Returns: Task object which allows to follow progress and manage request.
      */
+    @discardableResult
     func putFile(from localFileUrl: URL, to destinationUrl: URL, with headers: [Api.Header]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
         return try uploadFile(from: localFileUrl, to: destinationUrl, with: .put, headers: headers, configuration: configuration, completion: completion)
     }
@@ -171,6 +173,7 @@ public extension Api.Service {
 
      - Returns: Task object which allows to follow progress and manage request.
      */
+    @discardableResult
     func patchFile(from localFileUrl: URL, to destinationUrl: URL, with headers: [Api.Header]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
         return try uploadFile(from: localFileUrl, to: destinationUrl, with: .patch, headers: headers, configuration: configuration, completion: completion)
     }
@@ -193,6 +196,7 @@ public extension Api.Service {
      
      - Important: While using default file manager, if any file exists at *localUrl* it will be overridden by downloaded file.
      */
+    @discardableResult
     func downloadFile(from remoteFileUrl: URL, to localUrl: URL, with headers: [Api.Header]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
         return try downloadFile(from: remoteFileUrl, to: localUrl, apiHeaders: headers, configuration: configuration, completion: completion)
     }
@@ -216,6 +220,7 @@ public extension Api.Service {
      
      This method allows to customize every request configuration. It may be very powerfull if you know what you are doing.
      */
+    @discardableResult
     func uploadFile(from localFileUrl: URL, to destinationUrl: URL, with method: Api.Method, headers: [Api.Header]? = nil, configuration: Configuration = .background(), completion: CompletionHandler? = nil) throws -> Task {
         let headers = httpHeaders(for: headers)
         let uploadRequest = Http.UploadRequest(url: destinationUrl, method: method.httpMethod, resourceUrl: localFileUrl, headers: headers)
@@ -238,7 +243,7 @@ public extension Api.Service {
 
     - Returns: Task object which allows to follow progress and manage request.
     */
-
+    @discardableResult
     func sendRequest(to url: URL, with body: Data? = nil, method: Api.Method, headers: [Api.Header]? = nil, configuration: Configuration = .foreground, completion: CompletionHandler? = nil) throws -> Task {
         let headers = httpHeaders(for: headers)
         let httpRequest = Http.DataRequest(url: url, method: method.httpMethod, body: body, headers: headers)

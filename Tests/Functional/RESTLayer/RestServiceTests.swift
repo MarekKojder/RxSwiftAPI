@@ -17,6 +17,8 @@ struct ExampleParameters: Codable {
     let count: Int
 }
 
+struct EmptyParameters: Codable {}
+
 struct ExampleFailData: Codable {
     let notExistingProperty: Int
 }
@@ -47,11 +49,11 @@ class RestServiceTests: XCTestCase {
         super.setUp()
 
         restService = Rest.Service(baseUrl: TestData.Path.root,
-                                  headerFields: TestData.Headers.example)
+                                   headerFields: TestData.Headers.example)
 
         downloadRestService = Rest.Service(baseUrl: TestData.Path.downloadRoot,
-                                          apiPath: "wikipedia/",
-                                          headerFields: nil)
+                                           apiPath: "wikipedia/",
+                                           headerFields: nil)
     }
 
     override func tearDown() {
@@ -103,6 +105,7 @@ extension RestServiceTests {
     func testParsingFailureGet() {
         let type = ExampleFailData.self
         let path = ExamplePath.get
+        let parameters = EmptyParameters()
         let responseExpectation = expectation(description: "Expect GET response")
         var responseError: Error? = nil
         let completion: Rest.Response.CompletionHandler<ExampleFailData> = { [weak self] (data, details) in
@@ -111,7 +114,7 @@ extension RestServiceTests {
             responseExpectation.fulfill()
         }
         do {
-            try restService.get(type: type, from: path, completion: completion)
+            try restService.get(type: type, from: path, parameters: parameters, completion: completion)
         } catch {
             XCTFail(error.localizedDescription)
         }
@@ -344,6 +347,28 @@ extension RestServiceTests {
         }
     }
 
+    func testGetFileWithParameters() {
+        let path = ExamplePath.fileToDownload
+        let location = TestData.Url.fileDestination
+        let parameters = EmptyParameters()
+        let responseExpectation = expectation(description: "Expect GET response")
+        var responseFailed = true
+        let completion = { [weak self] (success: Bool, details: Rest.Response.Details) in
+            self?.log(details, for: path)
+            responseFailed = !details.statusCode.isSuccess
+            responseExpectation.fulfill()
+        }
+        do {
+            try _ = downloadRestService.getFile(at: path, parameters: parameters, saveAt: location, configuration: .foreground, completion: completion)
+        } catch {
+            XCTFail(error.localizedDescription)
+        }
+        waitForExpectations(timeout: 300) { error in
+            XCTAssertNil(error, "Test failed with error: \(error!.localizedDescription)")
+            XCTAssertFalse(responseFailed, "GET request failed with error")
+        }
+    }
+
     func testWrongPathGetFile() {
         let path = ExamplePath.fileToDownload
         let location = TestData.Url.fileDestination
@@ -433,7 +458,7 @@ extension RestServiceTests {
         let path2 = ExamplePath.patch
         let path3 = ExamplePath.get
         let location = TestData.Url.localFile
-        let responseExpectation = expectation(description: "Expect PATCH response")
+        let responseExpectation = expectation(description: "Expect error response")
         var responseFailed = true
         let completion = { [weak self] (success: Bool, details: Rest.Response.Details) in
             self?.log(details, for: path2)
@@ -444,10 +469,10 @@ extension RestServiceTests {
             try _ = restService.putFile(from: location, at: path1, configuration: .foreground)
             try _ = restService.patchFile(from: location, at: path2, configuration: .foreground, completion: completion)
             try restService.get(type: ExampleData.self, from: path3)
+            restService.cancelAllRequests()
         } catch {
             XCTFail(error.localizedDescription)
         }
-        restService.cancelAllRequests()
 
         waitForExpectations(timeout: 30) { error in
             XCTAssertNil(error, "Test failed with error: \(error!.localizedDescription)")

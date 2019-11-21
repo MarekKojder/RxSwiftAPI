@@ -353,12 +353,12 @@ public extension Rest.Service {
 //MARK: Requests managing
 public extension Rest.Service {
 
-    ///Cancels all currently running requests.
+    ///Cancels all currently running requests, and calls their completion with `cancelled` error.
     func cancelAllRequests() {
         apiService.cancelAllRequests()
     }
 
-    ///Invalidates all sessions and cancells all tasks.
+    ///Invalidates all sessions, cancells related tasks and removes all relations. No completion will be called.
     func terminateAllRequests() {
         apiService.terminateAllRequests()
     }

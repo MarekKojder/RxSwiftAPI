@@ -1,8 +1,11 @@
 # Change Log
 
 ## Upcoming
-- Namespace refactor
 - Creation of RxLayer
+
+## [v2.2.0](https://github.com/MarekKojder/RxSwiftAPI/tree/2.2.0) (2090-11-21)
+- Provided namespaces for every layer.
+- Fixed commented tests.
 
 ## [v2.1.4](https://github.com/MarekKojder/RxSwiftAPI/tree/2.1.4) (2090-11-20)
 - Updated documentation.

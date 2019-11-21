@@ -60,7 +60,6 @@
 		EA3B4E3C2163A2D300BC730D /* ApiHeaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE3D1E5EC4C700A82381 /* ApiHeaderTests.swift */; };
 		EA3B4E3D2163A2D300BC730D /* ClientErrorStatusCodeTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE441E5EC4C700A82381 /* ClientErrorStatusCodeTypeTests.swift */; };
 		EA3B4E3F2163A2D300BC730D /* StatusCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE481E5EC4C700A82381 /* StatusCodeTests.swift */; };
-		EA3B4E402163A2D300BC730D /* HttpCallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDA7B920515B210019DE47 /* HttpCallTests.swift */; };
 		EA3B4E412163A2D300BC730D /* HttpUploadRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE541E5EC4C700A82381 /* HttpUploadRequestTests.swift */; };
 		EA3B4E422163A2D300BC730D /* RequestServiceConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE5A1E5EC4C700A82381 /* RequestServiceConfigurationTests.swift */; };
 		EA3B4E432163A2D300BC730D /* HttpDataRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93FE501E5EC4C700A82381 /* HttpDataRequestTests.swift */; };
@@ -76,6 +75,8 @@
 		EA54E3C720C535CF0096D989 /* RestServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA54E3C520C535CF0096D989 /* RestServiceError.swift */; };
 		EA54E3C820C535CF0096D989 /* RestServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA54E3C520C535CF0096D989 /* RestServiceError.swift */; };
 		EA54E3C920C535CF0096D989 /* RestServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA54E3C520C535CF0096D989 /* RestServiceError.swift */; };
+		EA5D40312386C4370072FA9B /* QueueRelatedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5D40302386C4370072FA9B /* QueueRelatedTests.swift */; };
+		EA5D40322386C4370072FA9B /* QueueRelatedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5D40302386C4370072FA9B /* QueueRelatedTests.swift */; };
 		EA67E8BE2350B3FC009D2D9C /* ApiServiceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA67E8BD2350B3FC009D2D9C /* ApiServiceTask.swift */; };
 		EA67E8BF2350B3FC009D2D9C /* ApiServiceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA67E8BD2350B3FC009D2D9C /* ApiServiceTask.swift */; };
 		EA67E8C02350B3FC009D2D9C /* ApiServiceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA67E8BD2350B3FC009D2D9C /* ApiServiceTask.swift */; };
@@ -257,7 +258,6 @@
 		EAB1479920C70DF5009E1358 /* ApiServiceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB1479620C70DF5009E1358 /* ApiServiceConfiguration.swift */; };
 		EAB1479A20C70DF5009E1358 /* ApiServiceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB1479620C70DF5009E1358 /* ApiServiceConfiguration.swift */; };
 		EAB1479C20C7146C009E1358 /* ApiServiceConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB1479B20C7146C009E1358 /* ApiServiceConfigurationTests.swift */; };
-		EABDA7BA20515B210019DE47 /* HttpCallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDA7B920515B210019DE47 /* HttpCallTests.swift */; };
 		EAC18313201B6E5500767037 /* CoderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC18312201B6E5500767037 /* CoderProvider.swift */; };
 		EAC18314201B6E5500767037 /* CoderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC18312201B6E5500767037 /* CoderProvider.swift */; };
 		EAC18315201B6E5500767037 /* CoderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC18312201B6E5500767037 /* CoderProvider.swift */; };
@@ -348,6 +348,7 @@
 		EA3B4E2D2163A16E00BC730D /* FunctionalTests OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FunctionalTests OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA3B4E512163A2D300BC730D /* UnitTests OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "UnitTests OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA54E3C520C535CF0096D989 /* RestServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestServiceError.swift; sourceTree = "<group>"; };
+		EA5D40302386C4370072FA9B /* QueueRelatedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueRelatedTests.swift; sourceTree = "<group>"; };
 		EA66932C22CDD9C300031AD9 /* redeploy.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = redeploy.sh; path = Scripts/redeploy.sh; sourceTree = "<group>"; };
 		EA67E8BD2350B3FC009D2D9C /* ApiServiceTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiServiceTask.swift; sourceTree = "<group>"; };
 		EA695B8720209D1D004662B1 /* ResourcePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcePath.swift; sourceTree = "<group>"; };
@@ -429,7 +430,6 @@
 		EAA0E2A91E5DC4AA00A7AA3A /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		EAB1479620C70DF5009E1358 /* ApiServiceConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiServiceConfiguration.swift; sourceTree = "<group>"; };
 		EAB1479B20C7146C009E1358 /* ApiServiceConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiServiceConfigurationTests.swift; sourceTree = "<group>"; };
-		EABDA7B920515B210019DE47 /* HttpCallTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpCallTests.swift; sourceTree = "<group>"; };
 		EAC18312201B6E5500767037 /* CoderProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoderProvider.swift; sourceTree = "<group>"; };
 		EAD87205234DD48F007A4D0E /* SessionServiceTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionServiceTask.swift; sourceTree = "<group>"; };
 		EAF67ED723853F65002EAEAC /* Http.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Http.swift; sourceTree = "<group>"; };
@@ -603,6 +603,14 @@
 				EA9D659D23550A6200700D09 /* RestResponse.swift */,
 			);
 			path = Namespace;
+			sourceTree = "<group>";
+		};
+		EA5D402F2386C40D0072FA9B /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				EA5D40302386C4370072FA9B /* QueueRelatedTests.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		EA695B892020B461004662B1 /* CoderProvider */ = {
@@ -843,6 +851,7 @@
 				EA93FE5D1E5EC4C700A82381 /* RESTLayer */,
 				EA93FE3B1E5EC4C700A82381 /* APILayer */,
 				EA93FE4E1E5EC4C700A82381 /* HTTPLayer */,
+				EA5D402F2386C40D0072FA9B /* Helpers */,
 				EA93FE631E5EC4C700A82381 /* SupportingFiles */,
 			);
 			name = Unit;
@@ -934,7 +943,6 @@
 		EA93FE591E5EC4C700A82381 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				EABDA7B920515B210019DE47 /* HttpCallTests.swift */,
 				EA93FE5A1E5EC4C700A82381 /* RequestServiceConfigurationTests.swift */,
 				EA93FE5B1E5EC4C700A82381 /* RequestServiceTests.swift */,
 			);
@@ -1667,6 +1675,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA3B4E332163A2D300BC730D /* ServerErrorStatusCodeTypeTests.swift in Sources */,
+				EA5D40322386C4370072FA9B /* QueueRelatedTests.swift in Sources */,
 				EA3B4E342163A2D300BC730D /* HttpDownloadRequestTests.swift in Sources */,
 				EA3B4E352163A2D300BC730D /* SuccessStatusCodeTypeTests.swift in Sources */,
 				EA3B4E362163A2D300BC730D /* RedirectionStatusCodeTypeTests.swift in Sources */,
@@ -1678,7 +1687,6 @@
 				EA3B4E3C2163A2D300BC730D /* ApiHeaderTests.swift in Sources */,
 				EA3B4E3D2163A2D300BC730D /* ClientErrorStatusCodeTypeTests.swift in Sources */,
 				EA3B4E3F2163A2D300BC730D /* StatusCodeTests.swift in Sources */,
-				EA3B4E402163A2D300BC730D /* HttpCallTests.swift in Sources */,
 				EA3B4E412163A2D300BC730D /* HttpUploadRequestTests.swift in Sources */,
 				EA3B4E422163A2D300BC730D /* RequestServiceConfigurationTests.swift in Sources */,
 				EA083AE722BD7DC80041213C /* OSXTestData.swift in Sources */,
@@ -1699,6 +1707,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA93FE8A1E5EC66000A82381 /* ServerErrorStatusCodeTypeTests.swift in Sources */,
+				EA5D40312386C4370072FA9B /* QueueRelatedTests.swift in Sources */,
 				EA93FE951E5EC68900A82381 /* HttpDownloadRequestTests.swift in Sources */,
 				EA93FE871E5EC65000A82381 /* SuccessStatusCodeTypeTests.swift in Sources */,
 				EA93FE881E5EC65800A82381 /* RedirectionStatusCodeTypeTests.swift in Sources */,
@@ -1710,7 +1719,6 @@
 				EA93FE8D1E5EC66B00A82381 /* ApiHeaderTests.swift in Sources */,
 				EA93FE891E5EC65D00A82381 /* ClientErrorStatusCodeTypeTests.swift in Sources */,
 				EA93FE8C1E5EC66700A82381 /* StatusCodeTests.swift in Sources */,
-				EABDA7BA20515B210019DE47 /* HttpCallTests.swift in Sources */,
 				EA93FE941E5EC68500A82381 /* HttpUploadRequestTests.swift in Sources */,
 				EA93FE991E5EC69700A82381 /* RequestServiceConfigurationTests.swift in Sources */,
 				EA93FE931E5EC68200A82381 /* HttpDataRequestTests.swift in Sources */,
