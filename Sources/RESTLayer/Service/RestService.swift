@@ -4,44 +4,48 @@
 //
 //  Created by Marek Kojder on 03.02.2017.
 //
+
 import Foundation
 
-public class RestService {
+extension Rest {
 
-    ///Base URL of API server. Remember not to finish it with */* sign.
-    public let baseUrl: String
+    public class Service {
 
-    ///Path of API on server. May be used for versioning. Remember to start it with */* sign.
-    public let apiPath: String?
+        ///Base URL of API server. Remember not to finish it with */* sign.
+        public let baseUrl: String
 
-    ///Array of aditional HTTP header fields.
-    private let headerFields: [Api.Header]?
+        ///Path of API on server. May be used for versioning. Remember to start it with */* sign.
+        public let apiPath: String?
 
-    ///Provider of decoder and encoder.
-    private let coder: CoderProvider
+        ///Array of aditional HTTP header fields.
+        private let headerFields: [Api.Header]?
 
-    ///Service for managing request with REST server.
-    private let apiService: Api.Service
+        ///Provider of decoder and encoder.
+        private let coder: CoderProvider
 
-    /**
-     - Parameters:
-       - baseUrl: Base URL string of API server.
-       - apiPath: Path of API on server.
-       - headerFields: Array of HTTP header fields which will be added to all requests. By default ContentType.json is set.
-       - coderProvider: Object providing *JSONCoder* and *JSONDecoder*.
-       - fileManager: Object of class implementing *FileManager* Protocol.
-     */
-    public init(baseUrl: String, apiPath: String? = nil, headerFields: [Api.Header]? = [Api.Header.ContentType.json], coderProvider: CoderProvider = DefaultCoderProvider(), fileManager: FileManager = DefaultFileManager()) {
-        self.baseUrl = baseUrl
-        self.apiPath = apiPath
-        self.headerFields = headerFields
-        self.coder = coderProvider
-        self.apiService = Api.Service(fileManager: fileManager)
+        ///Service for managing request with REST server.
+        private let apiService: Api.Service
+
+        /**
+         - Parameters:
+           - baseUrl: Base URL string of API server.
+           - apiPath: Path of API on server.
+           - headerFields: Array of HTTP header fields which will be added to all requests. By default ContentType.json is set.
+           - coderProvider: Object providing *JSONCoder* and *JSONDecoder*.
+           - fileManager: Object of class implementing *FileManager* Protocol.
+         */
+        public init(baseUrl: String, apiPath: String? = nil, headerFields: [Api.Header]? = [Api.Header.ContentType.json], coderProvider: CoderProvider = DefaultCoderProvider(), fileManager: FileManager = DefaultFileManager()) {
+            self.baseUrl = baseUrl
+            self.apiPath = apiPath
+            self.headerFields = headerFields
+            self.coder = coderProvider
+            self.apiService = Api.Service(fileManager: fileManager)
+        }
     }
 }
 
 //MARK: Simple requests
-public extension RestService {
+public extension Rest.Service {
 
     /**
      Sends HTTP GET request.
@@ -55,7 +59,7 @@ public extension RestService {
      - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func get<Response: Decodable>(type: Response.Type, from path: ResourcePath, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, completion: RestResponse.CompletionHandler<Response>? = nil) throws -> Api.Service.Task {
+    func get<Response: Decodable>(type: Response.Type, from path: ResourcePath, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, completion: Rest.Response.CompletionHandler<Response>? = nil) throws -> Api.Service.Task {
         return try apiService.getData(from: try requestUrl(for: path),
                                       with: apiHeaders(adding: aditionalHeaders),
                                       configuration: configuration,
@@ -75,7 +79,7 @@ public extension RestService {
      - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func get<Parameters: Encodable, Response: Decodable>(type: Response.Type, from path: ResourcePath, parameters: Parameters, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, completion: RestResponse.CompletionHandler<Response>? = nil) throws -> Api.Service.Task {
+    func get<Parameters: Encodable, Response: Decodable>(type: Response.Type, from path: ResourcePath, parameters: Parameters, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, completion: Rest.Response.CompletionHandler<Response>? = nil) throws -> Api.Service.Task {
         return try apiService.getData(from: try requestUrl(for: path, with: parameters),
                                       with: apiHeaders(adding: aditionalHeaders),
                                       configuration: configuration,
@@ -95,7 +99,7 @@ public extension RestService {
      - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func post<Request: Encodable, Response: Decodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, responseType: Response.Type? = nil, completion: RestResponse.CompletionHandler<Response>? = nil) throws -> Api.Service.Task {
+    func post<Request: Encodable, Response: Decodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, responseType: Response.Type? = nil, completion: Rest.Response.CompletionHandler<Response>? = nil) throws -> Api.Service.Task {
         return try post(value,
                         at: path,
                         aditionalHeaders: aditionalHeaders,
@@ -115,7 +119,7 @@ public extension RestService {
      - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func post<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> Api.Service.Task {
+    func post<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, completion: Rest.Response.SimpleCompletionHandler? = nil) throws -> Api.Service.Task {
         return try post(value,
                         at: path,
                         aditionalHeaders: aditionalHeaders,
@@ -136,7 +140,7 @@ public extension RestService {
      - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func put<Request: Encodable, Response: Decodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, responseType: Response.Type? = nil, completion: RestResponse.CompletionHandler<Response>? = nil) throws -> Api.Service.Task {
+    func put<Request: Encodable, Response: Decodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, responseType: Response.Type? = nil, completion: Rest.Response.CompletionHandler<Response>? = nil) throws -> Api.Service.Task {
         return try put(value,
                        at: path,
                        aditionalHeaders: aditionalHeaders,
@@ -156,7 +160,7 @@ public extension RestService {
      - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func put<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> Api.Service.Task {
+    func put<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, completion: Rest.Response.SimpleCompletionHandler? = nil) throws -> Api.Service.Task {
         return try put(value,
                        at: path,
                        aditionalHeaders: aditionalHeaders,
@@ -176,7 +180,7 @@ public extension RestService {
      - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func patch<Request: Encodable, Response: Decodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, responseType: Response.Type? = nil, completion: RestResponse.CompletionHandler<Response>? = nil) throws -> Api.Service.Task {
+    func patch<Request: Encodable, Response: Decodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, responseType: Response.Type? = nil, completion: Rest.Response.CompletionHandler<Response>? = nil) throws -> Api.Service.Task {
         return try patch(value,
                          at: path,
                          aditionalHeaders: aditionalHeaders,
@@ -196,7 +200,7 @@ public extension RestService {
      - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func patch<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> Api.Service.Task {
+    func patch<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, completion: Rest.Response.SimpleCompletionHandler? = nil) throws -> Api.Service.Task {
         return try patch(value,
                          at: path,
                          aditionalHeaders: aditionalHeaders,
@@ -217,7 +221,7 @@ public extension RestService {
      - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func delete<Request: Encodable, Response: Decodable>(_ value: Request? = nil, at path: ResourcePath, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, responseType: Response.Type? = nil, completion: RestResponse.CompletionHandler<Response>? = nil) throws -> Api.Service.Task {
+    func delete<Request: Encodable, Response: Decodable>(_ value: Request? = nil, at path: ResourcePath, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, responseType: Response.Type? = nil, completion: Rest.Response.CompletionHandler<Response>? = nil) throws -> Api.Service.Task {
         return try delete(value,
                           at: path,
                           aditionalHeaders: aditionalHeaders,
@@ -237,7 +241,7 @@ public extension RestService {
      - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
     @discardableResult
-    func delete<Request: Encodable>(_ value: Request? = nil, at path: ResourcePath, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> Api.Service.Task {
+    func delete<Request: Encodable>(_ value: Request? = nil, at path: ResourcePath, aditionalHeaders: [Api.Header]? = nil, configuration: Api.Service.Configuration = .foreground, completion: Rest.Response.SimpleCompletionHandler? = nil) throws -> Api.Service.Task {
         return try delete(value,
                           at: path,
                           aditionalHeaders: aditionalHeaders,
@@ -247,7 +251,7 @@ public extension RestService {
 }
 
 //MARK: File managing
-public extension RestService {
+public extension Rest.Service {
 
     /**
      Sends HTTP GET request for file.
@@ -260,7 +264,7 @@ public extension RestService {
      - Throws: RestService.Error if creating *URL* have failed.
      - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
-    func getFile(at path: ResourcePath, saveAt destinationUrl: URL, configuration: Api.Service.Configuration = .background(), aditionalHeaders: [Api.Header]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> Api.Service.Task {
+    func getFile(at path: ResourcePath, saveAt destinationUrl: URL, configuration: Api.Service.Configuration = .background(), aditionalHeaders: [Api.Header]? = nil, completion: Rest.Response.SimpleCompletionHandler? = nil) throws -> Api.Service.Task {
         return try apiService.downloadFile(from: try requestUrl(for: path),
                                            to: destinationUrl,
                                            with: apiHeaders(adding: aditionalHeaders),
@@ -280,7 +284,7 @@ public extension RestService {
      - Throws: RestService.Error if creating *URL* have failed.
      - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
-    func getFile<Parameters: Encodable>(at path: ResourcePath, parameters: Parameters?, saveAt destinationUrl: URL, configuration: Api.Service.Configuration = .background(), aditionalHeaders: [Api.Header]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> Api.Service.Task {
+    func getFile<Parameters: Encodable>(at path: ResourcePath, parameters: Parameters?, saveAt destinationUrl: URL, configuration: Api.Service.Configuration = .background(), aditionalHeaders: [Api.Header]? = nil, completion: Rest.Response.SimpleCompletionHandler? = nil) throws -> Api.Service.Task {
         return try apiService.downloadFile(from: try requestUrl(for: path, with: parameters),
                                            to: destinationUrl,
                                            with: apiHeaders(adding: aditionalHeaders),
@@ -299,7 +303,7 @@ public extension RestService {
      - Throws: RestService.Error if creating *URL* have failed.
      - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
-    func postFile(from url: URL, at path: ResourcePath, configuration: Api.Service.Configuration = .background(), aditionalHeaders: [Api.Header]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> Api.Service.Task? {
+    func postFile(from url: URL, at path: ResourcePath, configuration: Api.Service.Configuration = .background(), aditionalHeaders: [Api.Header]? = nil, completion: Rest.Response.SimpleCompletionHandler? = nil) throws -> Api.Service.Task? {
         return try apiService.postFile(from: url,
                                        to: try requestUrl(for: path),
                                        with: apiHeaders(adding: aditionalHeaders),
@@ -318,7 +322,7 @@ public extension RestService {
      - Throws: RestService.Error if creating *URL* have failed.
      - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
-    func putFile(from url: URL, at path: ResourcePath, configuration: Api.Service.Configuration = .background(), aditionalHeaders: [Api.Header]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> Api.Service.Task? {
+    func putFile(from url: URL, at path: ResourcePath, configuration: Api.Service.Configuration = .background(), aditionalHeaders: [Api.Header]? = nil, completion: Rest.Response.SimpleCompletionHandler? = nil) throws -> Api.Service.Task? {
         return try apiService.putFile(from: url,
                                       to: try requestUrl(for: path),
                                       with: apiHeaders(adding: aditionalHeaders),
@@ -337,7 +341,7 @@ public extension RestService {
      - Throws: RestService.Error if creating *URL* have failed.
      - Returns: ApiService.Task object which allows to follow progress and manage request.
      */
-    func patchFile(from url: URL, at path: ResourcePath, configuration: Api.Service.Configuration = .background(), aditionalHeaders: [Api.Header]? = nil, completion: RestResponse.SimpleCompletionHandler? = nil) throws -> Api.Service.Task? {
+    func patchFile(from url: URL, at path: ResourcePath, configuration: Api.Service.Configuration = .background(), aditionalHeaders: [Api.Header]? = nil, completion: Rest.Response.SimpleCompletionHandler? = nil) throws -> Api.Service.Task? {
         return try apiService.patchFile(from: url,
                                         to: try requestUrl(for: path),
                                         with: apiHeaders(adding: aditionalHeaders),
@@ -347,7 +351,7 @@ public extension RestService {
 }
 
 //MARK: Requests managing
-public extension RestService {
+public extension Rest.Service {
 
     ///Cancels all currently running requests.
     func cancelAllRequests() {
@@ -362,7 +366,7 @@ public extension RestService {
 
 //MARK: Handling background sessions
 #if !os(OSX)
-public extension RestService {
+public extension Rest.Service {
 
     /**
      Handle events for background session with identifier.
@@ -378,7 +382,7 @@ public extension RestService {
 #endif
 
 //MARK: - Parameter factories
-private extension RestService {
+private extension Rest.Service {
 
     ///Creates full url by joining `baseUrl`, `apiPath` and given `path`.
     func requestUrl(for path: ResourcePath) throws -> URL {
@@ -389,7 +393,7 @@ private extension RestService {
             url = baseUrl.appending(path.rawValue)
         }
         guard let finalUrl = URL(string: url) else {
-            throw RestService.Error.url
+            throw Rest.Error.url
         }
         return finalUrl
     }
@@ -409,7 +413,7 @@ private extension RestService {
             return fullUrl
         }
         guard var components = URLComponents(url: fullUrl, resolvingAgainstBaseURL: false) else {
-            throw RestService.Error.urlComponents
+            throw Rest.Error.urlComponents
         }
         var items = components.queryItems ?? [URLQueryItem]()
         let itemsToAppend = dictionary.map({ URLQueryItem(name: $0.key, value: $0.value != nil ? "\($0.value!)" : nil) })
@@ -417,7 +421,7 @@ private extension RestService {
         components.queryItems = items
 
         guard let urlWithParameters = components.url else {
-            throw RestService.Error.url
+            throw Rest.Error.url
         }
         return urlWithParameters
     }
@@ -443,16 +447,16 @@ private extension RestService {
     }
 
     ///Converts *RestResponseCompletionHandler* into *ApiResponseCompletionHandler*.
-    func completionHandler<Response: Decodable>(coder: CoderProvider, with completion: RestResponse.CompletionHandler<Response>?) -> Api.Service.CompletionHandler? {
+    func completionHandler<Response: Decodable>(coder: CoderProvider, with completion: Rest.Response.CompletionHandler<Response>?) -> Api.Service.CompletionHandler? {
         guard let completion = completion else {
             return nil
         }
         return { (response, error) in
             guard let response = response, error == nil else {
-                completion(nil, RestResponse.Details(error))
+                completion(nil, Rest.Response.Details(error))
                 return
             }
-            var details = RestResponse.Details(response)
+            var details = Rest.Response.Details(response)
             guard let body = response.body else {
                 completion(nil, details)
                 return
@@ -468,21 +472,21 @@ private extension RestService {
     }
 
     ///Converts *SimpleRestResponseCompletionHandler* into *ApiResponseCompletionHandler*.
-    func completionHandler(with completion: RestResponse.SimpleCompletionHandler?) -> Api.Service.CompletionHandler? {
+    func completionHandler(with completion: Rest.Response.SimpleCompletionHandler?) -> Api.Service.CompletionHandler? {
         guard let completion = completion else {
             return nil
         }
         return { (response, error) in
             guard let response = response, error == nil else {
-                completion(false, RestResponse.Details(error))
+                completion(false, Rest.Response.Details(error))
                 return
             }
-            completion(response.statusCode.isSuccess, RestResponse.Details(response))
+            completion(response.statusCode.isSuccess, Rest.Response.Details(response))
         }
     }
 }
 
-private extension RestService {
+private extension Rest.Service {
 
     ///Posts given `value` using `apiService`.
     func post<Request: Encodable>(_ value: Request?, at path: ResourcePath, aditionalHeaders: [Api.Header]?, configuration: Api.Service.Configuration, completion: Api.Service.CompletionHandler?) throws -> Api.Service.Task {

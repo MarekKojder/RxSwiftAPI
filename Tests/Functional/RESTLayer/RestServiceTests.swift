@@ -35,9 +35,9 @@ enum ExamplePath: String, ResourcePath {
 
 class RestServiceTests: XCTestCase {
 
-    private var restService: RestService!
+    private var restService: Rest.Service!
 
-    private var downloadRestService: RestService!
+    private var downloadRestService: Rest.Service!
 
     private var exampleData: ExampleData {
         return ExampleData(url: TestData.Url.root)
@@ -46,10 +46,10 @@ class RestServiceTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        restService = RestService(baseUrl: TestData.Path.root,
+        restService = Rest.Service(baseUrl: TestData.Path.root,
                                   headerFields: TestData.Headers.example)
 
-        downloadRestService = RestService(baseUrl: TestData.Path.downloadRoot,
+        downloadRestService = Rest.Service(baseUrl: TestData.Path.downloadRoot,
                                           apiPath: "wikipedia/",
                                           headerFields: nil)
     }
@@ -60,7 +60,7 @@ class RestServiceTests: XCTestCase {
         super.tearDown()
     }
 
-    private func log(_ details: RestResponse.Details, for path: ResourcePath, and resource: Codable? = nil) {
+    private func log(_ details: Rest.Response.Details, for path: ResourcePath, and resource: Codable? = nil) {
         var message = "Request for resource \(path.rawValue)"
         if details.statusCode.isSuccess {
             message.append(" succeeded.")
@@ -82,7 +82,7 @@ extension RestServiceTests {
         let parameters = ExampleParameters(parameter: "parameter", count: 1)
         let responseExpectation = expectation(description: "Expect GET response")
         var responseFailed = true
-        let completion: RestResponse.CompletionHandler<ExampleData> = { [weak self] (data, details) in
+        let completion: Rest.Response.CompletionHandler<ExampleData> = { [weak self] (data, details) in
             self?.log(details, for: path)
             details.printPrettyBody()
             print("--------------------")
@@ -105,7 +105,7 @@ extension RestServiceTests {
         let path = ExamplePath.get
         let responseExpectation = expectation(description: "Expect GET response")
         var responseError: Error? = nil
-        let completion: RestResponse.CompletionHandler<ExampleFailData> = { [weak self] (data, details) in
+        let completion: Rest.Response.CompletionHandler<ExampleFailData> = { [weak self] (data, details) in
             self?.log(details, for: path)
             responseError = details.error
             responseExpectation.fulfill()
@@ -126,7 +126,7 @@ extension RestServiceTests {
         let path = ExamplePath.notFound
         let responseExpectation = expectation(description: "Expect GET response")
         var responseFailed = true
-        let completion: RestResponse.CompletionHandler<ExampleData> = { [weak self] (data, details) in
+        let completion: Rest.Response.CompletionHandler<ExampleData> = { [weak self] (data, details) in
             self?.log(details, for: path)
             responseFailed = !details.statusCode.isSuccess
             responseExpectation.fulfill()
@@ -143,14 +143,14 @@ extension RestServiceTests {
     }
 
     func testUrlFailureGet() {
-        let service = RestService(baseUrl: "")
+        let service = Rest.Service(baseUrl: "")
         let type = ExampleData.self
         let path = ExamplePath.none
         do {
             try service.get(type: type, from: path)
             XCTFail("Request should throw an exception")
         } catch {
-            XCTAssertEqual(error.localizedDescription, RestService.Error.url.localizedDescription)
+            XCTAssertEqual(error.localizedDescription, Rest.Error.url.localizedDescription)
         }
     }
 
@@ -159,7 +159,7 @@ extension RestServiceTests {
         let path = ExamplePath.post
         let responseExpectation = expectation(description: "Expect POST response")
         var responseFailed = true
-        let completion = { [weak self] (success: Bool, details: RestResponse.Details) in
+        let completion = { [weak self] (success: Bool, details: Rest.Response.Details) in
             self?.log(details, for: path)
             responseFailed = !details.statusCode.isSuccess
             responseExpectation.fulfill()
@@ -180,7 +180,7 @@ extension RestServiceTests {
         let path = ExamplePath.post
         let responseExpectation = expectation(description: "Expect POST response")
         var responseFailed = true
-        let completion = { [weak self] (data: ExampleData?, details: RestResponse.Details) in
+        let completion = { [weak self] (data: ExampleData?, details: Rest.Response.Details) in
             self?.log(details, for: path)
             responseFailed = !details.statusCode.isSuccess
             responseExpectation.fulfill()
@@ -201,7 +201,7 @@ extension RestServiceTests {
         let path = ExamplePath.put
         let responseExpectation = expectation(description: "Expect PUT response")
         var responseFailed = true
-        let completion = { [weak self] (success: Bool, details: RestResponse.Details) in
+        let completion = { [weak self] (success: Bool, details: Rest.Response.Details) in
             self?.log(details, for: path)
             responseFailed = !details.statusCode.isSuccess
             responseExpectation.fulfill()
@@ -222,7 +222,7 @@ extension RestServiceTests {
         let path = ExamplePath.put
         let responseExpectation = expectation(description: "Expect PUT response")
         var responseFailed = true
-        let completion = { [weak self] (data: ExampleData?, details: RestResponse.Details) in
+        let completion = { [weak self] (data: ExampleData?, details: Rest.Response.Details) in
             self?.log(details, for: path)
             responseFailed = !details.statusCode.isSuccess
             responseExpectation.fulfill()
@@ -243,7 +243,7 @@ extension RestServiceTests {
         let path = ExamplePath.patch
         let responseExpectation = expectation(description: "Expect PATCH response")
         var responseFailed = true
-        let completion = { [weak self] (success: Bool, details: RestResponse.Details) in
+        let completion = { [weak self] (success: Bool, details: Rest.Response.Details) in
             self?.log(details, for: path)
             responseFailed = !details.statusCode.isSuccess
             responseExpectation.fulfill()
@@ -264,7 +264,7 @@ extension RestServiceTests {
         let path = ExamplePath.patch
         let responseExpectation = expectation(description: "Expect PATCH response")
         var responseFailed = true
-        let completion = { [weak self] (data: ExampleData?, details: RestResponse.Details) in
+        let completion = { [weak self] (data: ExampleData?, details: Rest.Response.Details) in
             self?.log(details, for: path)
             responseFailed = !details.statusCode.isSuccess
             responseExpectation.fulfill()
@@ -285,7 +285,7 @@ extension RestServiceTests {
         let path = ExamplePath.delete
         let responseExpectation = expectation(description: "Expect DELETE response")
         var responseFailed = true
-        let completion = { [weak self] (success: Bool, details: RestResponse.Details) in
+        let completion = { [weak self] (success: Bool, details: Rest.Response.Details) in
             self?.log(details, for: path)
             responseFailed = !details.statusCode.isSuccess
             responseExpectation.fulfill()
@@ -306,7 +306,7 @@ extension RestServiceTests {
         let path = ExamplePath.delete
         let responseExpectation = expectation(description: "Expect DELETE response")
         var responseFailed = true
-        let completion = { [weak self] (data: ExampleData?, details: RestResponse.Details) in
+        let completion = { [weak self] (data: ExampleData?, details: Rest.Response.Details) in
             self?.log(details, for: path)
             responseFailed = !details.statusCode.isSuccess
             responseExpectation.fulfill()
@@ -328,7 +328,7 @@ extension RestServiceTests {
         let location = TestData.Url.fileDestination
         let responseExpectation = expectation(description: "Expect GET response")
         var responseFailed = true
-        let completion = { [weak self] (success: Bool, details: RestResponse.Details) in
+        let completion = { [weak self] (success: Bool, details: Rest.Response.Details) in
             self?.log(details, for: path)
             responseFailed = !details.statusCode.isSuccess
             responseExpectation.fulfill()
@@ -349,7 +349,7 @@ extension RestServiceTests {
         let location = TestData.Url.fileDestination
         let responseExpectation = expectation(description: "Expect GET response")
         var responseFailed = true
-        let completion = { [weak self] (success: Bool, details: RestResponse.Details) in
+        let completion = { [weak self] (success: Bool, details: Rest.Response.Details) in
             self?.log(details, for: path)
             responseFailed = !details.statusCode.isSuccess
             responseExpectation.fulfill()
@@ -370,7 +370,7 @@ extension RestServiceTests {
         let location = TestData.Url.localFile
         let responseExpectation = expectation(description: "Expect POST response")
         var responseFailed = true
-        let completion = { [weak self] (success: Bool, details: RestResponse.Details) in
+        let completion = { [weak self] (success: Bool, details: Rest.Response.Details) in
             self?.log(details, for: path)
             responseFailed = !details.statusCode.isSuccess
             responseExpectation.fulfill()
@@ -391,7 +391,7 @@ extension RestServiceTests {
         let location = TestData.Url.localFile
         let responseExpectation = expectation(description: "Expect PUT response")
         var responseFailed = true
-        let completion = { [weak self] (success: Bool, details: RestResponse.Details) in
+        let completion = { [weak self] (success: Bool, details: Rest.Response.Details) in
             self?.log(details, for: path)
             responseFailed = !details.statusCode.isSuccess
             responseExpectation.fulfill()
@@ -412,7 +412,7 @@ extension RestServiceTests {
         let location = TestData.Url.localFile
         let responseExpectation = expectation(description: "Expect PATCH response")
         var responseFailed = true
-        let completion = { [weak self] (success: Bool, details: RestResponse.Details) in
+        let completion = { [weak self] (success: Bool, details: Rest.Response.Details) in
             self?.log(details, for: path)
             responseFailed = !details.statusCode.isSuccess
             responseExpectation.fulfill()
@@ -435,7 +435,7 @@ extension RestServiceTests {
         let location = TestData.Url.localFile
         let responseExpectation = expectation(description: "Expect PATCH response")
         var responseFailed = true
-        let completion = { [weak self] (success: Bool, details: RestResponse.Details) in
+        let completion = { [weak self] (success: Bool, details: Rest.Response.Details) in
             self?.log(details, for: path2)
             responseFailed = !details.statusCode.isSuccess
             responseExpectation.fulfill()

@@ -7,8 +7,8 @@
 
 import Foundation
 
-public extension RestResponse {
-    
+public extension Rest.Response {
+
     struct Header {
 
         ///Header field name.

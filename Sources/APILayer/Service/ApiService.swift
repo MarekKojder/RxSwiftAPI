@@ -10,28 +10,28 @@ import RxCocoa
 
 extension Api {
 
-    final public class Service {
+    public class Service {
 
         public typealias CompletionHandler = (_ response: Api.Response?, _ error: Swift.Error?) -> ()
 
         ///Service managing requests
-        let requestService: Http.Service
+        let httpService: Http.Service
 
         /**
          - Parameter fileManager: Object of class implementing *FileManager* protocol.
          */
         public init(fileManager: FileManager = DefaultFileManager()) {
-            self.requestService = Http.Service(fileManager: fileManager)
+            self.httpService = Http.Service(fileManager: fileManager)
         }
 
         ///Cancels all currently running requests.
         public func cancelAllRequests() {
-            requestService.cancelAllRequests()
+            httpService.cancelAllRequests()
         }
 
         ///Invalidates all sessions and cancells all tasks.
         public func terminateAllRequests() {
-            requestService.invalidateAndCancel()
+            httpService.invalidateAndCancel()
         }
     }
 }
@@ -220,7 +220,7 @@ public extension Api.Service {
         let headers = httpHeaders(for: headers)
         let uploadRequest = Http.UploadRequest(url: destinationUrl, method: method.httpMethod, resourceUrl: localFileUrl, headers: headers)
 
-        return Task(try requestService.send(request: uploadRequest,
+        return Task(try httpService.send(request: uploadRequest,
                                             with: configuration.requestServiceConfiguration,
                                             completion: requestCompletion(for: completion)))
     }
@@ -243,7 +243,7 @@ public extension Api.Service {
         let headers = httpHeaders(for: headers)
         let httpRequest = Http.DataRequest(url: url, method: method.httpMethod, body: body, headers: headers)
 
-        return Task(try requestService.send(request: httpRequest,
+        return Task(try httpService.send(request: httpRequest,
                                             with: configuration.requestServiceConfiguration,
                                             completion: requestCompletion(for: completion)))
     }
@@ -265,7 +265,7 @@ public extension Api.Service {
      This method have to be used in `application(UIApplication, handleEventsForBackgroundURLSession: String, completionHandler: () -> Void)` method of AppDelegate.
      */
     func handleEventsForBackgroundSession(with identifier: String, completion: @escaping () -> Void) {
-        requestService.handleEventsForBackgroundSession(with: identifier, completion: completion)
+        httpService.handleEventsForBackgroundSession(with: identifier, completion: completion)
     }
 }
 #endif
@@ -290,7 +290,7 @@ private extension Api.Service {
         let headers = httpHeaders(for: apiHeaders)
         let downloadRequest = Http.DownloadRequest(url: remoteFileUrl, destinationUrl: localUrl, headers: headers)
 
-        return Task(try requestService.send(request: downloadRequest,
+        return Task(try httpService.send(request: downloadRequest,
                                             with: configuration.requestServiceConfiguration,
                                             completion: requestCompletion(for: completion)))
     }

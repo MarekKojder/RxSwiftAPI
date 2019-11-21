@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension RestService {
+public extension Rest {
 
     /**
      Enum for informing about RestService errors
@@ -20,7 +20,7 @@ public extension RestService {
     }
 }
 
-extension RestService.Error: LocalizedError {
+extension Rest.Error: LocalizedError {
 
     public var errorDescription: String? {
         switch self {

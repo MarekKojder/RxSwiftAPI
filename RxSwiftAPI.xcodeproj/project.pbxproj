@@ -29,6 +29,10 @@
 		EA2FBA6E2385571F00DDC8E0 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2FBA6C2385571F00DDC8E0 /* Api.swift */; };
 		EA2FBA6F2385571F00DDC8E0 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2FBA6C2385571F00DDC8E0 /* Api.swift */; };
 		EA2FBA702385571F00DDC8E0 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2FBA6C2385571F00DDC8E0 /* Api.swift */; };
+		EA2FBA7323856F1500DDC8E0 /* Rest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2FBA7223856F1500DDC8E0 /* Rest.swift */; };
+		EA2FBA7423856F1500DDC8E0 /* Rest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2FBA7223856F1500DDC8E0 /* Rest.swift */; };
+		EA2FBA7523856F1500DDC8E0 /* Rest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2FBA7223856F1500DDC8E0 /* Rest.swift */; };
+		EA2FBA7623856F1500DDC8E0 /* Rest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2FBA7223856F1500DDC8E0 /* Rest.swift */; };
 		EA3B4DFB21634FC700BC730D /* RestResponseDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3B4DFA21634FC700BC730D /* RestResponseDetails.swift */; };
 		EA3B4DFC21634FC700BC730D /* RestResponseDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3B4DFA21634FC700BC730D /* RestResponseDetails.swift */; };
 		EA3B4DFD21634FC700BC730D /* RestResponseDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3B4DFA21634FC700BC730D /* RestResponseDetails.swift */; };
@@ -338,6 +342,7 @@
 		EA083AE822BD81F70041213C /* RxSwiftAPI.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = RxSwiftAPI.podspec; sourceTree = "<group>"; };
 		EA2A8F8E201B9FD8003721F0 /* FailableDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailableDecodable.swift; sourceTree = "<group>"; };
 		EA2FBA6C2385571F00DDC8E0 /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
+		EA2FBA7223856F1500DDC8E0 /* Rest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rest.swift; sourceTree = "<group>"; };
 		EA3B4DFA21634FC700BC730D /* RestResponseDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestResponseDetails.swift; sourceTree = "<group>"; };
 		EA3B4DFF2163520500BC730D /* RestResponseHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestResponseHeader.swift; sourceTree = "<group>"; };
 		EA3B4E2D2163A16E00BC730D /* FunctionalTests OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FunctionalTests OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -591,6 +596,15 @@
 			path = Namespace;
 			sourceTree = "<group>";
 		};
+		EA2FBA7123856F0300DDC8E0 /* Namespace */ = {
+			isa = PBXGroup;
+			children = (
+				EA2FBA7223856F1500DDC8E0 /* Rest.swift */,
+				EA9D659D23550A6200700D09 /* RestResponse.swift */,
+			);
+			path = Namespace;
+			sourceTree = "<group>";
+		};
 		EA695B892020B461004662B1 /* CoderProvider */ = {
 			isa = PBXGroup;
 			children = (
@@ -604,7 +618,6 @@
 			isa = PBXGroup;
 			children = (
 				EA695B8720209D1D004662B1 /* ResourcePath.swift */,
-				EA2A8F8E201B9FD8003721F0 /* FailableDecodable.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -741,6 +754,7 @@
 		EA8A7F231FB18ACB00088163 /* RESTLayer */ = {
 			isa = PBXGroup;
 			children = (
+				EA2FBA7123856F0300DDC8E0 /* Namespace */,
 				EA695B8F2020E806004662B1 /* Request */,
 				EA8A7F241FB18ACB00088163 /* Response */,
 				EA8A7F281FB18ACB00088163 /* Service */,
@@ -751,7 +765,7 @@
 		EA8A7F241FB18ACB00088163 /* Response */ = {
 			isa = PBXGroup;
 			children = (
-				EA9D659D23550A6200700D09 /* RestResponse.swift */,
+				EA2A8F8E201B9FD8003721F0 /* FailableDecodable.swift */,
 				EA3B4DFF2163520500BC730D /* RestResponseHeader.swift */,
 				EA3B4DFA21634FC700BC730D /* RestResponseDetails.swift */,
 				EA8A7F261FB18ACB00088163 /* RestResponseCompletion.swift */,
@@ -1742,6 +1756,7 @@
 				EA8A7F971FB18ACB00088163 /* HttpResponse.swift in Sources */,
 				EA8A7FA71FB18ACB00088163 /* HttpService.swift in Sources */,
 				EA9F374D20219179008DEFF3 /* ResourcePath.swift in Sources */,
+				EA2FBA7523856F1500DDC8E0 /* Rest.swift in Sources */,
 				EA3B4DFD21634FC700BC730D /* RestResponseDetails.swift in Sources */,
 				EA8A7F9F1FB18ACB00088163 /* HttpMethod.swift in Sources */,
 				EA3B4E022163520500BC730D /* RestResponseHeader.swift in Sources */,
@@ -1793,6 +1808,7 @@
 				EAC18314201B6E5500767037 /* CoderProvider.swift in Sources */,
 				EA8A7FCA1FB18ACB00088163 /* RestService.swift in Sources */,
 				EA8A7F721FB18ACB00088163 /* UnknownStatusCodeType.swift in Sources */,
+				EA2FBA7423856F1500DDC8E0 /* Rest.swift in Sources */,
 				EAD87207234DD48F007A4D0E /* SessionServiceTask.swift in Sources */,
 				EA67E8BF2350B3FC009D2D9C /* ApiServiceTask.swift in Sources */,
 				EAB1479820C70DF5009E1358 /* ApiServiceConfiguration.swift in Sources */,
@@ -1844,6 +1860,7 @@
 				EAC18316201B6E5500767037 /* CoderProvider.swift in Sources */,
 				EA8A7FCC1FB18ACB00088163 /* RestService.swift in Sources */,
 				EA8A7F741FB18ACB00088163 /* UnknownStatusCodeType.swift in Sources */,
+				EA2FBA7623856F1500DDC8E0 /* Rest.swift in Sources */,
 				EAD87209234DD48F007A4D0E /* SessionServiceTask.swift in Sources */,
 				EA67E8C12350B3FC009D2D9C /* ApiServiceTask.swift in Sources */,
 				EAB1479A20C70DF5009E1358 /* ApiServiceConfiguration.swift in Sources */,
@@ -1895,6 +1912,7 @@
 				EA8A7F751FB18ACB00088163 /* DefaultFileManager.swift in Sources */,
 				EAD87206234DD48F007A4D0E /* SessionServiceTask.swift in Sources */,
 				EA67E8BE2350B3FC009D2D9C /* ApiServiceTask.swift in Sources */,
+				EA2FBA7323856F1500DDC8E0 /* Rest.swift in Sources */,
 				EA8A7F5D1FB18ACB00088163 /* RedirectionStatusCodeType.swift in Sources */,
 				EAB1479720C70DF5009E1358 /* ApiServiceConfiguration.swift in Sources */,
 				EA8A7FC91FB18ACB00088163 /* RestService.swift in Sources */,

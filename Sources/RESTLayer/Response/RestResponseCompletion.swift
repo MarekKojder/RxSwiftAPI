@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension RestResponse {
+public extension Rest.Response {
     
     /**
      Closure called when api request is finished.
